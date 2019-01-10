@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="img/favicon.ico">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/cookies.js"></script>
+    <title>Speed Dial</title>
+</head>
+<body class="indexbody">
+    <div class="indexcover" style="position: absolute; width: 100vw; height: 100vh; z-index: 995; background-color: white;"> 
+        <div class="nameblockbox">
+            <h1 id="nameblock"></h1>
+        </div>
+    </div>
+
+    <div id="browseroptionbuttons">
+        <a href="#" id="browserhistorybutton"><i class="fas fa-history browseroptionbutton"></i></a>
+        <a href="#" id="browserdownloadsbutton"><i class="fas fa-download browseroptionbutton"></i></a>
+        <a href="#" id="browserbookmarksbutton"><i class="fas fa-bookmark browseroptionbutton"></i></a>
+        <a href="#" id="browserextensionsbutton"><i class="fas fa-puzzle-piece browseroptionbutton"></i></a>
+    </div>
+
+    <div class="indexnavbar">
+        <div id="randomgithub"><a href="https://github.com/KlibrDM"><i class="fab fa-github" style="color: white;"></i></a></div>
+        <div class="searchbar">
+            <form id="googlesearchform">
+                <input class="searchbarinput" id="googlesearchinput" type="search" autocomplete="off" placeholder="Search">
+                <button class="btn searchbarbutton"><i class="fas fa-search" style="color: white;"></i></button>
+            </form>
+        </div>
+        <div id="time"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="speeddialpages">
+            <div class="buttonsrow"></div>
+        </div>
+    </div>
+
+    <div id="settingsbutton"><i class="fas fa-sliders-h" style="color: white;"></i></div>
+    <div id="settingspanel" id="settingsform">
+        <h4>Settings</h4>
+        <form id="settingsform">
+            <div class="settingslabel"><label>Your name</label>
+                <input type="text" id="set_yourName" class="settingstextinput">
+            </div>
+
+            <div class="settingslabel"><label>White Background</label>
+                <input type="checkbox" id="set_isBackgroundWhite">
+            </div>
+
+            <div class="settingslabel"><label>Fill entire page</label>
+                <input type="checkbox" id="set_fillEntirePage">
+            </div>
+
+            <div class="settingslabel"><label>Mobile version</label>
+                <input type="checkbox" id="set_mobileVersion">
+            </div>
+
+            <div class="settingslabel"><label>Navbar opacity</label>
+                <input type="number" min="0" max="1" step="0.01" class="settingsnumberinput" id="set_navbarOpacity">
+            </div>
+
+            <div class="settingslabel"><label>Navbar color</label>
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_navbarColorR" style="border: 1px solid #fc4343;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_navbarColorG" style="border: 1px solid #24b143;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_navbarColorB" style="border: 1px solid #4286f4;">
+            </div>
+
+            <div class="settingslabel"><label>Cover color</label>
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverColorR" style="border: 1px solid #fc4343;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverColorG" style="border: 1px solid #24b143;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverColorB" style="border: 1px solid #4286f4;">
+            </div>
+
+            <div class="settingslabel"><label>Cover text color</label>
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverTextColorR" style="border: 1px solid #fc4343;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverTextColorG" style="border: 1px solid #24b143;">
+                <input type="number" min="0" max="255" class="settingsmultinumberinput" id="set_coverTextColorB" style="border: 1px solid #4286f4;">
+            </div>
+            <center><button type="submit" class="btn btn-success btn-sm settingsbutton">Save</button></center>
+        </form>
+        <hr>
+
+        <h4>Background</h4>
+        <div id="settingsbackgroundselector"></div>
+        <small>Background images provided by <a href="https://pixabay.com/">Pixabay</a></small>
+        <hr>
+
+        <h4>Pages</h4>
+        <form id="settingspagesform">
+            <div id="settingsalreadyexistingpages"></div>
+            <div class="settingslabel"><label>Add</label>
+                <input type="text" id="set_newPageBox" class="settingstextinput">
+            </div>
+            <center><button type="submit" class="btn btn-success btn-sm settingsbutton">Save</button></center>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/settings.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+*{
+    text-decoration: none;
+}
+
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none !important;
+}
+
+html, body{
+    margin:0;
+    padding:0;
+}
+
+body{
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+
+/*Cover*/
+
+.indexcover{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    animation: remove-cover-up 0.35s;
+    animation-fill-mode: forwards;
+    animation-delay: 0.8s;
+    z-index: 995;
+}
+
+.nameblockbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.nameblockbox h1{
+    font-size: 9vw;
+    animation: title-disappear 0.35s;
+    animation-delay: 0.35s;
+    animation-fill-mode: forwards;
+    z-index: 999;
+    text-align: center;
+}
+
+
+/*Navbar*/
+
+.indexnavbar{
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.navbartitle{
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbarbutton{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.navbarbuttontext{
+    color: white;
+    font-size: 20px;
+}
+
+.navbarbuttontext:hover{
+    color: white;
+}
+
+
+/*Searchbar*/
+
+.searchbar{
+    width: 50vw;
+    opacity: 0;
+    animation: fade-in 0.8s;
+    animation-delay: 0.9s;
+    animation-fill-mode: forwards;
+}
+
+.searchbar form{
+    border-radius: 100px;
+    border: 2px solid;
+    border-color: rgba(220, 220, 220, 0.4);
+    display: flex;
+    background-color: rgba(100, 100, 100, 0.25);
+}
+
+.searchbarinput{
+    background-color: rgba(0,0,0,0.0);
+    color: white;
+    text-indent: 15px;
+    border: 0;
+    min-height: 40px;
+    height: 7vh;
+    min-width: 50px;
+    flex-grow: 1;
+    font-size: 1.2vw;
+}
+
+.searchbarinput::placeholder{
+    color: white;
+}
+
+.searchbarinput:focus{
+    outline: none;
+}
+
+.searchbarinput:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+    border-radius: 100px;
+}
+
+.searchbarbutton{
+    background-color: rgba(0,0,0,0);
+    border: 0;
+    color: white;
+}
+
+.searchbarbutton:focus{
+    border-radius: 100px;
+    outline: none !important;
+    outline-style:none;
+    box-shadow:none;
+    border-color:transparent;
+}
+
+
+/*Time*/
+
+#time{
+    position: absolute;
+    font-size: 3.6vw;
+    right: 2vw;
+    color: rgb(255,255,255);
+    animation: fade-in 0.8s;
+    animation-delay: 0.9s;
+    animation-fill-mode: forwards;
+    border-radius: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: -5px;
+}
+
+#timeminutes{
+    font-size: 2.6vw;
+    color: rgb(236,236,236);
+}
+
+
+/*Random Github*/
+
+#randomgithub{
+    position: absolute;
+    left: 2vw;
+    font-size: 3vw;
+    display: none;
+    animation: wobble-hor-bottom 0.8s infinite;
+}
+
+
+/*Browser option buttons*/
+
+#browseroptionbuttons{
+    position: absolute;
+    left: 2vw;
+}
+
+.browseroptionbutton{
+    color: rgba(220,220,220,0.75);
+    background-color: rgba(0,0,0,0.25);
+    padding: 5px 10px 5px 10px;
+}
+
+
+/*Pages*/
+
+.buttonsrow{
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.pagebutton{
+    height: 75vh;
+    flex-grow: 1;
+    background-position: center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.pagebutton:hover{
+    animation: pop-out 0.25s;
+    animation-fill-mode: forwards;
+    z-index: 2;
+}
+
+.pagebutton:not(:hover){
+    animation: pop-back 0.25s;
+    animation-fill-mode: forwards;
+    z-index: 1;
+    transition: z-index 0.25s;
+}
+
+
+/*Settings*/
+
+#settingsbutton{
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(60,60,60,0.5);
+    border-radius: 100%;
+    z-index: 5;
+}
+
+#settingspanel{
+    padding: 20px 40px 20px 40px;
+    position: absolute;
+    background-color: white;
+    right: 0;
+    top: 0;
+    z-index: 3;
+    display: none;
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+
+.settingslabel{
+    display: flex;
+    align-items: center;
+}
+
+.settingslabel label{
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.settingstextinput{
+    height: 20px;
+}
+
+.settingsnumberinput{
+    height: 20px;
+    width: 55px;
+}
+
+.settingsmultinumberinput{
+    height: 20px;
+    width: 50px;
+    margin-right: 1px;
+}
+
+.settingsbutton{
+    margin-top: 4px;
+}
+
+#settingsbackgroundselector{
+    max-width: 300px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.backgroundImageSelector{
+    max-width: 100px;
+    border-radius: 5px;
+}
+
+#settingspagesform{
+    background-color: rgb(240,240,240);
+    border: 1px solid lightgray;
+    padding: 3px;
+    max-width: 300px;
+    overflow-x: scroll;
+}
+
+.pagecheckbox{
+    margin-left: auto;
+}
+
+.pagedeletebutton{
+    border: 0;
+    background-color: transparent;
+    color: red;
+}
+
+
+@media screen and (max-height: 400px){
+    .indexbuttons a{
+        font-size: 5vh;
+    }
+}
+
+@media screen and (max-width: 799px){
+    .indextitle h4{
+        font-size: 4vw;
+    }
+    .breakline{
+        display: block;
+    }
+    .searchbar{
+        width: 80vw;
+    }
+    .searchbarinput{
+        font-size: 3.2vw;
+    }
+    #time{
+        display: none;
+    }
+    #randomgithub{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 2000px){
+    .searchbarinput{
+        font-size: 0.8vw;
+    }
+    #time{
+        font-size: 2.2vw;
+    }
+    
+    #timeminutes{
+        font-size: 1.6vw;
+    }
+}
+
+@media screen and (min-width: 2600px){
+    .searchbarinput{
+        font-size: 0.6vw;
+    }
+    #time{
+        font-size: 1.8vw;
+    }
+    
+    #timeminutes{
+        font-size: 1.2vw;
+    }
+}
