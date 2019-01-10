@@ -1,5 +1,5 @@
 # metro-tab
-Live preview: https://klibrdm.github.io/metro-tab/index
+Live preview: https://klibrdm.github.io/metro-tab/
 
 Please note that the top-left buttons will not work unless used as an extension.
 
