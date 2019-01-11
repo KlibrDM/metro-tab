@@ -118,6 +118,14 @@ body{
     color: white;
 }
 
+.searchbarinput:-ms-input-placeholder{
+    color: white;
+}
+
+.searchbarinput::-ms-input-placeholder{
+    color: white;
+}
+
 .searchbarinput:focus{
     outline: none;
 }
