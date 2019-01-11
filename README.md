@@ -13,11 +13,12 @@ Cookies are being used, therefore it won't load as a local file. Follow the step
 * Click on `Load unpacked`
 * Navigate to the cloned repository location
 * Select the directory and click `OK`
-* Make sure it is ticked
+* Make sure the extension is turned on
 * Open up a new tab
 ## Limitations and bugs
 * Only predefined backgrounds can be used
 * Images for logos have to be handmade
+* Pages can't be reordered, you have to add them in the order you want them to be
 * 1px white line appears at the bottom while hovering over a page
 ## Screenshots
 ![screenshot](https://i.imgur.com/vX8b1xa.gif)
