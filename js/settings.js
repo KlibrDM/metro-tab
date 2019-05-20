@@ -129,10 +129,10 @@ function extractwebsite(link){
     if(sitename.substring(0,3)=="www"){
         sitename = sitename.substring(4);
     }
-    if(sitename.slice(-2) == "uk"){
-        sitename = sitename.substring(0, sitename.lastIndexOf(".")); //Do it twice for co.uk
-    }
     sitename = sitename.substring(0, sitename.lastIndexOf("."));
+	if(sitename.slice(-3) == ".co"){
+        sitename = sitename.substring(0, sitename.lastIndexOf(".")); //Do it twice for those that have .co
+    }
     return sitename;
 }
 
