@@ -1,4 +1,6 @@
 # metro-tab
+[Available on Chrome Web Store](https://chrome.google.com/webstore/detail/metro-speed-dial-modern-n/onhhmnkghemlcnlglcnjkhebiclbklpl?hl=en)
+
 Live preview: https://klibrdm.github.io/metro-tab/
 
 Please note that the top-left buttons will not work unless used as an extension.
