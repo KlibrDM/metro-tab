@@ -1,5 +1,5 @@
 /*Default settings*/
-var yourName = "KlibrDM";
+var yourName = "New Tab";
 var isBackgroundWhite = false;
 var backgroundImage = "bg1"; //you must set this if isBackgroundWhite is false
 var fillEntirePage = false; //no effect if mobileVersion is true
@@ -89,4 +89,19 @@ var knownpages = [
     "alibaba",
     "paypal",
     "olx",
+    "baidu",
+    "wikipedia",
+    "tmall",
+    "live",
+    "microsoft",
+    "list.tmall",
+    "office",
+    "msn",
+    "pages.tmall",
+    "yandex",
+    "whatsapp",
+    "spotify",
+    "linkedin",
+    "csdn",
+    "bing",
 ];
