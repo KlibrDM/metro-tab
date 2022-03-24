@@ -117,14 +117,6 @@ googlesearchform.addEventListener("submit", function(e){
     }
 });
 
-//Create new tab
-var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-if(isChrome){
-    chrome.browserAction.onClicked.addListener(function(){
-        chrome.tabs.create({'url':"chrome://newtab"})
-    })
-}
-
 //Browser options
 var element = document.getElementById("browserhistorybutton");
 element.addEventListener("click", function(e) {
