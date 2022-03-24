@@ -259,6 +259,7 @@ body{
 .settingslabel{
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 
 .settingslabel label{
@@ -267,18 +268,22 @@ body{
 }
 
 .settingstextinput{
-    height: 20px;
+    padding: 3px 5px;
+    border-radius: 10px;
+    border: 1px solid gray;
 }
 
 .settingsnumberinput{
-    height: 20px;
-    width: 55px;
+    padding: 3px 5px;
+    border-radius: 10px;
+    border: 1px solid gray;
 }
 
 .settingsmultinumberinput{
-    height: 20px;
-    width: 50px;
+    width: 55px;
     margin-right: 1px;
+    padding: 2px 4px;
+    border-radius: 10px;
 }
 
 .settingsbutton{
@@ -299,9 +304,10 @@ body{
 #settingspagesform{
     background-color: rgb(240,240,240);
     border: 1px solid lightgray;
-    padding: 3px;
+    padding: 7px 12px;
+    border-radius: 20px;
     max-width: 300px;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 .pagecheckbox{
