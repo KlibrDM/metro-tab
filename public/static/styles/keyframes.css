@@ -1,0 +1,73 @@
+@keyframes remove-cover-up {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 0vw;
+    height: 0;
+  }
+}
+
+@keyframes title-disappear {
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-out {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pop-back {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*thx Animista*/
+@keyframes wobble-hor-bottom {
+  0%,
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+  15% {
+    -webkit-transform: translateX(-7px) rotate(-3deg);
+    transform: translateX(-7px) rotate(-3deg);
+  }
+  30% {
+    -webkit-transform: translateX(4px) rotate(3deg);
+    transform: translateX(4px) rotate(3deg);
+  }
+  45% {
+    -webkit-transform: translateX(-4px) rotate(-1.8deg);
+    transform: translateX(-4px) rotate(-1.8deg);
+  }
+  60% {
+    -webkit-transform: translateX(2px) rotate(1.2deg);
+    transform: translateX(2px) rotate(1.2deg);
+  }
+  75% {
+    -webkit-transform: translateX(-2px) rotate(-0.6deg);
+    transform: translateX(-2px) rotate(-0.6deg);
+  }
+}
