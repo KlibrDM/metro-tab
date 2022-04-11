@@ -18,11 +18,10 @@
 <small>
   Background images provided by <a href="https://pixabay.com/">Pixabay</a>
 </small>
-<CustomBackgrounds {changeBackground}/>
+<CustomBackgrounds {changeBackground} />
 
 <style>
   #settingsBackgrounds {
-    max-width: 300px;
     white-space: nowrap;
     overflow-x: scroll;
     display: flex;

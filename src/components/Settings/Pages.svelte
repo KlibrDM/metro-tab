@@ -89,7 +89,6 @@
     border: 1px solid lightgray;
     padding: 8px 8px;
     border-radius: 20px;
-    max-width: 300px;
     overflow-x: auto;
   }
   #settingsPagesList {
@@ -150,10 +149,14 @@
     display: flex;
     align-items: center;
     margin-top: 10px;
+    gap: 5px;
   }
   .settingsPageInput input {
     flex-grow: 1;
-    margin-left: 5px;
-    margin-right: 5px;
+  }
+  @media screen and (max-width: 450px) {
+    .settingsPageInput {
+      flex-direction: column;
+    }
   }
 </style>

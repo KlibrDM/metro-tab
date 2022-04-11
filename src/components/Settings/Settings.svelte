@@ -225,7 +225,13 @@
     top: 0;
     z-index: 3;
     max-height: 100vh;
+    max-width: 450px;
     overflow-y: auto;
     box-sizing: border-box;
+  }
+  @media screen and (max-width: 450px) {
+    #settingsPanel {
+      width: 100vw;
+    }
   }
 </style>

@@ -232,7 +232,7 @@
     border: 1px solid gray;
   }
   .settingsMultiNumberInput {
-    width: 55px;
+    width: 50px;
     margin-right: 1px;
     padding: 2px 4px;
     border-radius: 10px;
@@ -246,5 +246,10 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+  }
+  @media screen and (max-width: 450px) {
+    .settingsMultiNumberInput {
+      width: 40px;
+    }
   }
 </style>
