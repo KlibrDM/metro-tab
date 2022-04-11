@@ -1,4 +1,6 @@
 <script>
+  import CustomBackgrounds from "./CustomBackgrounds.svelte";
+
   export let backgrounds;
   export let changeBackground;
 </script>
@@ -16,6 +18,7 @@
 <small>
   Background images provided by <a href="https://pixabay.com/">Pixabay</a>
 </small>
+<CustomBackgrounds {changeBackground}/>
 
 <style>
   #settingsBackgrounds {

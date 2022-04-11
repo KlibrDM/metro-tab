@@ -53,7 +53,13 @@
     });
 
     //Save to local storage
-    saveConfig(settingsData);
+    try {
+      saveConfig(settingsData);
+    } catch {
+      alert(
+        "Background image is too large and it couldn't be saved\n\nPlease resize/compress the image and try again"
+      );
+    }
   };
 
   const addPage = (addPageInput, event) => {
