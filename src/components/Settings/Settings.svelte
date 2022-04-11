@@ -1,7 +1,7 @@
 <script>
   import { userData } from "../../store";
   import { backgrounds, knownPages } from "../../data/config";
-  import { saveConfig } from "../../data/storage";
+  import { saveConfig, saveBackground } from "../../data/storage";
 
   import SettingsForm from "./SettingsForm.svelte";
   import Backgrounds from "./Backgrounds.svelte";
@@ -46,15 +46,15 @@
   const changeBackground = (bg) => {
     settingsData.backgroundImage = bg;
 
-    //Update background state
-    userData.update((state) => {
-      state.backgroundImage = settingsData.backgroundImage;
-      return state;
-    });
-
-    //Save to local storage
     try {
-      saveConfig(settingsData);
+      //Try saving to local storage if it doesn't exceed max size
+      saveBackground(settingsData.backgroundImage);
+
+      //Update background state IF it didn't fail saving to localstorage
+      userData.update((state) => {
+        state.backgroundImage = settingsData.backgroundImage;
+        return state;
+      });
     } catch {
       alert(
         "Background image is too large and it couldn't be saved\n\nPlease resize/compress the image and try again"

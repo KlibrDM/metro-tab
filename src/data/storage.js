@@ -18,6 +18,10 @@ export const saveConfig = (data) => {
   localStorage.setItem("pages", JSON.stringify(data.pages));
 };
 
+export const saveBackground = (bg) => {
+  localStorage.setItem("backgroundImage", bg);
+};
+
 /*Load data from localstorage
 If the extension can't get the item from localstorage, use the value from config
 (simple || if not bool, ? : if bool)*/
