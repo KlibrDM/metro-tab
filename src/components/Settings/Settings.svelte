@@ -87,6 +87,32 @@
     settingsData.pages = settingsData.pages;
   };
 
+  const movePage = (index, direction) => {
+    //Return if the move is not possible
+    if (direction === "up" && index == 0) {
+      return;
+    }
+    if (direction === "down" && index == settingsData.pages.length - 1) {
+      return;
+    }
+
+    //Get current item
+    let item = settingsData.pages[index];
+
+    //Remove current item from old location
+    settingsData.pages.splice(index, 1);
+
+    //Add current item in the direction
+    if (direction === "up") {
+      settingsData.pages.splice(index - 1, 0, item);
+    } else if (direction === "down") {
+      settingsData.pages.splice(index + 1, 0, item);
+    }
+
+    //Trigger list re-render
+    settingsData.pages = settingsData.pages;
+  };
+
   const checkWebsite = (pageName) => {
     if (pageName.substring(0, 4) == "http") {
       return pageName;
@@ -159,7 +185,7 @@
     <Backgrounds {backgrounds} {changeBackground} />
     <hr />
     <h2>Pages</h2>
-    <Pages {settingsData} {deletePage} {addPage} {saveSettings} />
+    <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
   </div>
 {/if}
 
