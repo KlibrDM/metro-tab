@@ -44,7 +44,11 @@
       bind:value={addPageInput}
     />
     <button
-      on:click={(e) => addPage(addPageInput, e)}
+      on:click={(e) => {
+        addPage(addPageInput, e);
+        //Clear page input after adding it
+        addPageInput = "";
+      }}
       type="submit"
       class="addPageButton"
     >
