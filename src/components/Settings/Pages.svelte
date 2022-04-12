@@ -4,6 +4,7 @@
   export let addPage;
   export let saveSettings;
   export let movePage;
+  let unsavedPages = false;
   let addPageInput = ""; //Binded to input
 </script>
 
@@ -13,10 +14,20 @@
       <div class="settingsPagesListPage">
         <div class="settingsPagesGroupLeft">
           <div class="settingsPagesMoveButtons">
-            <button on:click={() => movePage(index, "up")}>
+            <button
+              on:click={() => {
+                movePage(index, "up");
+                unsavedPages = true;
+              }}
+            >
               <i class="fa-solid fa-angle-up" />
             </button>
-            <button on:click={() => movePage(index, "down")}>
+            <button
+              on:click={() => {
+                movePage(index, "down");
+                unsavedPages = true;
+              }}
+            >
               <i class="fa-solid fa-angle-down" />
             </button>
           </div>
@@ -25,7 +36,10 @@
         <div class="settingsPageListButtons">
           <input type="checkbox" name="page" bind:checked={page.isActive} />
           <input
-            on:click={() => deletePage(index)}
+            on:click={() => {
+              deletePage(index);
+              unsavedPages = true;
+            }}
             type="button"
             class="pageDeleteButton"
             value="X"
@@ -46,8 +60,11 @@
     <button
       on:click={(e) => {
         addPage(addPageInput, e);
+
         //Clear page input after adding it
         addPageInput = "";
+
+        unsavedPages = true;
       }}
       type="submit"
       class="addPageButton"
@@ -56,8 +73,15 @@
     </button>
   </form>
 
+  {#if unsavedPages}
+    <small class="unsavedWarning">You have unsaved settings.</small>
+  {/if}
+
   <button
-    on:click={(e) => saveSettings(settingsData, e)}
+    on:click={(e) => {
+      saveSettings(settingsData, e);
+      unsavedPages = false;
+    }}
     type="submit"
     class="saveSettingsButton"
   >
@@ -89,7 +113,7 @@
     background-color: #0b1;
   }
   #settingsPages {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(245, 245, 245);
     border: 1px solid lightgray;
     padding: 8px 8px;
     border-radius: 20px;
@@ -157,6 +181,11 @@
   }
   .settingsPageInput input {
     flex-grow: 1;
+  }
+  .unsavedWarning {
+    display: block;
+    color: red;
+    margin-top: 8px;
   }
   @media screen and (max-width: 450px) {
     .settingsPageInput {

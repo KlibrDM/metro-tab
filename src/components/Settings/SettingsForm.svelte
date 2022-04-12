@@ -1,6 +1,7 @@
 <script>
   export let settingsData;
   export let saveSettings;
+  let unsavedSettings = false;
 </script>
 
 <form id="settingsform">
@@ -12,6 +13,9 @@
       name="set_yourName"
       class="settingsTextInput"
       bind:value={settingsData.yourName}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -22,6 +26,9 @@
       id="set_isBackgroundWhite"
       name="set_isBackgroundWhite"
       bind:checked={settingsData.isBackgroundWhite}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -32,6 +39,9 @@
       id="set_showCover"
       name="set_showCover"
       bind:checked={settingsData.showCover}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -42,6 +52,9 @@
       id="set_clockBackground"
       name="set_clockBackground"
       bind:checked={settingsData.clockBackground}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -56,6 +69,9 @@
       id="set_tileMinimumWidth"
       name="set_tileMinimumWidth"
       bind:value={settingsData.tileMinWidth}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -70,6 +86,9 @@
       id="set_tileHeight"
       name="set_tileHeight"
       bind:value={settingsData.tileHeight}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -84,6 +103,9 @@
       id="set_tileGap"
       name="set_tileGap"
       bind:value={settingsData.tileGap}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -98,6 +120,9 @@
       id="set_navbarOpacity"
       name="set_navbarOpacity"
       bind:value={settingsData.navbarOpacity}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -112,6 +137,9 @@
       name="set_navbarColorR"
       style="border: 1px solid #fc4343;"
       bind:value={settingsData.navbarColor.r}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -122,6 +150,9 @@
       name="set_navbarColorG"
       style="border: 1px solid #24b143;"
       bind:value={settingsData.navbarColor.g}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -132,6 +163,9 @@
       name="set_navbarColorB"
       style="border: 1px solid #4286f4;"
       bind:value={settingsData.navbarColor.b}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -146,6 +180,9 @@
       name="set_coverColorR"
       style="border: 1px solid #fc4343;"
       bind:value={settingsData.coverColor.r}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -156,6 +193,9 @@
       name="set_coverColorG"
       style="border: 1px solid #24b143;"
       bind:value={settingsData.coverColor.g}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -166,6 +206,9 @@
       name="set_coverColorB"
       style="border: 1px solid #4286f4;"
       bind:value={settingsData.coverColor.b}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
 
@@ -180,6 +223,9 @@
       name="set_coverTextColorR"
       style="border: 1px solid #fc4343;"
       bind:value={settingsData.coverTextColor.r}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -190,6 +236,9 @@
       name="set_coverTextColorG"
       style="border: 1px solid #24b143;"
       bind:value={settingsData.coverTextColor.g}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
     <input
       type="number"
@@ -200,10 +249,21 @@
       name="set_coverTextColorB"
       style="border: 1px solid #4286f4;"
       bind:value={settingsData.coverTextColor.b}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
     />
   </div>
+
+  {#if unsavedSettings}
+    <small class="unsavedWarning">You have unsaved settings.</small>
+  {/if}
+
   <button
-    on:click={(e) => saveSettings(settingsData, e)}
+    on:click={(e) => {
+      saveSettings(settingsData, e);
+      unsavedSettings = false;
+    }}
     type="submit"
     class="saveSettingsButton"
   >
@@ -246,6 +306,11 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+  }
+  .unsavedWarning {
+    display: block;
+    color: red;
+    margin-top: 8px;
   }
   @media screen and (max-width: 450px) {
     .settingsMultiNumberInput {
