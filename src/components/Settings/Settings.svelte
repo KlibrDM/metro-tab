@@ -170,6 +170,14 @@
       return entityMap[s];
     });
   }
+
+  //Transition
+  function slide() {
+    return {
+      duration: 300,
+      css: (t, u) => `transform: translateX(${u * 100}%)`,
+    };
+  }
 </script>
 
 <button on:click={toggleSettingsPanel} id="settingsButton">
@@ -177,7 +185,7 @@
 </button>
 
 {#if isPanelShown}
-  <div id="settingsPanel">
+  <div id="settingsPanel" transition:slide>
     <h2>Settings</h2>
     <SettingsForm {settingsData} {saveSettings} />
     <hr />
@@ -215,7 +223,7 @@
     border-radius: 100%;
     border: 0;
     cursor: pointer;
-    z-index: 5;
+    z-index: 7;
   }
   #settingsPanel {
     padding: 20px 40px;
@@ -223,7 +231,7 @@
     background-color: white;
     right: 0;
     top: 0;
-    z-index: 3;
+    z-index: 5;
     max-height: 100vh;
     width: 450px;
     overflow-y: auto;
@@ -232,6 +240,7 @@
   @media screen and (max-width: 450px) {
     #settingsPanel {
       width: 100vw;
+      padding: 20px;
     }
   }
 </style>

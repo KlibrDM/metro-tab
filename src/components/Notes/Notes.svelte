@@ -74,6 +74,14 @@
     //Save changes
     saveAllNotes();
   };
+
+  //Transition
+  function notesEntrance() {
+    return {
+      duration: 400,
+      css: (t, u) => `clip-path: circle(${t * 130}% at 82% 3.5vh)`,
+    };
+  }
 </script>
 
 <button on:click={toggleNotesPanel} id="notesButton">
@@ -81,7 +89,7 @@
 </button>
 
 {#if isPanelShown}
-  <div id="notesPanel">
+  <div id="notesPanel" transition:notesEntrance>
     <div id="notesTop">
       <h2>Notes</h2>
       <button on:click={createNewNote}>New</button>
@@ -113,7 +121,7 @@
     border-radius: 100%;
     border: 0;
     cursor: pointer;
-    z-index: 5;
+    z-index: 4;
   }
   #notesPanel {
     padding: 20px 40px;
@@ -147,5 +155,11 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  @media screen and (max-width: 450px) {
+    #notesPanel {
+      width: 100vw;
+      padding: 20px;
+    }
   }
 </style>
