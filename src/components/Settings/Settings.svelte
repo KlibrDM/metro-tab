@@ -204,7 +204,7 @@
   #settingsButton {
     position: absolute;
     top: 2vh;
-    right: 2vw;
+    right: 25px;
     width: 30px;
     height: 30px;
     color: white;

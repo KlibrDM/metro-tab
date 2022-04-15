@@ -12,6 +12,8 @@ export const navbarColor = { r: 58, g: 153, b: 255 };
 export const coverColor = { r: 58, g: 153, b: 255 };
 export const coverTextColor = { r: 255, g: 255, b: 255 };
 
+export const notes = [];
+
 export const pages = [
   {
     link: "https://www.google.com",

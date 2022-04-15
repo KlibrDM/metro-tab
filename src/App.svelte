@@ -7,6 +7,7 @@
   import SearchBar from "./components/SearchBar/SearchBar.svelte";
   import SpeedDial from "./components/SpeedDial.svelte";
   import Settings from "./components/Settings/Settings.svelte";
+  import Notes from "./components/Notes/Notes.svelte";
 
   let backgroundImage;
   let isBackgroundWhite = false;
@@ -33,6 +34,7 @@
   <SearchBar />
   <SpeedDial />
   <Settings />
+  <Notes />
 </main>
 
 <style>

@@ -15,11 +15,16 @@ export const saveConfig = (data) => {
   localStorage.setItem("navbarColor", JSON.stringify(data.navbarColor));
   localStorage.setItem("coverColor", JSON.stringify(data.coverColor));
   localStorage.setItem("coverTextColor", JSON.stringify(data.coverTextColor));
+  localStorage.setItem("notes", JSON.stringify(data.notes));
   localStorage.setItem("pages", JSON.stringify(data.pages));
 };
 
 export const saveBackground = (bg) => {
   localStorage.setItem("backgroundImage", bg);
+};
+
+export const saveNotes = (notes) => {
+  localStorage.setItem("notes", JSON.stringify(notes));
 };
 
 /*Load data from localstorage
@@ -77,6 +82,10 @@ const data = {
   coverTextColor:
     JSON.parse(localStorage.getItem("coverTextColor")) ||
     CONFIG.coverTextColor,
+
+  notes:
+    JSON.parse(localStorage.getItem("notes")) ||
+    CONFIG.notes,
 
   pages:
     JSON.parse(localStorage.getItem("pages")) ||
