@@ -8,7 +8,7 @@
 <div id="settingsBackgrounds">
   {#each backgrounds as bg, index}
     <img
-      src="static/images/bg/{bg}.jpg"
+      src="static/images/bg/thumbnails/{bg}.jpg"
       alt="Background {index}"
       class="backgroundImageSelector"
       on:click={() => changeBackground(bg)}
