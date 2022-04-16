@@ -92,5 +92,44 @@ const data = {
     CONFIG.pages,
 };
 
+/*Import pages data from legacy 1.1 version
+Data was stored in cookies instead of local storage*/
+let legacyPagesCookie = getCookie("pages");
+
+if (legacyPagesCookie != null) {
+  let oldPages = [];
+  let legacyPagesParsedCookie = JSON.parse(legacyPagesCookie);
+
+  //Old data also had a different format
+  //Therefore it has to be converted
+  legacyPagesParsedCookie.forEach((page, index) => {
+    oldPages[index] = {
+      link: page[0],
+      imageName: page[1],
+      isActive: page[2] ? true : false,
+    };
+  });
+
+  data.pages = oldPages;
+  eraseCookie("pages");
+  saveConfig(data);
+}
+
 //After loading the data, set it to state
 userData.set(data);
+
+//Cookie management functions to restore legacy data
+function getCookie(name) {
+  let nameEQ = name + "=";
+  let ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function eraseCookie(name) {
+  document.cookie = name + "=; Max-Age=-99999999;";
+}
