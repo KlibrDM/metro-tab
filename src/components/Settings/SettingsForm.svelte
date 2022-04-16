@@ -97,8 +97,8 @@
     <input
       type="number"
       min="0"
-      max="500"
-      step="1"
+      max="30"
+      step="0.1"
       class="settingsNumberInput"
       id="set_tileGap"
       name="set_tileGap"

@@ -17,7 +17,7 @@
 <!--This will show the pages!!!-->
 <div class="speedDial">
   <div class="speedDialBox">
-    <div class="buttons" style="gap: {tileGap}px">
+    <div class="buttons" style="gap: {tileGap}vw">
       {#each pages as page}
         {#if page.isActive}
           <!-- svelte-ignore a11y-missing-content -->
