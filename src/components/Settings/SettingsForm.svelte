@@ -4,7 +4,13 @@
   let unsavedSettings = false;
 </script>
 
-<form id="settingsform">
+<form
+  id="settingsform"
+  on:submit={(e) => {
+    saveSettings(settingsData, e);
+    unsavedSettings = false;
+  }}
+>
   <div class="settingsInput">
     <label for="set_yourName">Your name</label>
     <input
@@ -79,8 +85,8 @@
     <label for="set_tileHeight">Tile height</label>
     <input
       type="number"
-      min="0"
-      max="200"
+      min="5"
+      max="80"
       step="1"
       class="settingsNumberInput"
       id="set_tileHeight"
@@ -259,16 +265,7 @@
     <small class="unsavedWarning">You have unsaved settings.</small>
   {/if}
 
-  <button
-    on:click={(e) => {
-      saveSettings(settingsData, e);
-      unsavedSettings = false;
-    }}
-    type="submit"
-    class="saveSettingsButton"
-  >
-    Save
-  </button>
+  <button type="submit" class="saveSettingsButton">Save</button>
 </form>
 
 <style>
