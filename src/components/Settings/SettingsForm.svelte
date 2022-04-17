@@ -278,6 +278,9 @@
     margin-right: 10px;
     margin-bottom: 0;
   }
+  .settingsInput input:out-of-range {
+    background-color: rgba(255, 0, 0, 0.15);
+  }
   .settingsTextInput {
     padding: 3px 5px;
     border-radius: 10px;
