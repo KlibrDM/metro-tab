@@ -49,28 +49,26 @@
     {/each}
   </div>
 
-  <form class="settingsPageInput">
+  <form
+    class="settingsPageInput"
+    on:submit={(e) => {
+      addPage(addPageInput, e);
+
+      //Clear page input after adding it
+      addPageInput = "";
+
+      unsavedPages = true;
+    }}
+  >
     <label for="set_newPageBox">Link</label>
     <input
       type="text"
       id="set_newPageBox"
       class="settingsTextInput"
       bind:value={addPageInput}
+      required={true}
     />
-    <button
-      on:click={(e) => {
-        addPage(addPageInput, e);
-
-        //Clear page input after adding it
-        addPageInput = "";
-
-        unsavedPages = true;
-      }}
-      type="submit"
-      class="addPageButton"
-    >
-      Add
-    </button>
+    <button type="submit" class="addPageButton">Add</button>
   </form>
 
   {#if unsavedPages}
