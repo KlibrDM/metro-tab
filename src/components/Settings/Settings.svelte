@@ -128,9 +128,11 @@
     if (knownPages.includes(name)) {
       //Return the image name if the extension has it
       return name + ".jpg";
-    } else {
+    } else if ("1234567890qwertyuiopasdfghjklzxcvbnm".includes(name[0])) {
       //Return the image for the first letter
       return name[0] + ".jpg";
+    } else {
+      return "_.jpg";
     }
   };
 
