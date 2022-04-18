@@ -63,6 +63,11 @@ export const backgrounds = [
   "bg13",
   "bg14",
   "bg15",
+  "bg16",
+  "bg17",
+  "bg18",
+  "bg19",
+  "bg20",
 ];
 
 //Known pages are the ones that have a thumbnail image
