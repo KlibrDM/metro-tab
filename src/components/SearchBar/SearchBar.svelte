@@ -68,9 +68,9 @@
     width: 50vw;
     border-radius: 100px;
     border: 2px solid;
-    border-color: rgba(220, 220, 220, 0.4);
+    border-color: rgba(0, 0, 0, 0.4);
     display: flex;
-    background-color: rgba(100, 100, 100, 0.25);
+    background-color: rgba(0, 0, 0, 0.25);
   }
   #searchInput {
     background-color: rgba(0, 0, 0, 0);
