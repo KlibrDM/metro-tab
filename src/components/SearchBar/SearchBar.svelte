@@ -15,7 +15,7 @@
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery !== "") {
-      window.location.replace(
+      window.location.assign(
         "https://www.google.com/search?q=" + escapeHTML(searchQuery)
       );
     }
