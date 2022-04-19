@@ -132,4 +132,17 @@ export const knownPages = [
   "linkedin",
   "csdn",
   "bing",
+
+  //V2.0 (1)
+  "meet.google",
+  "classroom.google",
+  "teams.microsoft",
+  "web.whatsapp",
+  "skype",
+  "web.skype",
+  "zoom",
+  "tiktok",
+  "wish",
+  "discord",
+  "discordapp",
 ];
