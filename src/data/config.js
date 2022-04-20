@@ -145,4 +145,12 @@ export const knownPages = [
   "wish",
   "discord",
   "discordapp",
+  //V2.0 (2)
+  "g2a",
+  "instant-gaming",
+  "kinguin",
+  "eneba",
+  "cdkeys",
+  "gamivo",
+  "hrkgame",
 ];
