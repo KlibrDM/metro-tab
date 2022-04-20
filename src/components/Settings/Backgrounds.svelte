@@ -26,10 +26,18 @@
     overflow-x: scroll;
     display: flex;
     gap: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
   .backgroundImageSelector {
     max-width: 100px;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.3s;
+  }
+  .backgroundImageSelector:hover {
+    filter: drop-shadow(0px 0px 2px rgb(80, 80, 80));
+    transform: scale(1.03);
+    z-index: 2;
   }
 </style>
