@@ -24,7 +24,7 @@
 <!--Use the url made above if user selects image provided by the extension (bgXXX)-->
 <main
   style={isBackgroundWhite
-    ? ""
+    ? "background-color: white;"
     : backgroundImage.length > 5
     ? "background-image: url(" + backgroundImage + ");"
     : "background-image: url(" + backgroundImageUrl + ");"}
