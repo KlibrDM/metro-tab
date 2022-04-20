@@ -24,9 +24,11 @@
           <a
             href={page.link}
             class="pageButton"
-            style=" background-image: url('static/images/thumbnails/{page.imageName}');
-                    min-width: {tileMinWidth}vh;
-                    height: {tileHeight}vh;"
+            style="background-image: url('static/images/thumbnails/{page.imageName}');
+              min-width: {tileMinWidth}vh;
+              height: {tileHeight}vh;
+              {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
+              "
           />
         {/if}
       {/each}
