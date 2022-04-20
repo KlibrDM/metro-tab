@@ -71,6 +71,10 @@
     border-color: rgba(0, 0, 0, 0.4);
     display: flex;
     background-color: rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+  }
+  #searchbar:hover {
+    background-color: rgba(0, 0, 0, 0.35);
   }
   #searchInput {
     background-color: rgba(0, 0, 0, 0);
@@ -105,6 +109,7 @@
     padding-right: 20px;
     background-color: rgba(0, 0, 0, 0);
     border: 0;
+    cursor: pointer;
     color: white;
   }
   #searchButton:focus {

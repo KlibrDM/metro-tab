@@ -45,5 +45,9 @@
     cursor: pointer;
     color: black;
     background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: rgb(230, 200, 22);
   }
 </style>

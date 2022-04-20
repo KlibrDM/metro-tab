@@ -306,6 +306,10 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+    transition: 0.3s;
+  }
+  .saveSettingsButton:hover {
+    background-color: #0c2;
   }
   .unsavedWarning {
     display: block;

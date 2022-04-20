@@ -117,11 +117,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(60, 60, 60, 0.5);
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
     border-radius: 100%;
     border: 0;
     cursor: pointer;
     z-index: 4;
+  }
+  #notesButton:hover {
+    background-color: rgba(0, 0, 0, 0.4);
   }
   #notesPanel {
     padding: 20px 40px;
@@ -150,6 +154,10 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+    transition: 0.3s;
+  }
+  #notesTop > button:hover {
+    background-color: #0c2;
   }
   #notesBox {
     display: flex;

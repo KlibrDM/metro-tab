@@ -101,6 +101,10 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+    transition: 0.3s;
+  }
+  .saveSettingsButton:hover {
+    background-color: #0c2;
   }
   .addPageButton {
     padding: 4px 15px;
@@ -109,6 +113,10 @@
     cursor: pointer;
     color: white;
     background-color: #0b1;
+    transition: 0.3s;
+  }
+  .addPageButton:hover {
+    background-color: #0c2;
   }
   #settingsPages {
     background-color: rgb(245, 245, 245);
@@ -152,6 +160,10 @@
     cursor: pointer;
     color: black;
     background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+  }
+  .settingsPagesMoveButtons button:hover {
+    background-color: rgb(238, 195, 25);
   }
   .settingsPagesMoveButtons button:first-child {
     border-top-left-radius: 5px;
