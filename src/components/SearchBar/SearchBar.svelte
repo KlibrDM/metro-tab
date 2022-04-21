@@ -79,13 +79,13 @@
   #searchInput {
     background-color: rgba(0, 0, 0, 0);
     color: white;
-    text-indent: 15px;
+    text-indent: calc(8px + 0.8vw);
     border: 0;
     min-height: 40px;
     height: 7vh;
     min-width: 50px;
     flex-grow: 1;
-    font-size: 1.1em;
+    font-size: calc(8px + 1.4vh);
   }
   #searchInput::placeholder {
     color: white;
@@ -105,12 +105,13 @@
     border-radius: 100px;
   }
   #searchButton {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: calc(8px + 0.8vw);
+    padding-right: calc(8px + 0.8vw);
     background-color: rgba(0, 0, 0, 0);
     border: 0;
     cursor: pointer;
     color: white;
+    font-size: calc(8px + 1vh);
   }
   #searchButton:focus {
     border-radius: 100px;
