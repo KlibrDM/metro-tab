@@ -27,15 +27,20 @@
   #browserQuickNavBox {
     position: absolute;
     left: 2vw;
-    z-index: 20;
+    z-index: 45;
   }
   .browserQuickNavButton {
     color: rgba(220, 220, 220, 0.75);
     background-color: rgba(0, 0, 0, 0.25);
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     transition: 0.3s;
   }
   .browserQuickNavButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
+  }
+  @media screen and (max-width: 450px) {
+    .browserQuickNavButton {
+      padding: 4px 7px;
+    }
   }
 </style>

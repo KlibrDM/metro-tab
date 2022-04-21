@@ -47,6 +47,19 @@ export const pages = [
   },
 ];
 
+export const entertainmentData = [
+  {
+    name: "Hangman Game",
+    link: "https://klibrdm.github.io/hangman-game-react",
+    img: "hangman-game-icon.png",
+  },
+  {
+    name: "Business Club",
+    link: "https://klibrdm.github.io/business-club-game",
+    img: "business-club-icon.png",
+  },
+];
+
 export const backgrounds = [
   "bg1",
   "bg2",

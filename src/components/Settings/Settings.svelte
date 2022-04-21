@@ -182,7 +182,11 @@
   }
 </script>
 
-<button on:click={toggleSettingsPanel} id="settingsButton">
+<button
+  on:click={toggleSettingsPanel}
+  id="settingsButton"
+  class:highZIndex={isPanelShown}
+>
   <i class="fas fa-sliders-h" />
 </button>
 
@@ -226,7 +230,7 @@
     border-radius: 100%;
     border: 0;
     cursor: pointer;
-    z-index: 7;
+    z-index: 24;
   }
   #settingsButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
@@ -237,11 +241,14 @@
     background-color: white;
     right: 0;
     top: 0;
-    z-index: 5;
+    z-index: 50;
     max-height: 100vh;
     width: 450px;
     overflow-y: auto;
     box-sizing: border-box;
+  }
+  .highZIndex {
+    z-index: 60 !important;
   }
   @media screen and (max-width: 450px) {
     #settingsPanel {

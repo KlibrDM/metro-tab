@@ -8,6 +8,7 @@
   import SpeedDial from "./components/SpeedDial.svelte";
   import Settings from "./components/Settings/Settings.svelte";
   import Notes from "./components/Notes/Notes.svelte";
+  import Entertainment from "./components/Entertainment.svelte";
 
   let backgroundImage;
   let isBackgroundWhite = false;
@@ -35,6 +36,7 @@
   <SpeedDial />
   <Settings />
   <Notes />
+  <Entertainment />
 </main>
 
 <style>

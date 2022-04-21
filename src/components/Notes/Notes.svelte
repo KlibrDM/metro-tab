@@ -84,7 +84,11 @@
   }
 </script>
 
-<button on:click={toggleNotesPanel} id="notesButton">
+<button
+  on:click={toggleNotesPanel}
+  id="notesButton"
+  class:highZIndex={isPanelShown}
+>
   <i class="fa-solid fa-note-sticky" />
 </button>
 
@@ -122,7 +126,7 @@
     border-radius: 100%;
     border: 0;
     cursor: pointer;
-    z-index: 4;
+    z-index: 16;
   }
   #notesButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
@@ -133,7 +137,7 @@
     background-color: white;
     right: 0;
     top: 0;
-    z-index: 3;
+    z-index: 50;
     max-height: 100vh;
     width: 450px;
     overflow-y: auto;
@@ -163,6 +167,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  .highZIndex {
+    z-index: 60 !important;
   }
   @media screen and (max-width: 450px) {
     #notesPanel {
