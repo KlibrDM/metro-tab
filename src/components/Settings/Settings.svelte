@@ -152,8 +152,8 @@
       sitename = sitename.substring(0, sitename.lastIndexOf("."));
     }
 
-    //Do it twice for those that have .co
-    if (sitename.slice(-3) == ".co") {
+    //Do it twice for those that have .co or .com
+    if (sitename.slice(-3) == ".co" || sitename.slice(-4) == ".com") {
       sitename = sitename.substring(0, sitename.lastIndexOf("."));
     }
 
