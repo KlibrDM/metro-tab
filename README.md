@@ -6,8 +6,8 @@ Live preview: https://klibrdm.github.io/metro-tab/
 
 Please note that the top-left `QuickNav` buttons will not work unless used as an extension.
 
-New tab page (speed dial) for Chrome that has a simple metro interface and quick access to Chrome's history, downloads, bookmarks and extensions. It comes with a variety of settings and options to customize the featured pages.
-![screenshot](https://i.imgur.com/71WMMtL.jpg)
+A modern and simple speed dial that lets you bring all the websites you love to the new tab page. It offers quick access to your notes and to Chrome's history, downloads, bookmarks and extensions. It comes with a variety of settings and options to customize the featured pages and the possibility to upload custom backgrounds.
+![screenshot](https://i.imgur.com/8JFKA1A.jpg)
 
 ## Setup dev environment
 
@@ -31,12 +31,18 @@ New tab page (speed dial) for Chrome that has a simple metro interface and quick
 
 ## Screenshots
 
-![screenshot](https://i.imgur.com/vX8b1xa.gif)
+### Main view
+
+![screenshot](https://i.imgur.com/LJzue04.jpg)
 
 ##
 
-![screenshot](https://i.imgur.com/GdGNmqe.jpg)
+### Notes
+
+![screenshot](https://i.imgur.com/ffuYYLG.jpg)
 
 ##
 
-![screenshot](https://i.imgur.com/1lMbFFq.jpg)
+### Settings
+
+![screenshot](https://imgur.com/Bhi3R8z.jpg)
