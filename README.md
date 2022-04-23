@@ -35,13 +35,9 @@ A modern and simple speed dial that lets you bring all the websites you love to 
 
 ![screenshot](https://i.imgur.com/LJzue04.jpg)
 
-##
-
 ### Notes
 
 ![screenshot](https://i.imgur.com/ffuYYLG.jpg)
-
-##
 
 ### Settings
 
