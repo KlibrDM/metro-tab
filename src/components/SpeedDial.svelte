@@ -5,12 +5,18 @@
   let tileMinWidth;
   let tileHeight;
   let tileGap;
+  let tileBorder;
+  let tileBorderRadius;
+  let tileBorderColor;
 
   userData.subscribe((data) => {
     pages = data.pages;
     tileMinWidth = data.tileMinWidth;
     tileHeight = data.tileHeight;
     tileGap = data.tileGap;
+    tileBorder = data.tileBorder;
+    tileBorderRadius = data.tileBorderRadius;
+    tileBorderColor = data.tileBorderColor;
   });
 </script>
 
@@ -27,6 +33,8 @@
             style="background-image: url('static/images/thumbnails/{page.imageName}');
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
+              border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
+              border-radius: {tileBorderRadius}px;
               {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
               "
           />

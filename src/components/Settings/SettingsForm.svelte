@@ -116,6 +116,83 @@
   </div>
 
   <div class="settingsInput">
+    <label for="set_tileBorder">Tile border</label>
+    <input
+      type="number"
+      min="0"
+      max="50"
+      step="1"
+      class="settingsNumberInput"
+      id="set_tileBorder"
+      name="set_tileBorder"
+      bind:value={settingsData.tileBorder}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+  </div>
+
+  <div class="settingsInput">
+    <label for="set_tileBorderRadius">Tile border radius</label>
+    <input
+      type="number"
+      min="0"
+      max="1000"
+      step="1"
+      class="settingsNumberInput"
+      id="set_tileBorderRadius"
+      name="set_tileBorderRadius"
+      bind:value={settingsData.tileBorderRadius}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+  </div>
+
+  <div class="settingsInput">
+    <label for="">Tile border color</label>
+    <input
+      type="number"
+      min="0"
+      max="255"
+      class="settingsMultiNumberInput"
+      id="set_tileBorderColorR"
+      name="set_tileBorderColorR"
+      style="border: 1px solid #fc4343;"
+      bind:value={settingsData.tileBorderColor.r}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+    <input
+      type="number"
+      min="0"
+      max="255"
+      class="settingsMultiNumberInput"
+      id="set_tileBorderColorG"
+      name="set_tileBorderColorG"
+      style="border: 1px solid #24b143;"
+      bind:value={settingsData.tileBorderColor.g}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+    <input
+      type="number"
+      min="0"
+      max="255"
+      class="settingsMultiNumberInput"
+      id="set_tileBorderColorB"
+      name="set_tileBorderColorB"
+      style="border: 1px solid #4286f4;"
+      bind:value={settingsData.tileBorderColor.b}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+  </div>
+
+  <div class="settingsInput">
     <label for="set_navbarOpacity">Navbar opacity</label>
     <input
       type="number"

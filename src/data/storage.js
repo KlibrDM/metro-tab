@@ -11,6 +11,9 @@ export const saveConfig = (data) => {
   localStorage.setItem("tileMinWidth", data.tileMinWidth);
   localStorage.setItem("tileHeight", data.tileHeight);
   localStorage.setItem("tileGap", data.tileGap);
+  localStorage.setItem("tileBorder", data.tileBorder);
+  localStorage.setItem("tileBorderRadius", data.tileBorderRadius);
+  localStorage.setItem("tileBorderColor", JSON.stringify(data.tileBorderColor));
   localStorage.setItem("navbarOpacity", data.navbarOpacity);
   localStorage.setItem("navbarColor", JSON.stringify(data.navbarColor));
   localStorage.setItem("coverColor", JSON.stringify(data.coverColor));
@@ -66,6 +69,18 @@ const data = {
   tileGap:
     localStorage.getItem("tileGap") ||
     CONFIG.tileGap,
+
+  tileBorder:
+    localStorage.getItem("tileBorder") ||
+    CONFIG.tileBorder,
+
+  tileBorderRadius:
+    localStorage.getItem("tileBorderRadius") ||
+    CONFIG.tileBorderRadius,
+
+  tileBorderColor:
+    JSON.parse(localStorage.getItem("tileBorderColor")) ||
+    CONFIG.tileBorderColor,
 
   navbarOpacity:
     localStorage.getItem("navbarOpacity") ||

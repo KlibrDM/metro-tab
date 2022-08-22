@@ -31,6 +31,9 @@
       state.tileMinWidth = settingsData.tileMinWidth;
       state.tileHeight = settingsData.tileHeight;
       state.tileGap = settingsData.tileGap;
+      state.tileBorder = settingsData.tileBorder;
+      state.tileBorderRadius = settingsData.tileBorderRadius;
+      state.tileBorderColor = settingsData.tileBorderColor;
       state.navbarOpacity = settingsData.navbarOpacity;
       state.navbarColor = settingsData.navbarColor;
       state.coverColor = settingsData.coverColor;
