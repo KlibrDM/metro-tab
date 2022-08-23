@@ -41,4 +41,8 @@ A modern and simple speed dial that lets you bring all the websites you love to 
 
 ### Settings
 
-![screenshot](https://imgur.com/Bhi3R8z.jpg)
+![screenshot](https://i.imgur.com/Bhi3R8z.jpg)
+
+### NEW! Round tiles!
+
+![screenshot](https://i.imgur.com/r6oLZEh.jpg)
