@@ -207,4 +207,7 @@ export const knownPages = [
   "jysk",
   "newegg",
   "gamestop",
+
+  //V2.1
+  "localhost",
 ];

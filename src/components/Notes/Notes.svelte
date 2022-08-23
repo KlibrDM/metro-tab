@@ -51,10 +51,10 @@
 
   const moveNote = (index, direction) => {
     //Return if the move is not possible
-    if (direction === "up" && index == 0) {
+    if (direction === "up" && index === 0) {
       return;
     }
-    if (direction === "down" && index == userNotes.length - 1) {
+    if (direction === "down" && index === userNotes.length - 1) {
       return;
     }
 

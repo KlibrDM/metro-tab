@@ -9,7 +9,7 @@
 
     //Only show github logo if random chance matches
     //and window width is bigger than 799 pixels
-    if (chance == 1 && innerWidth > 799) {
+    if (chance === 1 && innerWidth > 799) {
       showGithub = true;
     } else {
       showGithub = false;

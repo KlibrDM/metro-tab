@@ -92,10 +92,10 @@
 
   const movePage = (index, direction) => {
     //Return if the move is not possible
-    if (direction === "up" && index == 0) {
+    if (direction === "up" && index === 0) {
       return;
     }
-    if (direction === "down" && index == settingsData.pages.length - 1) {
+    if (direction === "down" && index === settingsData.pages.length - 1) {
       return;
     }
 
@@ -117,7 +117,7 @@
   };
 
   const checkWebsite = (pageName) => {
-    if (pageName.substring(0, 4) == "http") {
+    if (pageName.substring(0, 4) === "http") {
       return pageName;
     } else {
       return "http://" + pageName;
@@ -146,17 +146,22 @@
     sitename = sitename.substring(sitename.indexOf("://") + 3);
 
     //Remove www. if existent
-    if (sitename.substring(0, 3) == "www") {
+    if (sitename.substring(0, 3) === "www") {
       sitename = sitename.substring(4);
     }
 
+    //Remove port if existent
+    if (sitename.lastIndexOf(":") !== -1) {
+      sitename = sitename.substring(0, sitename.lastIndexOf(":"));
+    }
+
     //Remove ending (.com etc) (if found)
-    if (sitename.lastIndexOf(".") != -1) {
+    if (sitename.lastIndexOf(".") !== -1) {
       sitename = sitename.substring(0, sitename.lastIndexOf("."));
     }
 
     //Do it twice for those that have .co or .com
-    if (sitename.slice(-3) == ".co" || sitename.slice(-4) == ".com") {
+    if (sitename.slice(-3) === ".co" || sitename.slice(-4) === ".com") {
       sitename = sitename.substring(0, sitename.lastIndexOf("."));
     }
 
