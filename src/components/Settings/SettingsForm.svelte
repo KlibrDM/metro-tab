@@ -2,11 +2,36 @@
   export let settingsData;
   export let saveSettings;
   let unsavedSettings = false;
+
+  const toHex = (color) => {
+    let hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
+    return hex;
+  };
+
+  const toRGB = (hex) => {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  };
+
+  let tileBorderColor = toHex(settingsData.tileBorderColor);
+  let navbarColor = toHex(settingsData.navbarColor);
+  let coverColor = toHex(settingsData.coverColor);
+  let coverTextColor = toHex(settingsData.coverTextColor);
 </script>
 
 <form
   id="settingsform"
   on:submit={(e) => {
+    //Convert colors from HEX to RGB
+    settingsData.tileBorderColor = toRGB(tileBorderColor);
+    settingsData.navbarColor = toRGB(navbarColor);
+    settingsData.coverColor = toRGB(coverColor);
+    settingsData.coverTextColor = toRGB(coverTextColor);
+
     saveSettings(settingsData, e);
     unsavedSettings = false;
   }}
@@ -150,42 +175,13 @@
   </div>
 
   <div class="settingsInput">
-    <label for="">Tile border color</label>
+    <label for="set_tileBorderColor">Tile border color</label>
     <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_tileBorderColorR"
-      name="set_tileBorderColorR"
-      style="border: 1px solid #fc4343;"
-      bind:value={settingsData.tileBorderColor.r}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_tileBorderColorG"
-      name="set_tileBorderColorG"
-      style="border: 1px solid #24b143;"
-      bind:value={settingsData.tileBorderColor.g}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_tileBorderColorB"
-      name="set_tileBorderColorB"
-      style="border: 1px solid #4286f4;"
-      bind:value={settingsData.tileBorderColor.b}
+      type="color"
+      class="settingsColorInput"
+      id="set_tileBorderColor"
+      name="set_tileBorderColor"
+      bind:value={tileBorderColor}
       on:input={() => {
         unsavedSettings = true;
       }}
@@ -210,42 +206,13 @@
   </div>
 
   <div class="settingsInput">
-    <label for="">Navbar color</label>
+    <label for="set_navbarColor">Navbar color</label>
     <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_navbarColorR"
-      name="set_navbarColorR"
-      style="border: 1px solid #fc4343;"
-      bind:value={settingsData.navbarColor.r}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_navbarColorG"
-      name="set_navbarColorG"
-      style="border: 1px solid #24b143;"
-      bind:value={settingsData.navbarColor.g}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_navbarColorB"
-      name="set_navbarColorB"
-      style="border: 1px solid #4286f4;"
-      bind:value={settingsData.navbarColor.b}
+      type="color"
+      class="settingsColorInput"
+      id="set_navbarColor"
+      name="set_navbarColor"
+      bind:value={navbarColor}
       on:input={() => {
         unsavedSettings = true;
       }}
@@ -253,42 +220,13 @@
   </div>
 
   <div class="settingsInput">
-    <label for="">Cover color</label>
+    <label for="set_coverColor">Cover color</label>
     <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverColorR"
-      name="set_coverColorR"
-      style="border: 1px solid #fc4343;"
-      bind:value={settingsData.coverColor.r}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverColorG"
-      name="set_coverColorG"
-      style="border: 1px solid #24b143;"
-      bind:value={settingsData.coverColor.g}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverColorB"
-      name="set_coverColorB"
-      style="border: 1px solid #4286f4;"
-      bind:value={settingsData.coverColor.b}
+      type="color"
+      class="settingsColorInput"
+      id="set_coverColor"
+      name="set_coverColor"
+      bind:value={coverColor}
       on:input={() => {
         unsavedSettings = true;
       }}
@@ -296,42 +234,13 @@
   </div>
 
   <div class="settingsInput">
-    <label for="">Cover text color</label>
+    <label for="set_coverTextColor">Cover text color</label>
     <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverTextColorR"
-      name="set_coverTextColorR"
-      style="border: 1px solid #fc4343;"
-      bind:value={settingsData.coverTextColor.r}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverTextColorG"
-      name="set_coverTextColorG"
-      style="border: 1px solid #24b143;"
-      bind:value={settingsData.coverTextColor.g}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-    <input
-      type="number"
-      min="0"
-      max="255"
-      class="settingsMultiNumberInput"
-      id="set_coverTextColorB"
-      name="set_coverTextColorB"
-      style="border: 1px solid #4286f4;"
-      bind:value={settingsData.coverTextColor.b}
+      type="color"
+      class="settingsColorInput"
+      id="set_coverTextColor"
+      name="set_coverTextColor"
+      bind:value={coverTextColor}
       on:input={() => {
         unsavedSettings = true;
       }}
@@ -368,12 +277,15 @@
     border-radius: 10px;
     border: 1px solid gray;
   }
-  .settingsMultiNumberInput {
-    width: 50px;
-    margin-right: 1px;
-    padding: 2px 4px;
+  .settingsColorInput {
+    padding: 3px 5px;
     border-radius: 10px;
-    outline: none;
+    border: 1px solid gray;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .settingsColorInput:hover {
+    background-color: rgb(225, 225, 225);
   }
   .saveSettingsButton {
     margin-top: 8px;
