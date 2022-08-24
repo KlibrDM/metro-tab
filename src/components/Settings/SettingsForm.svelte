@@ -305,9 +305,4 @@
     color: red;
     margin-top: 8px;
   }
-  @media screen and (max-width: 450px) {
-    .settingsMultiNumberInput {
-      width: 40px;
-    }
-  }
 </style>
