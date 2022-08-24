@@ -2,6 +2,7 @@
   import { userData } from "../store";
 
   let pages = [];
+  let tileGrow;
   let tileMinWidth;
   let tileHeight;
   let tileGap;
@@ -11,6 +12,7 @@
 
   userData.subscribe((data) => {
     pages = data.pages;
+    tileGrow = data.tileGrow;
     tileMinWidth = data.tileMinWidth;
     tileHeight = data.tileHeight;
     tileGap = data.tileGap;
@@ -31,6 +33,7 @@
             href={page.link}
             class="pageButton"
             style="background-image: url('static/images/thumbnails/{page.imageName}');
+              flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
               border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
@@ -65,7 +68,6 @@
   }
   .pageButton {
     min-width: 180px;
-    flex-grow: 1;
     background-position: center;
     background-size: cover;
     z-index: 0;

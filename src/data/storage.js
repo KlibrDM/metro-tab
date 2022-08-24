@@ -8,6 +8,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("showCover", data.showCover);
   localStorage.setItem("clockBackground", data.clockBackground);
   localStorage.setItem("backgroundImage", data.backgroundImage);
+  localStorage.setItem("tileGrow", data.tileGrow);
   localStorage.setItem("tileMinWidth", data.tileMinWidth);
   localStorage.setItem("tileHeight", data.tileHeight);
   localStorage.setItem("tileGap", data.tileGap);
@@ -57,6 +58,11 @@ const data = {
   backgroundImage:
     localStorage.getItem("backgroundImage") ||
     CONFIG.backgroundImage,
+
+  tileGrow:
+    localStorage.getItem("tileGrow") === null
+    ? CONFIG.tileGrow
+    : localStorage.getItem("tileGrow") === "true",
 
   tileMinWidth:
     localStorage.getItem("tileMinWidth") ||

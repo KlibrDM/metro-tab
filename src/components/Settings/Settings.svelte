@@ -28,6 +28,7 @@
       state.isBackgroundWhite = settingsData.isBackgroundWhite;
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
+      state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
       state.tileHeight = settingsData.tileHeight;
       state.tileGap = settingsData.tileGap;

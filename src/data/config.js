@@ -4,6 +4,7 @@ export const isBackgroundWhite = false;
 export const showCover = true;
 export const clockBackground = false;
 export const backgroundImage = "bg1";
+export const tileGrow = true;
 export const tileMinWidth = 20;
 export const tileHeight = 55;
 export const tileGap = 0;

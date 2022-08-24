@@ -90,6 +90,19 @@
   </div>
 
   <div class="settingsInput">
+    <label for="set_tileGrow">Tile fill space</label>
+    <input
+      type="checkbox"
+      id="set_tileGrow"
+      name="set_tileGrow"
+      bind:checked={settingsData.tileGrow}
+      on:input={() => {
+        unsavedSettings = true;
+      }}
+    />
+  </div>
+
+  <div class="settingsInput">
     <label for="set_tileMinimumWidth">Tile minimum width</label>
     <input
       type="number"
