@@ -27,15 +27,15 @@
 <style>
   #time {
     position: absolute;
-    font-size: 3.6vw;
+    font-size: 3em;
     right: 2vw;
     color: white;
     border-radius: 12px;
     padding: 3px 5px;
-    line-height: 4.6vw;
+    line-height: 1.2em;
   }
   #minutes {
-    font-size: 2.6vw;
+    font-size: 0.7em;
     color: rgb(236, 236, 236);
   }
   .clockbg {
@@ -48,10 +48,10 @@
     }
   }
 
-  @media screen and (min-width: 1921px) and (max-height: 769px) {
+  @media screen and (max-height: 600px) {
     #time {
-      font-size: 3vw;
-      line-height: 3.4vw;
+      font-size: 2.2em;
+      line-height: 0.8em;
     }
   }
 </style>
