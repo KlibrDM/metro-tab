@@ -42,7 +42,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_your_name.png" alt="Set your name" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_yourName">Your name</label>
         <input
@@ -62,7 +62,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_show_cover.png" alt="Set show cover" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_showCover">Show cover</label>
         <input
@@ -82,7 +82,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_clock_background.png" alt="Set clock background" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_clockBackground">Clock background</label>
         <input
@@ -102,7 +102,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_fill_space.png" alt="Set tile fill space" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileGrow">Tile fill space</label>
         <input
@@ -122,7 +122,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_minimum_width.png" alt="Set tile minimum width" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileMinimumWidth">Tile minimum width</label>
         <div class="settingsNumberSliderGroup">
@@ -136,7 +136,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="10"
@@ -158,7 +158,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_height.png" alt="Set tile height" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileHeight">Tile height</label>
         <div class="settingsNumberSliderGroup">
@@ -172,7 +172,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="5"
@@ -194,7 +194,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_gap.png" alt="Set tile gap" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileGap">Tile gap</label>
         <div class="settingsNumberSliderGroup">
@@ -208,7 +208,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="0"
@@ -230,7 +230,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_border.png" alt="Set tile border" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileBorder">Tile border size</label>
         <div class="settingsNumberSliderGroup">
@@ -244,7 +244,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="0"
@@ -266,7 +266,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_border_radius.png" alt="Set tile border radius" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileBorderRadius">Tile border radius</label>
         <div class="settingsNumberSliderGroup">
@@ -280,7 +280,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="0"
@@ -302,7 +302,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_border_color.png" alt="Set tile border color" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_tileBorderColor">Tile border color</label>
         <input
@@ -322,7 +322,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_navbar_opacity.png" alt="Set navbar opacity" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_navbarOpacity">Navbar opacity</label>
         <div class="settingsNumberSliderGroup">
@@ -336,7 +336,7 @@
             on:input={() => {
               unsavedSettings = true;
             }}
-          >
+          />
           <input
             type="number"
             min="0"
@@ -358,7 +358,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_navbar_color.png" alt="Set navbar color" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_navbarColor">Navbar color</label>
         <input
@@ -378,7 +378,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_cover_color.png" alt="Set cover color" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_coverColor">Cover color</label>
         <input
@@ -398,7 +398,7 @@
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_cover_text_color.png" alt="Set cover text color" />
       </div>
-      <hr>
+      <hr/>
       <div class="settingsInputGroup">
         <label for="set_coverTextColor">Cover text color</label>
         <input

@@ -241,7 +241,7 @@
         Visuals
       </button>
     </div>
-    <hr>
+    <hr/>
     <div id="settingsContent">
       {#if tabIndex === 0}
         <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
