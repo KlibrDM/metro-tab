@@ -8,6 +8,7 @@
   let addPageInput = ""; //Binded to input
 </script>
 
+<h2>Pages</h2>
 <div id="settingsPages">
   <div id="settingsPagesList">
     {#each settingsData.pages as page, index}
@@ -49,45 +50,58 @@
     {/each}
   </div>
 
-  <form
-    class="settingsPageInput"
-    on:submit={(e) => {
-      addPage(addPageInput, e);
+  <div id="settingsPageOptions">
+    <h4>Add new page</h4>
+    <form
+      class="settingsPageInput"
+      on:submit={(e) => {
+        addPage(addPageInput, e);
 
-      //Clear page input after adding it
-      addPageInput = "";
+        //Clear page input after adding it
+        addPageInput = "";
 
-      unsavedPages = true;
-    }}
-  >
-    <label for="set_newPageBox">Link</label>
-    <input
-      type="text"
-      id="set_newPageBox"
-      class="settingsTextInput"
-      bind:value={addPageInput}
-      required={true}
-    />
-    <button type="submit" class="addPageButton">Add</button>
-  </form>
+        unsavedPages = true;
+      }}
+    >
+      <input
+        type="text"
+        id="set_newPageBox"
+        class="settingsTextInput"
+        bind:value={addPageInput}
+        placeholder="Type the address of the page"
+        required={true}
+      />
+      <button type="submit" class="addPageButton">Add</button>
+    </form>
 
-  {#if unsavedPages}
-    <small class="unsavedWarning">You have unsaved settings.</small>
-  {/if}
+    <div class="settingsButtonWithError">
+      <button
+        on:click={(e) => {
+          saveSettings(settingsData, e);
+          unsavedPages = false;
+        }}
+        type="submit"
+        class="saveSettingsButton"
+      >
+        Save
+      </button>
 
-  <button
-    on:click={(e) => {
-      saveSettings(settingsData, e);
-      unsavedPages = false;
-    }}
-    type="submit"
-    class="saveSettingsButton"
-  >
-    Save
-  </button>
+      {#if unsavedPages}
+        <small class="unsavedWarning">You have unsaved settings.</small>
+      {/if}
+    </div>
+  </div>
 </div>
 
 <style>
+  h2 {
+    margin-block-start: 0.4em;
+    margin-block-end: 0.4em;
+  }
+  h4 {
+    margin-block-start: 0.4em;
+    margin-block-end: 0.4em;
+  }
   .settingsTextInput {
     padding: 3px 5px;
     border-radius: 10px;
@@ -107,7 +121,7 @@
     background-color: #0c2;
   }
   .addPageButton {
-    padding: 4px 15px;
+    padding: 8px 20px;
     border: 0;
     border-radius: 10px;
     cursor: pointer;
@@ -118,17 +132,21 @@
   .addPageButton:hover {
     background-color: #0c2;
   }
+  .settingsButtonWithError {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   #settingsPages {
-    background-color: rgb(245, 245, 245);
-    border: 1px solid lightgray;
-    padding: 8px 8px;
-    border-radius: 20px;
-    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
   #settingsPagesList {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    overflow-y: auto;
   }
   .settingsPagesListPage {
     display: flex;
@@ -141,21 +159,19 @@
   .settingsPagesGroupLeft {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
   }
   .settingsPagesListPage label {
     overflow-wrap: anywhere;
   }
   .settingsPagesMoveButtons {
-    width: 14px;
     display: flex;
     flex-direction: column;
   }
   .settingsPagesMoveButtons button {
     width: inherit;
-    height: 12px;
     font-size: 10px;
-    padding: 0;
+    padding: 3px 5px;
     border: 0;
     cursor: pointer;
     color: black;
@@ -191,6 +207,7 @@
   }
   .settingsPageInput input {
     flex-grow: 1;
+    font-size: 1.1em;
   }
   .unsavedWarning {
     display: block;

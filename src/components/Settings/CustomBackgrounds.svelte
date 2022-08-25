@@ -14,7 +14,7 @@
 </script>
 
 <div id="customBackgrounds">
-  <h4>Custom Background</h4>
+  <h4>Custom background image</h4>
   <button
     class="chan"
     on:click={() => {

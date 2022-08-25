@@ -4,9 +4,10 @@ import { userData } from "../store";
 export const saveConfig = (data) => {
   localStorage.setItem("ft", true);
   localStorage.setItem("yourName", data.yourName);
-  localStorage.setItem("isBackgroundWhite", data.isBackgroundWhite);
   localStorage.setItem("showCover", data.showCover);
   localStorage.setItem("clockBackground", data.clockBackground);
+  localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
+  localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
   localStorage.setItem("tileGrow", data.tileGrow);
   localStorage.setItem("tileMinWidth", data.tileMinWidth);
@@ -25,6 +26,12 @@ export const saveConfig = (data) => {
 
 export const saveBackground = (bg) => {
   localStorage.setItem("backgroundImage", bg);
+  localStorage.setItem("isBackgroundSolid", false);
+};
+
+export const saveBackgroundColor = (color) => {
+  localStorage.setItem("backgroundSolidColor", color);
+  localStorage.setItem("isBackgroundSolid", true);
 };
 
 export const saveNotes = (notes) => {
@@ -40,11 +47,6 @@ const data = {
     localStorage.getItem("yourName") ||
     CONFIG.yourName,
 
-  isBackgroundWhite:
-    localStorage.getItem("isBackgroundWhite") === null
-    ? CONFIG.isBackgroundWhite
-    : localStorage.getItem("isBackgroundWhite") === "true",
-
   showCover: 
     localStorage.getItem("showCover") === null 
     ? CONFIG.showCover
@@ -54,6 +56,15 @@ const data = {
     localStorage.getItem("clockBackground") === null
     ? CONFIG.clockBackground
     : localStorage.getItem("clockBackground") === "true",
+
+  isBackgroundSolid:
+    localStorage.getItem("isBackgroundSolid") === null
+    ? CONFIG.isBackgroundSolid
+    : localStorage.getItem("isBackgroundSolid") === "true",
+
+  backgroundSolidColor:
+    localStorage.getItem("backgroundSolidColor") ||
+    CONFIG.backgroundSolidColor,
 
   backgroundImage:
     localStorage.getItem("backgroundImage") ||

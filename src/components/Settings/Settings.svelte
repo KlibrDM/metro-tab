@@ -1,7 +1,7 @@
 <script>
   import { userData } from "../../store";
   import { backgrounds, knownPages } from "../../data/config";
-  import { saveConfig, saveBackground } from "../../data/storage";
+  import { saveConfig, saveBackground, saveBackgroundColor } from "../../data/storage";
 
   import SettingsForm from "./SettingsForm.svelte";
   import Backgrounds from "./Backgrounds.svelte";
@@ -9,10 +9,15 @@
 
   let settingsData = {}; //Local data for settings
   let isPanelShown = false;
+  let tabIndex = 0;
 
   const toggleSettingsPanel = () => {
     isPanelShown = !isPanelShown;
   };
+
+  const changeTab = (index) => {
+    tabIndex = index;
+  }
 
   //Subscribe to the entire userData
   userData.subscribe((data) => {
@@ -25,7 +30,6 @@
     //Update state
     userData.update((state) => {
       state.yourName = escapeHTML(settingsData.yourName);
-      state.isBackgroundWhite = settingsData.isBackgroundWhite;
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
       state.tileGrow = settingsData.tileGrow;
@@ -57,6 +61,7 @@
       //Update background state IF it didn't fail saving to localstorage
       userData.update((state) => {
         state.backgroundImage = settingsData.backgroundImage;
+        state.isBackgroundSolid = false;
         return state;
       });
     } catch {
@@ -64,6 +69,18 @@
         "Background image is too large and it couldn't be saved\n\nPlease resize/compress the image and try again"
       );
     }
+  };
+
+  const changeBackgroundColor = (color) => {
+    settingsData.backgroundSolidColor = color;
+
+    saveBackgroundColor(settingsData.backgroundSolidColor);
+
+    userData.update((state) => {
+      state.backgroundSolidColor = color;
+      state.isBackgroundSolid = true;
+      return state;
+    });
   };
 
   const addPage = (addPageInput, event) => {
@@ -185,8 +202,8 @@
   //Transition
   function slide() {
     return {
-      duration: 300,
-      css: (t, u) => `transform: translateX(${u * 100}%)`,
+      duration: 500,
+      css: (t, u) => `clip-path: circle(${t * 130}% at 96% 3.5vh)`,
     };
   }
 </script>
@@ -201,28 +218,48 @@
 
 {#if isPanelShown}
   <div id="settingsPanel" transition:slide>
-    <h2>Settings</h2>
-    <SettingsForm {settingsData} {saveSettings} />
-    <hr />
-    <h2>Background</h2>
-    <Backgrounds {backgrounds} {changeBackground} />
-    <hr />
-    <h2>Pages</h2>
-    <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
+    <div id="settingsHeader">
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 0}
+        on:click={() => {changeTab(0);}}
+      >
+        Pages
+      </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 1}
+        on:click={() => {changeTab(1);}}
+      >
+        Background
+      </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 2}
+        on:click={() => {changeTab(2);}}
+      >
+        Visuals
+      </button>
+    </div>
+    <hr>
+    <div id="settingsContent">
+      {#if tabIndex === 0}
+        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
+      {:else if tabIndex === 1}
+        <Backgrounds {backgrounds} {changeBackground} {changeBackgroundColor} />
+      {:else if tabIndex === 2}
+        <SettingsForm {settingsData} {saveSettings} />
+      {/if}
+    </div>
   </div>
 {/if}
 
 <style>
-  h2 {
-    margin-block-start: 0.4em;
-    margin-block-end: 0.4em;
-  }
   hr {
     margin-block-start: 0.9em;
     border: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-left: 8px;
-    margin-right: 8px;
+    width: 100%;
   }
   #settingsButton {
     position: absolute;
@@ -252,16 +289,46 @@
     top: 0;
     z-index: 50;
     max-height: 100vh;
-    width: 450px;
+    width: 100vw;
+    height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
   .highZIndex {
     z-index: 60 !important;
   }
+  #settingsHeader {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+  }
+  .settingsHeaderButton {
+    background-color: transparent;
+    border: 0;
+    color: rgb(95, 95, 95);
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em;
+  }
+  .settingsHeaderButton:hover {
+    color: black;
+  }
+  .headerSelected {
+    color: rgb(58, 153, 255);
+  }
+  .headerSelected:hover {
+    color: rgb(58, 153, 255);
+  }
+  #settingsContent {
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
   @media screen and (max-width: 450px) {
     #settingsPanel {
-      width: 100vw;
       padding: 20px;
     }
   }

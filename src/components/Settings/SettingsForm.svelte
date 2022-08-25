@@ -23,8 +23,9 @@
   let coverTextColor = toHex(settingsData.coverTextColor);
 </script>
 
+<h2>Visuals</h2>
 <form
-  id="settingsform"
+  id="settingsForm"
   on:submit={(e) => {
     //Convert colors from HEX to RGB
     settingsData.tileBorderColor = toRGB(tileBorderColor);
@@ -36,242 +37,355 @@
     unsavedSettings = false;
   }}
 >
-  <div class="settingsInput">
-    <label for="set_yourName">Your name</label>
-    <input
-      type="text"
-      id="set_yourName"
-      name="set_yourName"
-      class="settingsTextInput"
-      bind:value={settingsData.yourName}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
+  <div class="settingsFormGroup">
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_your_name.png" alt="Set your name" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_yourName">Your name</label>
+        <input
+          type="text"
+          id="set_yourName"
+          name="set_yourName"
+          class="settingsTextInput"
+          bind:value={settingsData.yourName}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_show_cover.png" alt="Set show cover" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_showCover">Show cover</label>
+        <input
+          type="checkbox"
+          id="set_showCover"
+          name="set_showCover"
+          bind:checked={settingsData.showCover}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_clock_background.png" alt="Set clock background" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_clockBackground">Clock background</label>
+        <input
+          type="checkbox"
+          id="set_clockBackground"
+          name="set_clockBackground"
+          bind:checked={settingsData.clockBackground}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_fill_space.png" alt="Set tile fill space" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileGrow">Tile fill space</label>
+        <input
+          type="checkbox"
+          id="set_tileGrow"
+          name="set_tileGrow"
+          bind:checked={settingsData.tileGrow}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_minimum_width.png" alt="Set tile minimum width" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileMinimumWidth">Tile minimum width</label>
+        <input
+          type="number"
+          min="10"
+          max="150"
+          step="1"
+          class="settingsNumberInput"
+          id="set_tileMinimumWidth"
+          name="set_tileMinimumWidth"
+          bind:value={settingsData.tileMinWidth}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_height.png" alt="Set tile height" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileHeight">Tile height</label>
+        <input
+          type="number"
+          min="5"
+          max="80"
+          step="1"
+          class="settingsNumberInput"
+          id="set_tileHeight"
+          name="set_tileHeight"
+          bind:value={settingsData.tileHeight}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_gap.png" alt="Set tile gap" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileGap">Tile gap</label>
+        <input
+          type="number"
+          min="0"
+          max="30"
+          step="0.1"
+          class="settingsNumberInput"
+          id="set_tileGap"
+          name="set_tileGap"
+          bind:value={settingsData.tileGap}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_border.png" alt="Set tile border" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileBorder">Tile border</label>
+        <input
+          type="number"
+          min="0"
+          max="50"
+          step="1"
+          class="settingsNumberInput"
+          id="set_tileBorder"
+          name="set_tileBorder"
+          bind:value={settingsData.tileBorder}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_border_radius.png" alt="Set tile border radius" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileBorderRadius">Tile border radius</label>
+        <input
+          type="number"
+          min="0"
+          max="80"
+          step="0.1"
+          class="settingsNumberInput"
+          id="set_tileBorderRadius"
+          name="set_tileBorderRadius"
+          bind:value={settingsData.tileBorderRadius}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_border_color.png" alt="Set tile border color" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_tileBorderColor">Tile border color</label>
+        <input
+          type="color"
+          class="settingsColorInput"
+          id="set_tileBorderColor"
+          name="set_tileBorderColor"
+          bind:value={tileBorderColor}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_navbar_opacity.png" alt="Set navbar opacity" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_navbarOpacity">Navbar opacity</label>
+        <input
+          type="number"
+          min="0"
+          max="1"
+          step="0.01"
+          class="settingsNumberInput"
+          id="set_navbarOpacity"
+          name="set_navbarOpacity"
+          bind:value={settingsData.navbarOpacity}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_navbar_color.png" alt="Set navbar color" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_navbarColor">Navbar color</label>
+        <input
+          type="color"
+          class="settingsColorInput"
+          id="set_navbarColor"
+          name="set_navbarColor"
+          bind:value={navbarColor}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_cover_color.png" alt="Set cover color" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_coverColor">Cover color</label>
+        <input
+          type="color"
+          class="settingsColorInput"
+          id="set_coverColor"
+          name="set_coverColor"
+          bind:value={coverColor}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_cover_text_color.png" alt="Set cover text color" />
+      </div>
+      <hr>
+      <div class="settingsInputGroup">
+        <label for="set_coverTextColor">Cover text color</label>
+        <input
+          type="color"
+          class="settingsColorInput"
+          id="set_coverTextColor"
+          name="set_coverTextColor"
+          bind:value={coverTextColor}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
   </div>
 
-  <div class="settingsInput">
-    <label for="set_isBackgroundWhite">White background</label>
-    <input
-      type="checkbox"
-      id="set_isBackgroundWhite"
-      name="set_isBackgroundWhite"
-      bind:checked={settingsData.isBackgroundWhite}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
+  <div class="settingsButtonWithError">
+    <button type="submit" class="saveSettingsButton">Save</button>
+
+    {#if unsavedSettings}
+      <small class="unsavedWarning">You have unsaved settings.</small>
+    {/if}
   </div>
-
-  <div class="settingsInput">
-    <label for="set_showCover">Show cover</label>
-    <input
-      type="checkbox"
-      id="set_showCover"
-      name="set_showCover"
-      bind:checked={settingsData.showCover}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_clockBackground">Clock background</label>
-    <input
-      type="checkbox"
-      id="set_clockBackground"
-      name="set_clockBackground"
-      bind:checked={settingsData.clockBackground}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileGrow">Tile fill space</label>
-    <input
-      type="checkbox"
-      id="set_tileGrow"
-      name="set_tileGrow"
-      bind:checked={settingsData.tileGrow}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileMinimumWidth">Tile minimum width</label>
-    <input
-      type="number"
-      min="10"
-      max="300"
-      step="1"
-      class="settingsNumberInput"
-      id="set_tileMinimumWidth"
-      name="set_tileMinimumWidth"
-      bind:value={settingsData.tileMinWidth}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileHeight">Tile height</label>
-    <input
-      type="number"
-      min="5"
-      max="80"
-      step="1"
-      class="settingsNumberInput"
-      id="set_tileHeight"
-      name="set_tileHeight"
-      bind:value={settingsData.tileHeight}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileGap">Tile gap</label>
-    <input
-      type="number"
-      min="0"
-      max="30"
-      step="0.1"
-      class="settingsNumberInput"
-      id="set_tileGap"
-      name="set_tileGap"
-      bind:value={settingsData.tileGap}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileBorder">Tile border</label>
-    <input
-      type="number"
-      min="0"
-      max="50"
-      step="1"
-      class="settingsNumberInput"
-      id="set_tileBorder"
-      name="set_tileBorder"
-      bind:value={settingsData.tileBorder}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileBorderRadius">Tile border radius</label>
-    <input
-      type="number"
-      min="0"
-      max="1000"
-      step="1"
-      class="settingsNumberInput"
-      id="set_tileBorderRadius"
-      name="set_tileBorderRadius"
-      bind:value={settingsData.tileBorderRadius}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_tileBorderColor">Tile border color</label>
-    <input
-      type="color"
-      class="settingsColorInput"
-      id="set_tileBorderColor"
-      name="set_tileBorderColor"
-      bind:value={tileBorderColor}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_navbarOpacity">Navbar opacity</label>
-    <input
-      type="number"
-      min="0"
-      max="1"
-      step="0.01"
-      class="settingsNumberInput"
-      id="set_navbarOpacity"
-      name="set_navbarOpacity"
-      bind:value={settingsData.navbarOpacity}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_navbarColor">Navbar color</label>
-    <input
-      type="color"
-      class="settingsColorInput"
-      id="set_navbarColor"
-      name="set_navbarColor"
-      bind:value={navbarColor}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_coverColor">Cover color</label>
-    <input
-      type="color"
-      class="settingsColorInput"
-      id="set_coverColor"
-      name="set_coverColor"
-      bind:value={coverColor}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  <div class="settingsInput">
-    <label for="set_coverTextColor">Cover text color</label>
-    <input
-      type="color"
-      class="settingsColorInput"
-      id="set_coverTextColor"
-      name="set_coverTextColor"
-      bind:value={coverTextColor}
-      on:input={() => {
-        unsavedSettings = true;
-      }}
-    />
-  </div>
-
-  {#if unsavedSettings}
-    <small class="unsavedWarning">You have unsaved settings.</small>
-  {/if}
-
-  <button type="submit" class="saveSettingsButton">Save</button>
 </form>
 
 <style>
+  h2 {
+    margin-block-start: 0.4em;
+    margin-block-end: 0.4em;
+  }
+  hr {
+    width: 90%;
+    border: 0;
+    border-top: 1px solid lightgray;
+  }
+  #settingsForm {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .settingsFormGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    overflow-y: auto;
+  }
   .settingsInput {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top: 5px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    flex-grow: 1;
+    max-width: 500px;
+  }
+  .imagePlaceholder {
+    width: 250px;
+    min-height: 125px;
+  }
+  .settingsInput img {
+    width: 250px;
+    display: block;
+  }
+  .settingsInputGroup {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 15px 10px 15px;
+    width: calc(100% - 30px);
   }
   .settingsInput label {
     margin-right: 10px;
@@ -282,23 +396,29 @@
   }
   .settingsTextInput {
     padding: 3px 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid gray;
+    max-width: 120px;
   }
   .settingsNumberInput {
     padding: 3px 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid gray;
   }
   .settingsColorInput {
     padding: 3px 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid gray;
     cursor: pointer;
     transition: 0.3s;
   }
   .settingsColorInput:hover {
     background-color: rgb(225, 225, 225);
+  }
+  .settingsButtonWithError {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   .saveSettingsButton {
     margin-top: 8px;

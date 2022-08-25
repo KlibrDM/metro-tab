@@ -11,11 +11,13 @@
   import Entertainment from "./components/Entertainment.svelte";
 
   let backgroundImage;
-  let isBackgroundWhite = false;
+  let isBackgroundSolid = false;
+  let backgroundSolidColor;
 
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
-    isBackgroundWhite = data.isBackgroundWhite;
+    isBackgroundSolid = data.isBackgroundSolid;
+    backgroundSolidColor = data.backgroundSolidColor;
   });
 
   //Update background image url when background image changes
@@ -24,8 +26,8 @@
 
 <!--Use the url made above if user selects image provided by the extension (bgXXX)-->
 <main
-  style={isBackgroundWhite
-    ? "background-color: white;"
+  style={isBackgroundSolid
+    ? "background-color: " + backgroundSolidColor + ";"
     : backgroundImage.length > 5
     ? "background-image: url(" + backgroundImage + ");"
     : "background-image: url(" + backgroundImageUrl + ");"}

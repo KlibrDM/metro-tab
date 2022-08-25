@@ -37,7 +37,7 @@
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
               border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
-              border-radius: {tileBorderRadius}px;
+              border-radius: {tileBorderRadius}vh;
               {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
               "
           />

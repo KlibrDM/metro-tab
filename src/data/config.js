@@ -1,8 +1,9 @@
 /*Default settings*/
 export const yourName = "New Tab";
-export const isBackgroundWhite = false;
 export const showCover = true;
 export const clockBackground = false;
+export const isBackgroundSolid = false;
+export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "bg1";
 export const tileGrow = true;
 export const tileMinWidth = 20;
