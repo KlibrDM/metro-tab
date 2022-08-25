@@ -69,6 +69,7 @@
           type="checkbox"
           id="set_showCover"
           name="set_showCover"
+          class="settingsCheckbox"
           bind:checked={settingsData.showCover}
           on:input={() => {
             unsavedSettings = true;
@@ -88,6 +89,7 @@
           type="checkbox"
           id="set_clockBackground"
           name="set_clockBackground"
+          class="settingsCheckbox"
           bind:checked={settingsData.clockBackground}
           on:input={() => {
             unsavedSettings = true;
@@ -107,6 +109,7 @@
           type="checkbox"
           id="set_tileGrow"
           name="set_tileGrow"
+          class="settingsCheckbox"
           bind:checked={settingsData.tileGrow}
           on:input={() => {
             unsavedSettings = true;
@@ -122,19 +125,32 @@
       <hr>
       <div class="settingsInputGroup">
         <label for="set_tileMinimumWidth">Tile minimum width</label>
-        <input
-          type="number"
-          min="10"
-          max="150"
-          step="1"
-          class="settingsNumberInput"
-          id="set_tileMinimumWidth"
-          name="set_tileMinimumWidth"
-          bind:value={settingsData.tileMinWidth}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="10"
+            max="150"
+            step="1"
+            class="settingsSlider"
+            bind:value={settingsData.tileMinWidth}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="10"
+            max="150"
+            step="1"
+            class="settingsNumberInput"
+            id="set_tileMinimumWidth"
+            name="set_tileMinimumWidth"
+            bind:value={settingsData.tileMinWidth}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -145,19 +161,32 @@
       <hr>
       <div class="settingsInputGroup">
         <label for="set_tileHeight">Tile height</label>
-        <input
-          type="number"
-          min="5"
-          max="80"
-          step="1"
-          class="settingsNumberInput"
-          id="set_tileHeight"
-          name="set_tileHeight"
-          bind:value={settingsData.tileHeight}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="5"
+            max="80"
+            step="1"
+            class="settingsSlider"
+            bind:value={settingsData.tileHeight}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="5"
+            max="80"
+            step="1"
+            class="settingsNumberInput"
+            id="set_tileHeight"
+            name="set_tileHeight"
+            bind:value={settingsData.tileHeight}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -168,19 +197,32 @@
       <hr>
       <div class="settingsInputGroup">
         <label for="set_tileGap">Tile gap</label>
-        <input
-          type="number"
-          min="0"
-          max="30"
-          step="0.1"
-          class="settingsNumberInput"
-          id="set_tileGap"
-          name="set_tileGap"
-          bind:value={settingsData.tileGap}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="30"
+            step="0.1"
+            class="settingsSlider"
+            bind:value={settingsData.tileGap}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="0"
+            max="30"
+            step="0.1"
+            class="settingsNumberInput"
+            id="set_tileGap"
+            name="set_tileGap"
+            bind:value={settingsData.tileGap}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -190,20 +232,33 @@
       </div>
       <hr>
       <div class="settingsInputGroup">
-        <label for="set_tileBorder">Tile border</label>
-        <input
-          type="number"
-          min="0"
-          max="50"
-          step="1"
-          class="settingsNumberInput"
-          id="set_tileBorder"
-          name="set_tileBorder"
-          bind:value={settingsData.tileBorder}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <label for="set_tileBorder">Tile border size</label>
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="50"
+            step="1"
+            class="settingsSlider"
+            bind:value={settingsData.tileBorder}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="0"
+            max="50"
+            step="1"
+            class="settingsNumberInput"
+            id="set_tileBorder"
+            name="set_tileBorder"
+            bind:value={settingsData.tileBorder}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -214,19 +269,32 @@
       <hr>
       <div class="settingsInputGroup">
         <label for="set_tileBorderRadius">Tile border radius</label>
-        <input
-          type="number"
-          min="0"
-          max="80"
-          step="0.1"
-          class="settingsNumberInput"
-          id="set_tileBorderRadius"
-          name="set_tileBorderRadius"
-          bind:value={settingsData.tileBorderRadius}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="80"
+            step="0.1"
+            class="settingsSlider"
+            bind:value={settingsData.tileBorderRadius}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="0"
+            max="80"
+            step="0.1"
+            class="settingsNumberInput"
+            id="set_tileBorderRadius"
+            name="set_tileBorderRadius"
+            bind:value={settingsData.tileBorderRadius}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -257,19 +325,32 @@
       <hr>
       <div class="settingsInputGroup">
         <label for="set_navbarOpacity">Navbar opacity</label>
-        <input
-          type="number"
-          min="0"
-          max="1"
-          step="0.01"
-          class="settingsNumberInput"
-          id="set_navbarOpacity"
-          name="set_navbarOpacity"
-          bind:value={settingsData.navbarOpacity}
-          on:input={() => {
-            unsavedSettings = true;
-          }}
-        />
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            class="settingsSlider"
+            bind:value={settingsData.navbarOpacity}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          >
+          <input
+            type="number"
+            min="0"
+            max="1"
+            step="0.01"
+            class="settingsNumberInput"
+            id="set_navbarOpacity"
+            name="set_navbarOpacity"
+            bind:value={settingsData.navbarOpacity}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
       </div>
     </div>
 
@@ -372,6 +453,7 @@
     border-radius: 15px;
     flex-grow: 1;
     max-width: 500px;
+    flex-basis: 24%;
   }
   .imagePlaceholder {
     width: 250px;
@@ -404,9 +486,26 @@
     padding: 3px 5px;
     border-radius: 5px;
     border: 1px solid gray;
+    width: 40px;
+  }
+  .settingsNumberSliderGroup {
+    display: flex;
+    flex-grow: 1;
+    gap: 5px;
+  }
+  .settingsSlider {
+    width: 50px;
+    flex-grow: 1;
+  }
+  .settingsSlider::-webkit-slider-thumb {
+    cursor: pointer;
+  }
+  .settingsCheckbox {
+    width: 18px;
+    height: 18px;
   }
   .settingsColorInput {
-    padding: 3px 5px;
+    padding: 1px 3px;
     border-radius: 5px;
     border: 1px solid gray;
     cursor: pointer;
