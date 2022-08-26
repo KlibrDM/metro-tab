@@ -191,6 +191,156 @@ export const backgrounds = [
     format: "avif",
     source: "starline-freepik",
   },
+  {
+    name: "sl6",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl7",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl8",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl9",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl10",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl11",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl12",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl13",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl14",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl15",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl16",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl17",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl18",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl19",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl20",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl21",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl22",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl23",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl24",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl25",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl26",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl27",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl28",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl29",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl30",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl31",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl32",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl33",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl34",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl35",
+    format: "avif",
+    source: "starline-freepik",
+  },
 ];
 
 export const sourceDetails = new Map([
