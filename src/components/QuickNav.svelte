@@ -6,19 +6,19 @@
 
 <div id="browserQuickNavBox">
   <!-- svelte-ignore a11y-invalid-attribute -->
-  <a href="#" on:click={() => onClickChromeTabs("history")}>
+  <a href="#" aria-label="History" on:click={() => onClickChromeTabs("history")}>
     <i class="fas fa-history browserQuickNavButton" />
   </a>
   <!-- svelte-ignore a11y-invalid-attribute -->
-  <a href="#" on:click={() => onClickChromeTabs("downloads")}>
+  <a href="#" aria-label="Downloads" on:click={() => onClickChromeTabs("downloads")}>
     <i class="fas fa-download browserQuickNavButton" />
   </a>
   <!-- svelte-ignore a11y-invalid-attribute -->
-  <a href="#" on:click={() => onClickChromeTabs("bookmarks")}>
+  <a href="#" aria-label="Bookmarks" on:click={() => onClickChromeTabs("bookmarks")}>
     <i class="fas fa-bookmark browserQuickNavButton" />
   </a>
   <!-- svelte-ignore a11y-invalid-attribute -->
-  <a href="#" on:click={() => onClickChromeTabs("extensions")}>
+  <a href="#" aria-label="Extensions" on:click={() => onClickChromeTabs("extensions")}>
     <i class="fas fa-puzzle-piece browserQuickNavButton" />
   </a>
 </div>

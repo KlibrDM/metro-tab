@@ -211,6 +211,7 @@
 <button
   on:click={toggleSettingsPanel}
   id="settingsButton"
+  aria-label="Settings"
   class:highZIndex={isPanelShown}
 >
   <i class="fas fa-sliders-h" />

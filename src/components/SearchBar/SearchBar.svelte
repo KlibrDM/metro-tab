@@ -48,7 +48,7 @@
       placeholder="Search"
       bind:value={searchQuery}
     />
-    <button id="searchButton">
+    <button id="searchButton" aria-label="Search">
       <i class="fas fa-search" style="color: white" />
     </button>
   </form>

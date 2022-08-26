@@ -19,6 +19,7 @@
 <button
   on:click={toggleEntertainmentPanel}
   id="entertainmentButton"
+  aria-label="Entertainment"
   class:highZIndex={isPanelShown}
 >
   <i class="fa-solid fa-gamepad" />

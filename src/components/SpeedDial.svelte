@@ -33,6 +33,7 @@
           <a
             href={page.link}
             class="pageButton"
+            aria-label={page.link}
             style="background-image: url('static/images/thumbnails/{clearOldExtension(page.imageName)}.avif');
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;

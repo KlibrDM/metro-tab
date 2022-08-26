@@ -87,6 +87,7 @@
 <button
   on:click={toggleNotesPanel}
   id="notesButton"
+  aria-label="Notes"
   class:highZIndex={isPanelShown}
 >
   <i class="fa-solid fa-note-sticky" />
