@@ -1,6 +1,6 @@
 <script>
   import { userData } from "../../store";
-  import { backgrounds, knownPages } from "../../data/config";
+  import { knownPages } from "../../data/config";
   import { saveConfig, saveBackground, saveBackgroundColor } from "../../data/storage";
 
   import SettingsForm from "./SettingsForm.svelte";
@@ -148,12 +148,12 @@
 
     if (knownPages.includes(name)) {
       //Return the image name if the extension has it
-      return name + ".jpg";
+      return name;
     } else if ("1234567890qwertyuiopasdfghjklzxcvbnm".includes(name[0])) {
       //Return the image for the first letter
-      return name[0] + ".jpg";
+      return name[0];
     } else {
-      return "_.jpg";
+      return "_";
     }
   };
 
@@ -246,7 +246,7 @@
       {#if tabIndex === 0}
         <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
       {:else if tabIndex === 1}
-        <Backgrounds {backgrounds} {changeBackground} {changeBackgroundColor} />
+        <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}
         <SettingsForm {settingsData} {saveSettings} />
       {/if}

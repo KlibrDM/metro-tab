@@ -1,8 +1,9 @@
 <script>
   import { userData } from "../../store";
+  import { backgrounds, sourceDetails } from "../../data/config";
+  import { getBackgroundFormat } from "../../data/tools";
   import CustomBackgrounds from "./CustomBackgrounds.svelte";
 
-  export let backgrounds;
   export let changeBackground;
   export let changeBackgroundColor;
 
@@ -11,6 +12,14 @@
   let newBackgroundSolidColor;
   let isBackgroundSolid;
   let backgroundSolidColorChanged = false;
+  let backgroundSources = new Set();
+
+  //Add sources to set
+  backgrounds.forEach((bg) => {
+    if(sourceDetails.get(bg.source)){
+      backgroundSources.add(sourceDetails.get(bg.source));
+    }
+  });
 
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
@@ -19,7 +28,7 @@
     isBackgroundSolid = data.isBackgroundSolid;
   });
 
-  $: backgroundImageUrl = "static/images/bg/" + backgroundImage + ".jpg";
+  $: backgroundImageUrl = "static/images/bg/thumbnails/" + backgroundImage + "." + getBackgroundFormat(backgroundImage);
 </script>
 
 <h2>Background</h2>
@@ -69,22 +78,26 @@
   </div>
 </div>
 
-<h4>Gallery</h4>
-<small>
-  Background images provided by <a href="https://pixabay.com/">Pixabay</a>
-</small>
-<div id="settingsBackgrounds">
-  {#each backgrounds as bg, index}
-    <div class="backgroundImageSelectorPlaceholder">
-      <img
-        src="static/images/bg/thumbnails/{bg}.jpg"
-        alt="Background {index}"
-        class="backgroundImageSelector"
-        on:click={() => changeBackground(bg)}
-      />
-    </div>
-  {/each}
-</div>
+<h2>Gallery</h2>
+{#each [...backgroundSources] as source}
+  <small>
+    Background images provided by <a href="{source.url}">{source.label}</a>
+  </small>
+  <div class="settingsBackgrounds">
+    {#each backgrounds as bg, index}
+      {#if bg.source === source.name}
+        <div class="backgroundImageSelectorPlaceholder">
+          <img
+            src="static/images/bg/thumbnails/{bg.name}.{bg.format}"
+            alt="Background {index + 1}"
+            class="backgroundImageSelector"
+            on:click={() => changeBackground(bg.name)}
+          />
+        </div>
+      {/if}
+    {/each}
+  </div>
+{/each}
 
 <style>
   h2 {
@@ -136,11 +149,12 @@
     background-color: #0b1;
     transition: 0.3s;
   }
-  #settingsBackgrounds {
+  .settingsBackgrounds {
     display: flex;
     gap: 3px;
     padding: 15px;
     flex-wrap: wrap;
+    margin-bottom: 10px;
   }
   .backgroundImageSelectorPlaceholder {
     width: 180px;

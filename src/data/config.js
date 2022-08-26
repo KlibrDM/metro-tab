@@ -22,32 +22,32 @@ export const notes = [];
 export const pages = [
   {
     link: "https://www.google.com",
-    imageName: "google.jpg",
+    imageName: "google",
     isActive: true,
   },
   {
     link: "https://www.facebook.com",
-    imageName: "facebook.jpg",
+    imageName: "facebook",
     isActive: true,
   },
   {
     link: "https://www.youtube.com",
-    imageName: "youtube.jpg",
+    imageName: "youtube",
     isActive: true,
   },
   {
     link: "https://www.yahoo.com",
-    imageName: "yahoo.jpg",
+    imageName: "yahoo",
     isActive: true,
   },
   {
     link: "https://www.reddit.com",
-    imageName: "reddit.jpg",
+    imageName: "reddit",
     isActive: true,
   },
   {
     link: "https://www.netflix.com/browse",
-    imageName: "netflix.jpg",
+    imageName: "netflix",
     isActive: true,
   },
 ];
@@ -56,37 +56,155 @@ export const entertainmentData = [
   {
     name: "Hangman Game",
     link: "https://klibrdm.github.io/hangman-game-react",
-    img: "hangman-game-icon.png",
+    img: "hangman-game-icon.avif",
   },
   {
     name: "Business Club",
     link: "https://klibrdm.github.io/business-club-game",
-    img: "business-club-icon.png",
+    img: "business-club-icon.avif",
   },
 ];
 
 export const backgrounds = [
-  "bg1",
-  "bg2",
-  "bg3",
-  "bg4",
-  "bg5",
-  "bg6",
-  "bg7",
-  "bg8",
-  "bg9",
-  "bg10",
-  "bg11",
-  "bg12",
-  "bg13",
-  "bg14",
-  "bg15",
-  "bg16",
-  "bg17",
-  "bg18",
-  "bg19",
-  "bg20",
+  {
+    name: "bg1",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg2",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg3",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg4",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg5",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg6",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg7",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg8",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg9",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg10",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg11",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg12",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg13",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg14",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg15",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg16",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg17",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg18",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg19",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg20",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "sl1",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl2",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl3",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl4",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl5",
+    format: "avif",
+    source: "starline-freepik",
+  },
 ];
+
+export const sourceDetails = new Map([
+  ['pixabay', {
+    name: 'pixabay',
+    label: 'Pixabay',
+    url: 'https://pixabay.com/'
+  }],
+  ['starline-freepik', {
+    name: 'starline-freepik',
+    label: 'starline on Freepik',
+    url: 'https://www.freepik.com/author/starline'
+  }],
+]);
 
 //Known pages are the ones that have a thumbnail image
 export const knownPages = [

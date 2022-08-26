@@ -1,4 +1,5 @@
 <script>
+  import { clearOldExtension } from "../data/tools";
   import { userData } from "../store";
 
   let pages = [];
@@ -32,7 +33,7 @@
           <a
             href={page.link}
             class="pageButton"
-            style="background-image: url('static/images/thumbnails/{page.imageName}');
+            style="background-image: url('static/images/thumbnails/{clearOldExtension(page.imageName)}.avif');
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;

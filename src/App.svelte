@@ -9,6 +9,7 @@
   import Settings from "./components/Settings/Settings.svelte";
   import Notes from "./components/Notes/Notes.svelte";
   import Entertainment from "./components/Entertainment.svelte";
+  import { getBackgroundFormat } from "./data/tools";
 
   let backgroundImage;
   let isBackgroundSolid = false;
@@ -21,7 +22,7 @@
   });
 
   //Update background image url when background image changes
-  $: backgroundImageUrl = "static/images/bg/" + backgroundImage + ".jpg";
+  $: backgroundImageUrl = "static/images/bg/" + backgroundImage + "." + getBackgroundFormat(backgroundImage);
 </script>
 
 <!--Use the url made above if user selects image provided by the extension (bgXXX)-->

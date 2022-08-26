@@ -1,21 +1,9 @@
 <script>
+  import { toHex, toRGB } from "../../data/tools";
+
   export let settingsData;
   export let saveSettings;
   let unsavedSettings = false;
-
-  const toHex = (color) => {
-    let hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
-    return hex;
-  };
-
-  const toRGB = (hex) => {
-    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  };
 
   let tileBorderColor = toHex(settingsData.tileBorderColor);
   let navbarColor = toHex(settingsData.navbarColor);
