@@ -6,6 +6,7 @@
   import SettingsForm from "./SettingsForm.svelte";
   import Backgrounds from "./Backgrounds.svelte";
   import Pages from "./Pages.svelte";
+  import ImportExport from "./ImportExport.svelte";
 
   let settingsData = {}; //Local data for settings
   let isPanelShown = false;
@@ -25,7 +26,9 @@
   });
 
   const saveSettings = (settingsData, event) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
     //Update state
     userData.update((state) => {
@@ -241,6 +244,13 @@
       >
         Visuals
       </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 3}
+        on:click={() => {changeTab(3);}}
+      >
+        Import/Export
+      </button>
     </div>
     <hr/>
     <div id="settingsContent">
@@ -250,6 +260,8 @@
         <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}
         <SettingsForm {settingsData} {saveSettings} />
+      {:else if tabIndex === 3}
+        <ImportExport {settingsData} {saveSettings} />
       {/if}
     </div>
   </div>
