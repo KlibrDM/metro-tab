@@ -419,6 +419,11 @@
       <label for="import_notes">Import Notes</label>
     </div>
 
+    <small>
+      * Importing notes and pages will overwrite your existing ones<br>
+      * Export your current settings before importing, otherwise you won't be able to revert the changes
+    </small>
+
     <button
       id="importButton"
       on:click={() => {
@@ -483,6 +488,10 @@
       <label for="export_notes">Export Notes</label>
     </div>
 
+    <small>
+      * Make sure you aren't storing any sensitive information in your notes before exporting them
+    </small>
+
     <button
       id="exportButton"
       on:click={() => {
@@ -511,14 +520,22 @@
     border: 1px solid lightgray;
     border-radius: 10px;
     padding: 10px 30px 25px 30px;
+    flex-grow: 1;
+    max-width: 25%;
   }
   h2 {
     margin-block-start: 0.4em;
     margin-block-end: 0.6em;
   }
+  small {
+    margin-top: 0.4em;
+    margin-bottom: 0.8em;
+    font-size: 0.8em;
+    color: gray;
+  }
   button {
-    margin-top: 12px;
-    padding: 8px 20px;
+    margin-top: auto;
+    padding: 8px 30px;
     border: 0;
     border-radius: 10px;
     cursor: pointer;
@@ -538,11 +555,22 @@
   #exportButton:hover {
     background-color: rgb(230, 200, 22);
   }
+  @media screen and (max-width: 800px) {
+    .IEPage {
+      gap: 8px;
+    }
+    .IESection {
+      max-width: 100%;
+    }
+  }
   @media screen and (max-width: 450px) {
     .IEPage {
       flex-direction: column;
       margin-top: 16px;
       gap: 16px;
+    }
+    .IESection {
+      max-width: 100%;
     }
   }
 </style>
