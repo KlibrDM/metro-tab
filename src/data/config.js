@@ -5,6 +5,7 @@ export const clockBackground = false;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "bg1";
+export const tileZoom = true;
 export const tileGrow = true;
 export const tileMinWidth = 20;
 export const tileHeight = 55;

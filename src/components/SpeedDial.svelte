@@ -3,6 +3,7 @@
   import { userData } from "../store";
 
   let pages = [];
+  let tileZoom;
   let tileGrow;
   let tileMinWidth;
   let tileHeight;
@@ -13,6 +14,7 @@
 
   userData.subscribe((data) => {
     pages = data.pages;
+    tileZoom = data.tileZoom;
     tileGrow = data.tileGrow;
     tileMinWidth = data.tileMinWidth;
     tileHeight = data.tileHeight;
@@ -41,6 +43,7 @@
               border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
               border-radius: {tileBorderRadius}vh;
               {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
+              {!tileZoom ? "animation: none !important" : ''}
               "
           />
         {/if}

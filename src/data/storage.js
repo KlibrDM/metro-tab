@@ -9,6 +9,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
+  localStorage.setItem("tileZoom", data.tileZoom);
   localStorage.setItem("tileGrow", data.tileGrow);
   localStorage.setItem("tileMinWidth", data.tileMinWidth);
   localStorage.setItem("tileHeight", data.tileHeight);
@@ -69,6 +70,11 @@ const data = {
   backgroundImage:
     localStorage.getItem("backgroundImage") ||
     CONFIG.backgroundImage,
+
+  tileZoom:
+    localStorage.getItem("tileZoom") === null
+    ? CONFIG.tileZoom
+    : localStorage.getItem("tileZoom") === "true",
 
   tileGrow:
     localStorage.getItem("tileGrow") === null

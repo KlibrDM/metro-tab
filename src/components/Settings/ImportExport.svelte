@@ -24,6 +24,7 @@
       exportDataObject.yourName = settingsData.yourName;
       exportDataObject.showCover = settingsData.showCover;
       exportDataObject.clockBackground = settingsData.clockBackground;
+      exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
       exportDataObject.tileMinWidth = settingsData.tileMinWidth;
       exportDataObject.tileHeight = settingsData.tileHeight;
@@ -165,6 +166,15 @@
 
           if(settings.hasOwnProperty('clockBackground')){
             if(typeof settings.clockBackground !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('tileZoom')){
+            if(typeof settings.tileZoom !== 'boolean'){
               errorsFound = true;
             }
           }
@@ -337,6 +347,7 @@
             settingsToSave.yourName = settings.yourName;
             settingsToSave.showCover = settings.showCover;
             settingsToSave.clockBackground = settings.clockBackground;
+            settingsToSave.tileZoom = settings.tileZoom;
             settingsToSave.tileGrow = settings.tileGrow;
             settingsToSave.tileMinWidth = settings.tileMinWidth;
             settingsToSave.tileHeight = settings.tileHeight;

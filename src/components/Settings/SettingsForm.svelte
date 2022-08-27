@@ -88,6 +88,26 @@
 
     <div class="settingsInput">
       <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_zoom.png" alt="Set tile zoom on hover" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_tileZoom">Tile zoom on hover</label>
+        <input
+          type="checkbox"
+          id="set_tileZoom"
+          name="set_tileZoom"
+          class="settingsCheckbox"
+          bind:checked={settingsData.tileZoom}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_fill_space.png" alt="Set tile fill space" />
       </div>
       <hr/>
@@ -216,42 +236,6 @@
 
     <div class="settingsInput">
       <div class="imagePlaceholder">
-        <img src="static/images/settings/s_tile_border.png" alt="Set tile border" />
-      </div>
-      <hr/>
-      <div class="settingsInputGroup">
-        <label for="set_tileBorder">Tile border size</label>
-        <div class="settingsNumberSliderGroup">
-          <input
-            type="range"
-            min="0"
-            max="50"
-            step="1"
-            class="settingsSlider"
-            bind:value={settingsData.tileBorder}
-            on:input={() => {
-              unsavedSettings = true;
-            }}
-          />
-          <input
-            type="number"
-            min="0"
-            max="50"
-            step="1"
-            class="settingsNumberInput"
-            id="set_tileBorder"
-            name="set_tileBorder"
-            bind:value={settingsData.tileBorder}
-            on:input={() => {
-              unsavedSettings = true;
-            }}
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="settingsInput">
-      <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_border_radius.png" alt="Set tile border radius" />
       </div>
       <hr/>
@@ -278,6 +262,42 @@
             id="set_tileBorderRadius"
             name="set_tileBorderRadius"
             bind:value={settingsData.tileBorderRadius}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_tile_border.png" alt="Set tile border" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_tileBorder">Tile border size</label>
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="50"
+            step="1"
+            class="settingsSlider"
+            bind:value={settingsData.tileBorder}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+          <input
+            type="number"
+            min="0"
+            max="50"
+            step="1"
+            class="settingsNumberInput"
+            id="set_tileBorder"
+            name="set_tileBorder"
+            bind:value={settingsData.tileBorder}
             on:input={() => {
               unsavedSettings = true;
             }}

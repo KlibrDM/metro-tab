@@ -35,6 +35,7 @@
       state.yourName = escapeHTML(settingsData.yourName);
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
+      state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
       state.tileHeight = settingsData.tileHeight;
