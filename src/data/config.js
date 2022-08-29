@@ -531,4 +531,7 @@ export const knownPages = [
 
   //V2.1
   "localhost",
+  "calendar.google",
+  "photos.google",
+  "figma",
 ];
