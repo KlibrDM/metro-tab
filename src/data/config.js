@@ -168,6 +168,56 @@ export const backgrounds = [
     source: "pixabay",
   },
   {
+    name: "bg21",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg22",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg23",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg24",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg25",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg26",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg27",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg28",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg29",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg30",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
     name: "sl1",
     format: "avif",
     source: "starline-freepik",
