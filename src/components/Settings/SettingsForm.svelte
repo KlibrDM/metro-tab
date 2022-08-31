@@ -3,7 +3,7 @@
 
   export let settingsData;
   export let saveSettings;
-  let unsavedSettings = false;
+  export let unsavedSettings;
 
   let tileBorderColor = toHex(settingsData.tileBorderColor);
   let navbarColor = toHex(settingsData.navbarColor);

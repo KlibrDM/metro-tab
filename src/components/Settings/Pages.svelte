@@ -4,7 +4,7 @@
   export let addPage;
   export let saveSettings;
   export let movePage;
-  let unsavedPages = false;
+  export let unsavedPages;
   let addPageInput = ""; //Binded to input
 </script>
 

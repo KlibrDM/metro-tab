@@ -9,6 +9,7 @@
   import ImportExport from "./ImportExport.svelte";
 
   let settingsData = {}; //Local data for settings
+  let unsavedSettings = false;
   let isPanelShown = false;
   let tabIndex = 0;
 
@@ -207,7 +208,7 @@
   function slide() {
     return {
       duration: 500,
-      css: (t, u) => `clip-path: circle(${t * 130}% at 96% 3.5vh)`,
+      css: (t, u) => `clip-path: circle(${t * 130}% at 97.5% 3.5vh)`,
     };
   }
 </script>
@@ -256,11 +257,11 @@
     <hr/>
     <div id="settingsContent">
       {#if tabIndex === 0}
-        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} />
+        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} bind:unsavedPages={unsavedSettings} />
       {:else if tabIndex === 1}
         <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}
-        <SettingsForm {settingsData} {saveSettings} />
+        <SettingsForm {settingsData} {saveSettings} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 3}
         <ImportExport {settingsData} {saveSettings} />
       {/if}
