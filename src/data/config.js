@@ -1,17 +1,17 @@
 /*Default settings*/
 export const yourName = "New Tab";
 export const showCover = true;
-export const clockBackground = false;
+export const clockBackground = true;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
-export const backgroundImage = "bg1";
+export const backgroundImage = "sl1";
 export const tileZoom = true;
-export const tileGrow = true;
-export const tileMinWidth = 20;
-export const tileHeight = 55;
-export const tileGap = 0;
+export const tileGrow = false;
+export const tileMinWidth = 28;
+export const tileHeight = 18;
+export const tileGap = 2;
 export const tileBorder = 0;
-export const tileBorderRadius = 0;
+export const tileBorderRadius = 1.5;
 export const tileBorderColor = { r: 58, g: 153, b: 255 };
 export const navbarOpacity = 0;
 export const navbarColor = { r: 58, g: 153, b: 255 };
@@ -49,6 +49,16 @@ export const pages = [
   {
     link: "https://www.netflix.com/browse",
     imageName: "netflix",
+    isActive: true,
+  },
+  {
+    link: "https://www.amazon.com",
+    imageName: "amazon",
+    isActive: true,
+  },
+  {
+    link: "https://www.twitter.com",
+    imageName: "twitter",
     isActive: true,
   },
 ];
