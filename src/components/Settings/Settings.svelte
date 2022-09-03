@@ -11,6 +11,7 @@
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
   let isPanelShown = false;
+  let isPeekPressed = false;
   let tabIndex = 0;
 
   const toggleSettingsPanel = () => {
@@ -238,6 +239,18 @@
   }
 </script>
 
+{#if isPanelShown}
+  <button
+    on:mousedown={() => {isPeekPressed = true}}
+    on:mouseup={() => {isPeekPressed = false}}
+    class="highZIndex"
+    id="peekButton"
+    aria-label="Peek behind"
+  >
+    <i class="fas fa-eye" />
+  </button>
+{/if}
+
 <button
   on:click={toggleSettingsPanel}
   id="settingsButton"
@@ -248,7 +261,7 @@
 </button>
 
 {#if isPanelShown}
-  <div id="settingsPanel" transition:slide>
+  <div id="settingsPanel" transition:slide class:peekOpacity={isPeekPressed}>
     <div id="settingsHeader">
       <button
         class="settingsHeaderButton"
@@ -301,6 +314,9 @@
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     width: 100%;
   }
+  .peekOpacity {
+    opacity: 0;
+  }
   #settingsButton {
     position: absolute;
     top: 2vh;
@@ -320,6 +336,22 @@
   }
   #settingsButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
+  }
+  #peekButton {
+    position: absolute;
+    top: 2vh;
+    right: 65px;
+    width: 30px;
+    height: 30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+    border-radius: 100%;
+    border: 0;
+    cursor: pointer;
   }
   #settingsPanel {
     padding: 20px 40px;
