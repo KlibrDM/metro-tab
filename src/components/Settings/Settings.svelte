@@ -1,6 +1,7 @@
 <script>
   import { userData } from "../../store";
   import { knownPages } from "../../data/config";
+  import * as CONFIG from "../../data/config";
   import { saveConfig, saveBackground, saveBackgroundColor } from "../../data/storage";
 
   import SettingsForm from "./SettingsForm.svelte";
@@ -49,6 +50,31 @@
       state.coverColor = settingsData.coverColor;
       state.coverTextColor = settingsData.coverTextColor;
       state.pages = settingsData.pages;
+      return state;
+    });
+
+    //Save to localstorage
+    saveConfig(settingsData);
+  };
+
+  const resetVisuals = () => {
+    //Update state
+    userData.update((state) => {
+      state.yourName = escapeHTML(CONFIG.yourName);
+      state.showCover = CONFIG.showCover;
+      state.clockBackground = CONFIG.clockBackground;
+      state.tileZoom = CONFIG.tileZoom;
+      state.tileGrow = CONFIG.tileGrow;
+      state.tileMinWidth = CONFIG.tileMinWidth;
+      state.tileHeight = CONFIG.tileHeight;
+      state.tileGap = CONFIG.tileGap;
+      state.tileBorder = CONFIG.tileBorder;
+      state.tileBorderRadius = CONFIG.tileBorderRadius;
+      state.tileBorderColor = CONFIG.tileBorderColor;
+      state.navbarOpacity = CONFIG.navbarOpacity;
+      state.navbarColor = CONFIG.navbarColor;
+      state.coverColor = CONFIG.coverColor;
+      state.coverTextColor = CONFIG.coverTextColor;
       return state;
     });
 
@@ -261,7 +287,7 @@
       {:else if tabIndex === 1}
         <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}
-        <SettingsForm {settingsData} {saveSettings} bind:unsavedSettings={unsavedSettings} />
+        <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 3}
         <ImportExport {settingsData} {saveSettings} />
       {/if}

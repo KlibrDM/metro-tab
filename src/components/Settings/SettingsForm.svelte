@@ -3,6 +3,7 @@
 
   export let settingsData;
   export let saveSettings;
+  export let resetVisuals;
   export let unsavedSettings;
 
   let tileBorderColor = toHex(settingsData.tileBorderColor);
@@ -423,12 +424,18 @@
     </div>
   </div>
 
-  <div class="settingsButtonWithError">
-    <button type="submit" class="saveSettingsButton">Save</button>
+  <div class="settingBottomSection">
+    <div class="settingsButtonWithError">
+      <button type="submit" class="saveSettingsButton">Save</button>
 
-    {#if unsavedSettings}
-      <small class="unsavedWarning">You have unsaved settings.</small>
-    {/if}
+      {#if unsavedSettings}
+        <small class="unsavedWarning">You have unsaved settings.</small>
+      {/if}
+    </div>
+
+    <div class="settingsResetButton">
+      <button type="button" class="resetSettingsButton" on:click={resetVisuals}>Reset to default settings</button>
+    </div>
   </div>
 </form>
 
@@ -522,6 +529,10 @@
   .settingsColorInput:hover {
     background-color: rgb(225, 225, 225);
   }
+  .settingBottomSection{
+    display: flex;
+    justify-content: space-between;
+  }
   .settingsButtonWithError {
     display: flex;
     align-items: center;
@@ -539,6 +550,19 @@
   }
   .saveSettingsButton:hover {
     background-color: #0c2;
+  }
+  .resetSettingsButton {
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+    background-color: #fff;
+    transition: 0.3s;
+  }
+  .resetSettingsButton:hover {
+    background-color: #f3f3f3;
   }
   .unsavedWarning {
     display: block;
