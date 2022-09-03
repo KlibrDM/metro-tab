@@ -1,6 +1,5 @@
 <script>
   import { userData } from "../../store";
-  import { knownPages } from "../../data/config";
   import * as CONFIG from "../../data/config";
   import { saveConfig, saveBackground, saveBackgroundColor } from "../../data/storage";
 
@@ -177,7 +176,7 @@
     //Get page name from provided link
     let name = extractWebsiteName(link).toLowerCase();
 
-    if (knownPages.includes(name)) {
+    if (CONFIG.knownPages.includes(name)) {
       //Return the image name if the extension has it
       return name;
     } else if ("1234567890qwertyuiopasdfghjklzxcvbnm".includes(name[0])) {
