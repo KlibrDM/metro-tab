@@ -243,6 +243,7 @@
   <button
     on:mousedown={() => {isPeekPressed = true}}
     on:mouseup={() => {isPeekPressed = false}}
+    on:mouseleave={() => {isPeekPressed = false}}
     class="highZIndex"
     id="peekButton"
     aria-label="Peek behind"
