@@ -434,7 +434,16 @@
     </div>
 
     <div class="settingsResetButton">
-      <button type="button" class="resetSettingsButton" on:click={resetVisuals}>Reset to default settings</button>
+      <button
+        type="button"
+        class="resetSettingsButton"
+        on:click={() => {
+          resetVisuals();
+          unsavedSettings = false;
+        }}
+      >
+        Reset to default settings
+      </button>
     </div>
   </div>
 </form>
