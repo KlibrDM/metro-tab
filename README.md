@@ -4,7 +4,12 @@
 
 Live preview: https://klibrdm.github.io/metro-tab/
 
-Please note that the top-left `QuickNav` buttons will not work unless used as an extension.
+### Notes
+
+- The application is fully optimized for Chrome & Firefox and will not work on Edge, IE, Safari or any other browsers that don't support next-gen AVIF images
+- The top-left `QuickNav` buttons will not work unless used as an extension.
+
+### Description
 
 A modern and simple speed dial that lets you bring all the websites you love to the new tab page. It offers quick access to your notes and to Chrome's history, downloads, bookmarks and extensions. It comes with a variety of settings and options to customize the featured pages and the possibility to upload custom backgrounds.
 ![screenshot](https://i.imgur.com/QBe8rCR.jpg)
