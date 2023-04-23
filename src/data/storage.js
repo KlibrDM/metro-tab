@@ -39,6 +39,24 @@ export const saveNotes = (notes) => {
   localStorage.setItem("notes", JSON.stringify(notes));
 };
 
+export const saveTileImage = (link, image) => {
+  localStorage.setItem(link, image);
+}
+
+export const getTileImage = (link) => {
+  return localStorage.getItem(link);
+}
+
+export const getTileImageLinks = () => {
+  let links = [];
+  for (let key in localStorage) {
+    if (key.indexOf("http") !== -1) {
+      links.push(key);
+    }
+  }
+  return links;
+}
+
 /*Load data from localstorage
 If the extension can't get the item from localstorage, use the value from config
 (simple || if not bool, ? : if bool)*/
@@ -145,12 +163,35 @@ if (legacyPagesCookie != null) {
       link: page[0],
       imageName: page[1],
       isActive: page[2] ? true : false,
+      tileImageType: page[1].length > 1 ? 'predefined' : 'none',
+      tileName: page[1][0].toUpperCase() + page[1].slice(1),
+      backgroundColor: "#3a99ff",
+      textColor: "#ffffff"
     };
   });
 
   data.pages = oldPages;
   eraseCookie("pages");
   saveConfig(data);
+}
+
+/* Add new properties to old pages (missing on version 2.1 and before) */
+if (data.pages) {
+  data.pages.forEach(page => {
+    if (!page.hasOwnProperty("tileImageType")) {
+      page.tileImageType = page.imageName.length > 1 ? 'predefined' : 'none';
+    }
+    if (!page.hasOwnProperty("tileName")) {
+      page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
+    }
+    if (!page.hasOwnProperty("backgroundColor")) {
+      page.backgroundColor = "#3a99ff";
+    }
+    if (!page.hasOwnProperty("textColor")) {
+      page.textColor = "#ffffff";
+    }
+  });
+  localStorage.setItem("pages", JSON.stringify(data.pages));
 }
 
 //After loading the data, set it to state

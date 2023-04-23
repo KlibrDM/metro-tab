@@ -25,41 +25,73 @@ export const pages = [
     link: "https://www.google.com",
     imageName: "google",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Google",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.facebook.com",
     imageName: "facebook",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Facebook",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.youtube.com",
     imageName: "youtube",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "YouTube",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.yahoo.com",
     imageName: "yahoo",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Yahoo",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.reddit.com",
     imageName: "reddit",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Reddit",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.netflix.com/browse",
     imageName: "netflix",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Netflix",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.amazon.com",
     imageName: "amazon",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Amazon",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
   {
     link: "https://www.twitter.com",
     imageName: "twitter",
     isActive: true,
+    tileImageType: 'predefined',
+    tileName: "Twitter",
+    backgroundColor: "#3a99ff",
+    textColor: "#ffffff"
   },
 ];
 

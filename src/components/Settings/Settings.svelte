@@ -119,12 +119,17 @@
 
     //Will add http:// if user didn't already do it
     let linkToAdd = checkWebsite(addPageInput);
+    let imageName = getImageNameFor(linkToAdd);
 
     //Update pages state
     settingsData.pages.push({
       link: escapeHTML(linkToAdd),
-      imageName: getImageNameFor(linkToAdd),
+      imageName: imageName,
       isActive: true,
+      tileImageType: imageName.length > 1 ? 'predefined' : 'none',
+      tileName: imageName[0].toUpperCase() + imageName.slice(1),
+      backgroundColor: "#3a99ff",
+      textColor: "#ffffff"
     });
 
     //Trigger list re-render

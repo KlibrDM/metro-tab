@@ -1,4 +1,5 @@
 <script>
+  import { getTileImage } from "../data/storage";
   import { clearOldExtension } from "../data/tools";
   import { userData } from "../store";
 
@@ -36,7 +37,16 @@
             href={page.link}
             class="pageButton"
             aria-label={page.link}
-            style="background-image: url('static/images/thumbnails/{clearOldExtension(page.imageName)}.avif');
+            style="{
+                page.tileImageType === 'custom' && getTileImage(page.link)
+                ? 'background-image: url(' + (getTileImage(page.link) || '') + ')'
+                : page.tileImageType !== 'none'
+                  ? 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif")'
+                  : ''
+              };
+              background-color: {page.backgroundColor};
+              color: {page.textColor};
+              font-size: {tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
@@ -45,7 +55,9 @@
               {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
               {!tileZoom ? "animation: none !important" : ''}
               "
-          />
+          >
+            {page.tileImageType === 'none' ? page.tileName : ''}
+          </a>
         {/if}
       {/each}
     </div>
@@ -72,6 +84,10 @@
     gap: 0px;
   }
   .pageButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     min-width: 180px;
     background-position: center;
     background-size: cover;

@@ -1,10 +1,12 @@
 <script>
+  import { getTileImage, getTileImageLinks, saveTileImage } from "../../data/storage";
+
   export let settingsData;
   export let saveSettings;
 
   let settings, fileInput;
-  let importPages = true, importBackground = true, importVisuals = true, importNotes = true;
-  let exportPages = true, exportBackground = true, exportVisuals = true, exportNotes = true;
+  let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true;
+  let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportNotes = true;
 
   const exportData = () => {
     //Create export object based on what the user wants to export
@@ -37,6 +39,12 @@
       exportDataObject.coverColor = settingsData.coverColor;
       exportDataObject.coverTextColor = settingsData.coverTextColor;
     }
+    if(exportTileImages){
+      const links = getTileImageLinks();
+      links.forEach(link => {
+        exportDataObject[link] = getTileImage(link);
+      });
+    }
 
     //Set the anchor tag to download the file
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportDataObject));
@@ -63,8 +71,27 @@
 
           if(settings.pages){
             settings.pages.forEach(page => {
-              if(!page.hasOwnProperty('link') || !page.hasOwnProperty('imageName') || !page.hasOwnProperty('isActive')){
+              if(!page.hasOwnProperty('link')
+                || !page.hasOwnProperty('imageName')
+                || !page.hasOwnProperty('isActive')){
                 errorsFound = true;
+              }
+
+              // Set defaults if missing
+              if(!errorsFound && !page.hasOwnProperty('tileImageType')){
+                page.tileImageType = page.imageName.length > 1 ? 'predefined' : 'none';
+              }
+
+              if(!errorsFound && !page.hasOwnProperty('tileName')){
+                page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
+              }
+
+              if(!errorsFound && !page.hasOwnProperty('backgroundColor')){
+                page.backgroundColor = "#3a99ff";
+              }
+
+              if(!errorsFound && !page.hasOwnProperty('textColor')){
+                page.textColor = "#ffffff";
               }
             });
           }
@@ -95,6 +122,18 @@
 
           if(!errorsFound){
             settingsToSave.notes = settings.notes;
+          }
+        }
+
+        //Import all valid tile images
+        if(importTileImages){
+          for(let key in settings) {
+            if(key.indexOf("http") !== -1) {
+              const image = settings[key];
+              if(typeof image === 'string' && image.length > 0){
+                saveTileImage(key, image);
+              }
+            }
           }
         }
 
@@ -389,6 +428,17 @@
     <div>
       <input
         type="checkbox"
+        id="import_tileImages"
+        name="import_tileImages"
+        class="settingsCheckbox"
+        bind:checked={importTileImages}
+      />
+      <label for="import_tileImages">Import Tile Images</label>
+    </div>
+
+    <div>
+      <input
+        type="checkbox"
         id="import_background"
         name="import_background"
         class="settingsCheckbox"
@@ -453,6 +503,17 @@
         bind:checked={exportPages}
       />
       <label for="export_pages">Export Pages</label>
+    </div>
+
+    <div>
+      <input
+        type="checkbox"
+        id="export_tileImages"
+        name="export_tileImages"
+        class="settingsCheckbox"
+        bind:checked={exportTileImages}
+      />
+      <label for="export_tileImages">Export Tile Images</label>
     </div>
 
     <div>
