@@ -7,6 +7,9 @@
   export let addPage;
   export let saveSettings;
   export let movePage;
+  export let getImageNameFor;
+  export let checkWebsite;
+  export let escapeHTML;
   export let unsavedPages;
   let addPageInput = ""; //Binded to input
 
@@ -59,7 +62,23 @@
               <i class="fa-solid fa-angle-down" />
             </button>
           </div>
-          <label for="page">{page.link}</label>
+          <input
+            type="text"
+            id="set_newLinkBox"
+            class="settingsPageLinkInput"
+            bind:value={page.link}
+            placeholder="Type the address of the page"
+            maxlength="500"
+            required={true}
+            on:input={() => {
+              unsavedPages = true;
+            }}
+            on:change={() => {
+              page.link = escapeHTML(checkWebsite(page.link));
+              page.imageName = getImageNameFor(page.link);
+              page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
+            }}
+          />
         </div>
         <div class="settingsPageListButtons">
           <i on:click={() => { modalActive = true; selectedIndex = index; }} class="fa-solid fa-image pointer" />
@@ -311,8 +330,12 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-grow: 1;
+    padding-right: 8px;
   }
-  .settingsPagesListPage label {
+  .settingsPageLinkInput {
+    width: 100%;
+    border: 0;
     overflow-wrap: anywhere;
   }
   .settingsPagesMoveButtons {

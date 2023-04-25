@@ -222,14 +222,14 @@
     return sitename;
   };
 
-  let entityMap = {
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-    "`": "&#x60;",
-  };
   function escapeHTML(string) {
+    let entityMap = {
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+      "`": "&#x60;",
+    };
     return String(string).replace(/[<>"'`]/g, function (s) {
       return entityMap[s];
     });
@@ -301,7 +301,7 @@
     <hr/>
     <div id="settingsContent">
       {#if tabIndex === 0}
-        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} bind:unsavedPages={unsavedSettings} />
+        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {getImageNameFor} {checkWebsite} {escapeHTML} bind:unsavedPages={unsavedSettings} />
       {:else if tabIndex === 1}
         <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}
