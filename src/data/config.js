@@ -576,4 +576,10 @@ export const knownPages = [
   "calendar.google",
   "photos.google",
   "figma",
+
+  //V2.2
+  "chatgpt",
+  "chat.openai",
+  "openai",
+  "platform.openai",
 ];
