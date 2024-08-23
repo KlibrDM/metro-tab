@@ -2,12 +2,14 @@
 
 [Available on Chrome Web Store](https://chrome.google.com/webstore/detail/metro-speed-dial-modern-n/onhhmnkghemlcnlglcnjkhebiclbklpl?hl=en)
 
+[Available on Firefox Browser Add-ons](https://addons.mozilla.org/en-US/firefox/addon/metro-speed-dial-new-tab-page/)
+
 Live preview: https://klibrdm.github.io/metro-tab/
 
 ### Notes
 
-- The application is fully optimized for Chrome & Firefox and will not work on Edge, IE, Safari or any other browsers that don't support next-gen AVIF images
-- The top-left `QuickNav` buttons will not work unless used as an extension.
+- The application is fully optimized for Chrome & Firefox and will not work on browsers that don't support next-gen AVIF images.
+- The top-left `QuickNav` buttons are Chrome specific and will not work unless used as an extension.
 
 ### Description
 
@@ -48,6 +50,6 @@ A modern and simple speed dial that lets you bring all the websites you love to 
 
 ![screenshot](https://i.imgur.com/jW3NEx0.jpg)
 
-### 🎉 Round tiles 🎉
+### Round tiles
 
 ![screenshot](https://i.imgur.com/r6oLZEh.jpg)
