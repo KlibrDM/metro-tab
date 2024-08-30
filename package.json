@@ -1,6 +1,6 @@
 {
   "name": "metro-tab-svelte",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "scripts": {
     "build": "rollup -c",
