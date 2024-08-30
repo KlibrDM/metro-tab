@@ -18,6 +18,80 @@ export const navbarColor = { r: 58, g: 153, b: 255 };
 export const coverColor = { r: 58, g: 153, b: 255 };
 export const coverTextColor = { r: 255, g: 255, b: 255 };
 
+export const searchEngine = "google";
+export const searchEngineList = [
+  {
+    name: "google",
+    label: "Google",
+    link: "https://www.google.com/search?q=",
+  },
+  {
+    name: "bing",
+    label: "Bing",
+    link: "https://www.bing.com/search?q=",
+  },
+  {
+    name: "duckduckgo",
+    label: "DuckDuckGo",
+    link: "https://duckduckgo.com/?q=",
+  },
+  {
+    name: "bravesearch",
+    label: "Brave Search",
+    link: "https://search.brave.com/search?q=",
+  },
+  {
+    name: "yahoo",
+    label: "Yahoo",
+    link: "https://search.yahoo.com/search?p=",
+  },
+  {
+    name: "startpage",
+    label: "Startpage",
+    link: "https://www.startpage.com/do/dsearch?query=",
+  },
+  {
+    name: "ecosia",
+    label: "Ecosia",
+    link: "https://www.ecosia.org/search?q=",
+  },
+  {
+    name: "aol",
+    label: "AOL",
+    link: "https://search.aol.com/aol/search?q=",
+  },
+  {
+    name: "yandex",
+    label: "Yandex",
+    link: "https://yandex.com/search/?text=",
+  },
+  {
+    name: "baidu",
+    label: "Baidu",
+    link: "https://www.baidu.com/s?wd=",
+  },
+  {
+    name: "naver",
+    label: "Naver",
+    link: "https://search.naver.com/search.naver?query=",
+  },
+  {
+    name: "swisscows",
+    label: "Swisscows",
+    link: "https://swisscows.com/web?query=",
+  },
+  {
+    name: "qwant",
+    label: "Qwant",
+    link: "https://www.qwant.com/?q=",
+  },
+  {
+    name: "perplexity",
+    label: "Perplexity AI",
+    link: "https://www.perplexity.ai/search/new?q=",
+  }
+];
+
 export const notes = [];
 
 export const pages = [

@@ -2,12 +2,15 @@
   import Clock from "./Clock.svelte";
   import RandomGithub from "./RandomGithub.svelte";
   import { userData } from "../../store";
+  import { searchEngineList } from "../../data/config";
 
   let searchQuery = ""; //Binded to input
   let navbarOpacity;
   let navbarColor;
+  let searchEngine;
 
   userData.subscribe((data) => {
+    searchEngine = data.searchEngine;
     navbarOpacity = data.navbarOpacity;
     navbarColor = data.navbarColor;
   });
@@ -15,9 +18,21 @@
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery !== "") {
-      window.location.assign(
-        "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+      const selectedSearchEngine = searchEngineList.find(
+        (item) => item.name === searchEngine
       );
+
+      if (selectedSearchEngine) {
+        window.location.assign(
+          selectedSearchEngine.link + escapeHTML(searchQuery)
+        );
+      }
+      else {
+        // Fall back to google if search engine not found
+        window.location.assign(
+          "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+        );
+      }
     }
   };
 

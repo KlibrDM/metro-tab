@@ -23,6 +23,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("coverTextColor", JSON.stringify(data.coverTextColor));
   localStorage.setItem("notes", JSON.stringify(data.notes));
   localStorage.setItem("pages", JSON.stringify(data.pages));
+  localStorage.setItem("searchEngine", data.searchEngine);
 };
 
 export const saveBackground = (bg) => {
@@ -41,6 +42,10 @@ export const saveNotes = (notes) => {
 
 export const saveTileImage = (link, image) => {
   localStorage.setItem(link, image);
+}
+
+export const saveSearchEngine = (engine) => {
+  localStorage.setItem("searchEngine", engine);
 }
 
 export const getTileImage = (link) => {
@@ -146,6 +151,10 @@ const data = {
   pages:
     JSON.parse(localStorage.getItem("pages")) ||
     CONFIG.pages,
+
+  searchEngine:
+    localStorage.getItem("searchEngine") ||
+    CONFIG.searchEngine,
 };
 
 /*Import pages data from legacy 1.1 version

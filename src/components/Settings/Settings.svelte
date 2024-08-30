@@ -1,12 +1,13 @@
 <script>
   import { userData } from "../../store";
   import * as CONFIG from "../../data/config";
-  import { saveConfig, saveBackground, saveBackgroundColor } from "../../data/storage";
+  import { saveConfig, saveBackground, saveBackgroundColor, saveSearchEngine } from "../../data/storage";
 
   import SettingsForm from "./SettingsForm.svelte";
   import Backgrounds from "./Backgrounds.svelte";
   import Pages from "./Pages.svelte";
   import ImportExport from "./ImportExport.svelte";
+  import SearchEngine from "./SearchEngine.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -80,6 +81,16 @@
 
     //Save to localstorage
     saveConfig(settingsData);
+  };
+
+  const changeSearchEngine = (engine) => {
+    userData.update((state) => {
+      state.searchEngine = engine;
+      return state;
+    });
+
+    //Save to localstorage
+    saveSearchEngine(engine);
   };
 
   const changeBackground = (bg) => {
@@ -295,6 +306,13 @@
         class:headerSelected={tabIndex === 3}
         on:click={() => {changeTab(3);}}
       >
+        Search Engine
+      </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 4}
+        on:click={() => {changeTab(4);}}
+      >
         Import/Export
       </button>
     </div>
@@ -307,6 +325,8 @@
       {:else if tabIndex === 2}
         <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 3}
+        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} />
+      {:else if tabIndex === 4}
         <ImportExport {settingsData} {saveSettings} />
       {/if}
     </div>

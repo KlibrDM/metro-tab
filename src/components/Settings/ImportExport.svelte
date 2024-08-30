@@ -5,8 +5,8 @@
   export let saveSettings;
 
   let settings, fileInput;
-  let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true;
-  let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportNotes = true;
+  let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true, importSearchEngine = true;
+  let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportNotes = true, exportSearchEngine = true;
 
   const exportData = () => {
     //Create export object based on what the user wants to export
@@ -16,6 +16,9 @@
     }
     if(exportNotes){
       exportDataObject.notes = settingsData.notes;
+    }
+    if(exportSearchEngine){
+      exportDataObject.searchEngine = settingsData.searchEngine;
     }
     if(exportBackground){
       exportDataObject.isBackgroundSolid = settingsData.isBackgroundSolid;
@@ -122,6 +125,24 @@
 
           if(!errorsFound){
             settingsToSave.notes = settings.notes;
+          }
+        }
+
+        //Check search engine for errors then import
+        if(importSearchEngine){
+          let errorsFound = false;
+
+          if(settings.hasOwnProperty('searchEngine')){
+            if(typeof settings.searchEngine !== 'string'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(!errorsFound){
+            settingsToSave.searchEngine = settings.searchEngine;
           }
         }
 
@@ -461,6 +482,17 @@
     <div>
       <input
         type="checkbox"
+        id="import_searchEngine"
+        name="import_searchEngine"
+        class="settingsCheckbox"
+        bind:checked={importSearchEngine}
+      />
+      <label for="import_searchEngine">Import Search Engine</label>
+    </div>
+
+    <div>
+      <input
+        type="checkbox"
         id="import_notes"
         name="import_notes"
         class="settingsCheckbox"
@@ -536,6 +568,17 @@
         bind:checked={exportVisuals}
       />
       <label for="export_visuals">Export Visuals</label>
+    </div>
+
+    <div>
+      <input
+        type="checkbox"
+        id="export_searchEngine"
+        name="export_searchEngine"
+        class="settingsCheckbox"
+        bind:checked={exportSearchEngine}
+      />
+      <label for="export_searchEngine">Export Search Engine</label>
     </div>
 
     <div>
