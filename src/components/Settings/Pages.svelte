@@ -13,6 +13,11 @@
   export let unsavedPages;
   let addPageInput = ""; //Binded to input
 
+  let allowDrag = false; // Allow drag and drop only when the mouse is over the drag handle
+  let draggedItem = undefined;
+  let draggedItemIndex = undefined;
+  let draggedOverIndex = undefined;
+
   // Tile image modal
   let modalActive = false;
   let selectedIndex = -1;
@@ -36,62 +41,116 @@
       }
     };
   };
+
+  const handleDragEnd = (index) => {
+    // If the dragged item is dropped on itself, return early
+    if (index === draggedOverIndex) {
+      draggedItem = undefined;
+      draggedItemIndex = undefined;
+      draggedOverIndex = undefined;
+      return;
+    }
+
+    if (draggedItemIndex !== undefined) {
+      // Remove the dragged item from the list
+      settingsData.pages.splice(draggedItemIndex, 1);
+
+      // Insert the dragged item at the new position
+      settingsData.pages.splice(draggedOverIndex, 0, draggedItem);
+
+      settingsData.pages = [...settingsData.pages];
+      unsavedPages = true;
+
+      draggedItem = undefined;
+      draggedItemIndex = undefined;
+      draggedOverIndex = undefined;
+    }
+  }
 </script>
 
 <h2>Pages</h2>
 <div id="settingsPages">
   <div id="settingsPagesList">
     {#each settingsData.pages as page, index}
-      <div class="settingsPagesListPage">
-        <div class="settingsPagesGroupLeft">
-          <div class="settingsPagesMoveButtons">
-            <button
-              on:click={() => {
-                movePage(index, "up");
+      <div
+        class="settingsPagesListPageContainer"
+        draggable={allowDrag}
+        on:dragstart={() => { draggedItem = page; draggedItemIndex = index; }}
+        on:dragend={() => handleDragEnd(index)}
+        on:dragover={(e) => { e.preventDefault(); draggedOverIndex = index; }}
+        on:dragenter={(e) => { e.preventDefault(); }}
+      >
+        <div
+          class="settingsPagesListPage"
+          style="
+            border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
+            background: {
+              index === draggedItemIndex ? 'linear-gradient(to right, red, transparent 50px)' :
+              index === draggedOverIndex ?
+                draggedItemIndex !== undefined && draggedItemIndex > index ?
+                'linear-gradient(135deg, #3a99ff, transparent 40px)' :
+                'linear-gradient(45deg, #3a99ff, transparent 40px)' :
+              'unset'
+            };
+          "
+        >
+          <div class="settingsPagesGroupLeft">
+            <div class="settingsDragHandle"
+              on:focus={() => { allowDrag = true; }}
+              on:mouseover={() => { allowDrag = true; }}
+              on:mouseleave={() => { allowDrag = false; }}
+            >
+              <i class="fa-solid fa-grip-vertical" />
+            </div>
+            <div class="settingsPagesMoveButtons">
+              <button
+                on:click={() => {
+                  movePage(index, "up");
+                  unsavedPages = true;
+                }}
+              >
+                <i class="fa-solid fa-angle-up" />
+              </button>
+              <button
+                on:click={() => {
+                  movePage(index, "down");
+                  unsavedPages = true;
+                }}
+              >
+                <i class="fa-solid fa-angle-down" />
+              </button>
+            </div>
+            <input
+              type="text"
+              id="set_newLinkBox"
+              class="settingsPageLinkInput"
+              bind:value={page.link}
+              placeholder="Type the address of the page"
+              maxlength="500"
+              required={true}
+              on:input={() => {
                 unsavedPages = true;
               }}
-            >
-              <i class="fa-solid fa-angle-up" />
-            </button>
-            <button
-              on:click={() => {
-                movePage(index, "down");
-                unsavedPages = true;
+              on:change={() => {
+                page.link = escapeHTML(checkWebsite(page.link));
+                page.imageName = getImageNameFor(page.link);
+                page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
               }}
-            >
-              <i class="fa-solid fa-angle-down" />
-            </button>
+            />
           </div>
-          <input
-            type="text"
-            id="set_newLinkBox"
-            class="settingsPageLinkInput"
-            bind:value={page.link}
-            placeholder="Type the address of the page"
-            maxlength="500"
-            required={true}
-            on:input={() => {
-              unsavedPages = true;
-            }}
-            on:change={() => {
-              page.link = escapeHTML(checkWebsite(page.link));
-              page.imageName = getImageNameFor(page.link);
-              page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
-            }}
-          />
-        </div>
-        <div class="settingsPageListButtons">
-          <i on:click={() => { modalActive = true; selectedIndex = index; }} class="fa-solid fa-image pointer" />
-          <input type="checkbox" name="page" bind:checked={page.isActive} />
-          <input
-            on:click={() => {
-              deletePage(index);
-              unsavedPages = true;
-            }}
-            type="button"
-            class="pageDeleteButton"
-            value="X"
-          />
+          <div class="settingsPageListButtons">
+            <i on:click={() => { modalActive = true; selectedIndex = index; }} class="fa-solid fa-image pointer" />
+            <input type="checkbox" name="page" bind:checked={page.isActive} />
+            <input
+              on:click={() => {
+                deletePage(index);
+                unsavedPages = true;
+              }}
+              type="button"
+              class="pageDeleteButton"
+              value="X"
+            />
+          </div>
         </div>
       </div>
     {/each}
@@ -315,8 +374,13 @@
   #settingsPagesList {
     display: flex;
     flex-direction: column;
-    gap: 5px;
     overflow-y: auto;
+  }
+  .settingsPagesListPageContainer:not(:first-child) {
+    padding-top: 3px;
+  }
+  .settingsPagesListPageContainer:not(:last-child) {
+    padding-bottom: 2px;
   }
   .settingsPagesListPage {
     display: flex;
@@ -325,6 +389,9 @@
     border-radius: 10px;
     background-color: white;
     border: 1px solid lightgray;
+  }
+  .settingsDragHandle {
+    margin-left: 4px;
   }
   .settingsPagesGroupLeft {
     display: flex;
