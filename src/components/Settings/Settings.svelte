@@ -125,7 +125,19 @@
     });
   };
 
-  const addPage = (addPageInput, event) => {
+  const createGroup = () => {
+    settingsData.pages.push({
+      name: "New Group",
+      isGroup: true,
+      isActive: true,
+      pages: [],
+    });
+
+    //Trigger list re-render
+    settingsData.pages = settingsData.pages;
+  }
+
+  const addPage = (list, addPageInput, event) => {
     event.preventDefault();
 
     //Will add http:// if user didn't already do it
@@ -133,7 +145,7 @@
     let imageName = getImageNameFor(linkToAdd);
 
     //Update pages state
-    settingsData.pages.push({
+    list.push({
       link: escapeHTML(linkToAdd),
       imageName: imageName,
       isActive: true,
@@ -147,34 +159,34 @@
     settingsData.pages = settingsData.pages;
   };
 
-  const deletePage = (index) => {
+  const deletePage = (list, index) => {
     //Delete 1 element from specified index
-    settingsData.pages.splice(index, 1);
+    list.splice(index, 1);
 
     //Trigger list re-render
     settingsData.pages = settingsData.pages;
   };
 
-  const movePage = (index, direction) => {
+  const movePage = (list, index, direction) => {
     //Return if the move is not possible
     if (direction === "up" && index === 0) {
       return;
     }
-    if (direction === "down" && index === settingsData.pages.length - 1) {
+    if (direction === "down" && index === list.length - 1) {
       return;
     }
 
     //Get current item
-    let item = settingsData.pages[index];
+    let item = list[index];
 
     //Remove current item from old location
-    settingsData.pages.splice(index, 1);
+    list.splice(index, 1);
 
     //Add current item in the direction
     if (direction === "up") {
-      settingsData.pages.splice(index - 1, 0, item);
+      list.splice(index - 1, 0, item);
     } else if (direction === "down") {
-      settingsData.pages.splice(index + 1, 0, item);
+      list.splice(index + 1, 0, item);
     }
 
     //Trigger list re-render
@@ -319,7 +331,7 @@
     <hr/>
     <div id="settingsContent">
       {#if tabIndex === 0}
-        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {getImageNameFor} {checkWebsite} {escapeHTML} bind:unsavedPages={unsavedSettings} />
+        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} {getImageNameFor} {checkWebsite} {escapeHTML} bind:unsavedPages={unsavedSettings} />
       {:else if tabIndex === 1}
         <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 2}

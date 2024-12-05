@@ -17,6 +17,9 @@ export const saveConfig = (data) => {
   localStorage.setItem("tileBorder", data.tileBorder);
   localStorage.setItem("tileBorderRadius", data.tileBorderRadius);
   localStorage.setItem("tileBorderColor", JSON.stringify(data.tileBorderColor));
+  localStorage.setItem("groupTileGap", data.groupTileGap);
+  localStorage.setItem("groupTileBorderRadius", data.groupTileBorderRadius);
+  localStorage.setItem("groupTileGrow", data.groupTileGrow);
   localStorage.setItem("navbarOpacity", data.navbarOpacity);
   localStorage.setItem("navbarColor", JSON.stringify(data.navbarColor));
   localStorage.setItem("coverColor", JSON.stringify(data.coverColor));
@@ -128,6 +131,19 @@ const data = {
     JSON.parse(localStorage.getItem("tileBorderColor")) ||
     CONFIG.tileBorderColor,
 
+  groupTileGap:
+    localStorage.getItem("groupTileGap") ||
+    CONFIG.groupTileGap,
+
+  groupTileBorderRadius:
+    localStorage.getItem("groupTileBorderRadius") ||
+    CONFIG.groupTileBorderRadius,
+
+  groupTileGrow:
+    localStorage.getItem("groupTileGrow") === null
+    ? CONFIG.groupTileGrow
+    : localStorage.getItem("groupTileGrow") === "true",
+
   navbarOpacity:
     localStorage.getItem("navbarOpacity") ||
     CONFIG.navbarOpacity,
@@ -187,6 +203,10 @@ if (legacyPagesCookie != null) {
 /* Add new properties to old pages (missing on version 2.1 and before) */
 if (data.pages) {
   data.pages.forEach(page => {
+    if (page.isGroup) {
+      return;
+    }
+
     if (!page.hasOwnProperty("tileImageType")) {
       page.tileImageType = page.imageName.length > 1 ? 'predefined' : 'none';
     }

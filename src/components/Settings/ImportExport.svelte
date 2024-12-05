@@ -37,6 +37,9 @@
       exportDataObject.tileBorder = settingsData.tileBorder;
       exportDataObject.tileBorderRadius = settingsData.tileBorderRadius;
       exportDataObject.tileBorderColor = settingsData.tileBorderColor;
+      exportDataObject.groupTileGap = settingsData.groupTileGap;
+      exportDataObject.groupTileBorderRadius = settingsData.groupTileBorderRadius;
+      exportDataObject.groupTileGrow = settingsData.groupTileGrow;
       exportDataObject.navbarOpacity = settingsData.navbarOpacity;
       exportDataObject.navbarColor = settingsData.navbarColor;
       exportDataObject.coverColor = settingsData.coverColor;
@@ -74,27 +77,61 @@
 
           if(settings.pages){
             settings.pages.forEach(page => {
-              if(!page.hasOwnProperty('link')
-                || !page.hasOwnProperty('imageName')
-                || !page.hasOwnProperty('isActive')){
-                errorsFound = true;
-              }
+              if(page.isGroup){
+                // Handle group import
+                if(!page.hasOwnProperty('name') || !page.hasOwnProperty('pages') || !Array.isArray(page.pages)){
+                  errorsFound = true;
+                }
 
-              // Set defaults if missing
-              if(!errorsFound && !page.hasOwnProperty('tileImageType')){
-                page.tileImageType = page.imageName.length > 1 ? 'predefined' : 'none';
-              }
+                page.pages.forEach(subPage => {
+                  if(!subPage.hasOwnProperty('link')
+                    || !subPage.hasOwnProperty('imageName')
+                    || !subPage.hasOwnProperty('isActive')){
+                    errorsFound = true;
+                  }
 
-              if(!errorsFound && !page.hasOwnProperty('tileName')){
-                page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
-              }
+                  // Set defaults if missing
+                  if(!errorsFound && !subPage.hasOwnProperty('tileImageType')){
+                    subPage.tileImageType = subPage.imageName.length > 1 ? 'predefined' : 'none';
+                  }
 
-              if(!errorsFound && !page.hasOwnProperty('backgroundColor')){
-                page.backgroundColor = "#3a99ff";
-              }
+                  if(!errorsFound && !subPage.hasOwnProperty('tileName')){
+                    subPage.tileName = subPage.imageName[0].toUpperCase() + subPage.imageName.slice(1);
+                  }
 
-              if(!errorsFound && !page.hasOwnProperty('textColor')){
-                page.textColor = "#ffffff";
+                  if(!errorsFound && !subPage.hasOwnProperty('backgroundColor')){
+                    subPage.backgroundColor = "#3a99ff";
+                  }
+
+                  if(!errorsFound && !subPage.hasOwnProperty('textColor')){
+                    subPage.textColor = "#ffffff";
+                  }
+                });
+              }
+              else {
+                // Handle page import
+                if(!page.hasOwnProperty('link')
+                  || !page.hasOwnProperty('imageName')
+                  || !page.hasOwnProperty('isActive')){
+                  errorsFound = true;
+                }
+
+                // Set defaults if missing
+                if(!errorsFound && !page.hasOwnProperty('tileImageType')){
+                  page.tileImageType = page.imageName.length > 1 ? 'predefined' : 'none';
+                }
+
+                if(!errorsFound && !page.hasOwnProperty('tileName')){
+                  page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
+                }
+
+                if(!errorsFound && !page.hasOwnProperty('backgroundColor')){
+                  page.backgroundColor = "#3a99ff";
+                }
+
+                if(!errorsFound && !page.hasOwnProperty('textColor')){
+                  page.textColor = "#ffffff";
+                }
               }
             });
           }
@@ -301,6 +338,35 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('groupTileGap')){
+            settings.groupTileGap = parseFloat(settings.groupTileGap);
+            if(typeof settings.groupTileGap !== 'number' || settings.groupTileGap < 0 || settings.groupTileGap > 5){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('groupTileBorderRadius')){
+            settings.groupTileBorderRadius = parseFloat(settings.groupTileBorderRadius);
+            if(typeof settings.groupTileBorderRadius !== 'number' || settings.groupTileBorderRadius < 0 || settings.groupTileBorderRadius > 80){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('groupTileGrow')){
+            if(typeof settings.groupTileGrow !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('navbarOpacity')){
             settings.navbarOpacity = parseFloat(settings.navbarOpacity);
             if(typeof settings.navbarOpacity !== 'number' || settings.navbarOpacity < 0 || settings.navbarOpacity > 1){
@@ -415,6 +481,9 @@
             settingsToSave.tileBorder = settings.tileBorder;
             settingsToSave.tileBorderRadius = settings.tileBorderRadius;
             settingsToSave.tileBorderColor = settings.tileBorderColor;
+            settingsToSave.groupTileGap = settings.groupTileGap;
+            settingsToSave.groupTileBorderRadius = settings.groupTileBorderRadius;
+            settingsToSave.groupTileGrow = settings.groupTileGrow;
             settingsToSave.navbarOpacity = settings.navbarOpacity;
             settingsToSave.navbarColor = settings.navbarColor;
             settingsToSave.coverColor = settings.coverColor;
@@ -503,7 +572,8 @@
 
     <small>
       * Importing notes and pages will overwrite your existing ones<br>
-      * Export your current settings before importing, otherwise you won't be able to revert the changes
+      * Export your current settings before importing, otherwise you won't be able to revert the changes<br>
+      * Settings from older versions of the extension may not be fully compatible
     </small>
 
     <button

@@ -13,6 +13,9 @@ export const tileGap = 2;
 export const tileBorder = 0;
 export const tileBorderRadius = 1.5;
 export const tileBorderColor = { r: 58, g: 153, b: 255 };
+export const groupTileGap = 1;
+export const groupTileBorderRadius = 1.5;
+export const groupTileGrow = true;
 export const navbarOpacity = 0;
 export const navbarColor = { r: 58, g: 153, b: 255 };
 export const coverColor = { r: 58, g: 153, b: 255 };
@@ -150,15 +153,6 @@ export const pages = [
     textColor: "#ffffff"
   },
   {
-    link: "https://www.amazon.com",
-    imageName: "amazon",
-    isActive: true,
-    tileImageType: 'predefined',
-    tileName: "Amazon",
-    backgroundColor: "#3a99ff",
-    textColor: "#ffffff"
-  },
-  {
     link: "https://www.twitter.com",
     imageName: "twitter",
     isActive: true,
@@ -166,6 +160,31 @@ export const pages = [
     tileName: "Twitter",
     backgroundColor: "#3a99ff",
     textColor: "#ffffff"
+  },
+  {
+    name: "Shopping",
+    isGroup: true,
+    isActive: true,
+    pages: [
+      {
+        link: "https://www.amazon.com",
+        imageName: "amazon",
+        isActive: true,
+        tileImageType: 'predefined',
+        tileName: "Amazon",
+        backgroundColor: "#3a99ff",
+        textColor: "#ffffff"
+      },
+      {
+        link: "https://www.bestbuy.com",
+        imageName: "bestbuy",
+        isActive: true,
+        tileImageType: 'predefined',
+        tileName: "Bestbuy",
+        backgroundColor: "#3a99ff",
+        textColor: "#ffffff"
+      },
+    ]
   },
 ];
 

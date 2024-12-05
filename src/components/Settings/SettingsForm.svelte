@@ -329,6 +329,98 @@
 
     <div class="settingsInput">
       <div class="imagePlaceholder">
+        <img src="static/images/settings/s_group_tile_fill_space.png" alt="Set group tile fill space" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_groupTileGrow">Group tile fill space</label>
+        <input
+          type="checkbox"
+          id="set_groupTileGrow"
+          name="set_groupTileGrow"
+          class="settingsCheckbox"
+          bind:checked={settingsData.groupTileGrow}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_group_tile_gap.png" alt="Set group tile gap" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_groupTileGap">Group tile gap</label>
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="0.1"
+            class="settingsSlider"
+            bind:value={settingsData.groupTileGap}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+          <input
+            type="number"
+            min="0"
+            max="5"
+            step="0.1"
+            class="settingsNumberInput"
+            id="set_groupTileGap"
+            name="set_groupTileGap"
+            bind:value={settingsData.groupTileGap}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_group_tile_border_radius.png" alt="Set group tile border radius" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_groupTileBorderRadius">Group tile border radius</label>
+        <div class="settingsNumberSliderGroup">
+          <input
+            type="range"
+            min="0"
+            max="80"
+            step="0.1"
+            class="settingsSlider"
+            bind:value={settingsData.groupTileBorderRadius}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+          <input
+            type="number"
+            min="0"
+            max="80"
+            step="0.1"
+            class="settingsNumberInput"
+            id="set_groupTileBorderRadius"
+            name="set_groupTileBorderRadius"
+            bind:value={settingsData.groupTileBorderRadius}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
         <img src="static/images/settings/s_navbar_opacity.png" alt="Set navbar opacity" />
       </div>
       <hr/>
