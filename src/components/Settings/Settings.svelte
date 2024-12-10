@@ -38,6 +38,7 @@
       state.yourName = escapeHTML(settingsData.yourName);
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
+      state.clock24Hour = settingsData.clock24Hour;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
@@ -46,6 +47,9 @@
       state.tileBorder = settingsData.tileBorder;
       state.tileBorderRadius = settingsData.tileBorderRadius;
       state.tileBorderColor = settingsData.tileBorderColor;
+      state.groupTileGap = settingsData.groupTileGap;
+      state.groupTileBorderRadius = settingsData.groupTileBorderRadius;
+      state.groupTileGrow = settingsData.groupTileGrow;
       state.navbarOpacity = settingsData.navbarOpacity;
       state.navbarColor = settingsData.navbarColor;
       state.coverColor = settingsData.coverColor;
@@ -64,6 +68,7 @@
       state.yourName = escapeHTML(CONFIG.yourName);
       state.showCover = CONFIG.showCover;
       state.clockBackground = CONFIG.clockBackground;
+      state.clock24Hour = CONFIG.clock24Hour;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
       state.tileMinWidth = CONFIG.tileMinWidth;
@@ -72,6 +77,9 @@
       state.tileBorder = CONFIG.tileBorder;
       state.tileBorderRadius = CONFIG.tileBorderRadius;
       state.tileBorderColor = CONFIG.tileBorderColor;
+      state.groupTileGap = CONFIG.groupTileGap;
+      state.groupTileBorderRadius = CONFIG.groupTileBorderRadius;
+      state.groupTileGrow = CONFIG.groupTileGrow;
       state.navbarOpacity = CONFIG.navbarOpacity;
       state.navbarColor = CONFIG.navbarColor;
       state.coverColor = CONFIG.coverColor;

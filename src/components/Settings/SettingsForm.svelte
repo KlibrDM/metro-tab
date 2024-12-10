@@ -89,6 +89,26 @@
 
     <div class="settingsInput">
       <div class="imagePlaceholder">
+        <img src="static/images/settings/s_clock_24_hour.png" alt="Set 24 hour clock" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_clock24Hour">24 Hour Clock</label>
+        <input
+          type="checkbox"
+          id="set_clock24Hour"
+          name="set_clock24Hour"
+          class="settingsCheckbox"
+          bind:checked={settingsData.clock24Hour}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_zoom.png" alt="Set tile zoom on hover" />
       </div>
       <hr/>

@@ -29,6 +29,7 @@
       exportDataObject.yourName = settingsData.yourName;
       exportDataObject.showCover = settingsData.showCover;
       exportDataObject.clockBackground = settingsData.clockBackground;
+      exportDataObject.clock24Hour = settingsData.clock24Hour;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
       exportDataObject.tileMinWidth = settingsData.tileMinWidth;
@@ -270,6 +271,15 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('clock24Hour')){
+            if(typeof settings.clock24Hour !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('tileZoom')){
             if(typeof settings.tileZoom !== 'boolean'){
               errorsFound = true;
@@ -473,6 +483,7 @@
             settingsToSave.yourName = settings.yourName;
             settingsToSave.showCover = settings.showCover;
             settingsToSave.clockBackground = settings.clockBackground;
+            settingsToSave.clock24Hour = settings.clock24Hour;
             settingsToSave.tileZoom = settings.tileZoom;
             settingsToSave.tileGrow = settings.tileGrow;
             settingsToSave.tileMinWidth = settings.tileMinWidth;

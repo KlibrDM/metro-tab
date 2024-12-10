@@ -2,6 +2,7 @@
 export const yourName = "New Tab";
 export const showCover = true;
 export const clockBackground = true;
+export const clock24Hour = true;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "sl1";

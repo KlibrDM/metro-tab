@@ -6,6 +6,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("yourName", data.yourName);
   localStorage.setItem("showCover", data.showCover);
   localStorage.setItem("clockBackground", data.clockBackground);
+  localStorage.setItem("clock24Hour", data.clock24Hour);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
@@ -83,6 +84,11 @@ const data = {
     localStorage.getItem("clockBackground") === null
     ? CONFIG.clockBackground
     : localStorage.getItem("clockBackground") === "true",
+
+  clock24Hour:
+    localStorage.getItem("clock24Hour") === null
+    ? CONFIG.clock24Hour
+    : localStorage.getItem("clock24Hour") === "true",
 
   isBackgroundSolid:
     localStorage.getItem("isBackgroundSolid") === null
