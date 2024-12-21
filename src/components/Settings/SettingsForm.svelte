@@ -6,10 +6,21 @@
   export let resetVisuals;
   export let unsavedSettings;
 
+  // Keep dark mode separate and apply only when saving
+  let darkMode = settingsData.darkMode;
+
   let tileBorderColor = toHex(settingsData.tileBorderColor);
   let navbarColor = toHex(settingsData.navbarColor);
   let coverColor = toHex(settingsData.coverColor);
   let coverTextColor = toHex(settingsData.coverTextColor);
+
+  const resetLocalVisuals = () => {
+    darkMode = settingsData.darkMode;
+    tileBorderColor = toHex(settingsData.tileBorderColor);
+    navbarColor = toHex(settingsData.navbarColor);
+    coverColor = toHex(settingsData.coverColor);
+    coverTextColor = toHex(settingsData.coverTextColor);
+  }
 </script>
 
 <h2>Visuals</h2>
@@ -22,11 +33,13 @@
     settingsData.coverColor = toRGB(coverColor);
     settingsData.coverTextColor = toRGB(coverTextColor);
 
+    settingsData.darkMode = darkMode;
+
     saveSettings(settingsData, e);
     unsavedSettings = false;
   }}
 >
-  <div class="settingsFormGroup">
+  <div class="settingsFormGroup" class:darkModifier={settingsData.darkMode}>
     <div class="settingsInput">
       <div class="imagePlaceholder">
         <img src="static/images/settings/s_your_name.png" alt="Set your name" />
@@ -93,13 +106,33 @@
       </div>
       <hr/>
       <div class="settingsInputGroup">
-        <label for="set_clock24Hour">24 Hour Clock</label>
+        <label for="set_clock24Hour">24 hour clock</label>
         <input
           type="checkbox"
           id="set_clock24Hour"
           name="set_clock24Hour"
           class="settingsCheckbox"
           bind:checked={settingsData.clock24Hour}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
+        <img src="static/images/settings/s_dark_mode.png" alt="Set dark panels" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_darkMode">Dark panels</label>
+        <input
+          type="checkbox"
+          id="set_darkMode"
+          name="set_darkMode"
+          class="settingsCheckbox"
+          bind:checked={darkMode}
           on:input={() => {
             unsavedSettings = true;
           }}
@@ -551,6 +584,7 @@
         class="resetSettingsButton"
         on:click={() => {
           resetVisuals();
+          resetLocalVisuals();
           unsavedSettings = false;
         }}
       >
@@ -569,6 +603,9 @@
     width: 90%;
     border: 0;
     border-top: 1px solid lightgray;
+  }
+  .settingsFormGroup.darkModifier hr {
+    border-color: #3a99ff;
   }
   #settingsForm {
     display: flex;
@@ -590,6 +627,9 @@
     flex-grow: 1;
     max-width: 500px;
     flex-basis: 24%;
+  }
+  .settingsFormGroup.darkModifier .settingsInput {
+    border-color: #3a99ff;
   }
   .imagePlaceholder {
     width: 250px;

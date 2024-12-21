@@ -5,10 +5,12 @@
 
   let isPanelShown = false;
   let userNotes = []; //local data for notes
+  let darkMode = false;
 
   //Subscribe to notes
   userData.subscribe((data) => {
     userNotes = data.notes;
+    darkMode = data.darkMode;
   });
 
   const toggleNotesPanel = () => {
@@ -89,12 +91,13 @@
   id="notesButton"
   aria-label="Notes"
   class:highZIndex={isPanelShown}
+  class:darkModifier={darkMode}
 >
   <i class="fa-solid fa-note-sticky" />
 </button>
 
 {#if isPanelShown}
-  <div id="notesPanel" transition:notesEntrance>
+  <div id="notesPanel" class:darkModifier={darkMode} transition:notesEntrance>
     <div id="notesTop">
       <h2>Notes</h2>
       <button on:click={createNewNote}>New</button>
@@ -132,6 +135,13 @@
   #notesButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
   }
+  #notesButton.darkModifier.highZIndex {
+    background-color: rgba(255, 255, 255, 0.75);
+    color: black;
+  }
+  #notesButton.darkModifier.highZIndex:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+  }
   #notesPanel {
     padding: 20px 40px;
     position: absolute;
@@ -143,6 +153,10 @@
     width: 450px;
     overflow-y: auto;
     box-sizing: border-box;
+  }
+  #notesPanel.darkModifier {
+    background-color: rgb(3, 7, 15);
+    color: white;
   }
   #notesTop {
     display: flex;

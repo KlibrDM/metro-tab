@@ -3,13 +3,14 @@
 
   export let currentSearchEngine;
   export let changeSearchEngine;
+  export let darkMode;
 </script>
 
 <h2>Search Engine</h2>
 <div id="settingsSearchEngine">
   <div id="itemList">
     {#each searchEngineList as searchEngine}
-      <div class="item">
+      <div class="item" class:darkModifier={darkMode}>
         <p>{searchEngine.label}</p>
         {#if currentSearchEngine === searchEngine.name}
           <button disabled class="itemActive">Active</button>
@@ -46,8 +47,10 @@
     align-items: center;
     padding: 4px 4px;
     border-radius: 10px;
-    background-color: white;
     border: 1px solid lightgray;
+  }
+  .item.darkModifier {
+    border-color: #3a99ff;
   }
   .item p {
     margin: 0;

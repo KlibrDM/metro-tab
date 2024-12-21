@@ -54,7 +54,7 @@
 </script>
 
 <h2>Pages</h2>
-<div id="settingsPages">
+<div id="settingsPages" class:darkModifier={settingsData.darkMode}>
   <div id="settingsPagesList">
     {#each settingsData.pages as page, index}
       <div
@@ -240,7 +240,6 @@
       settingsData={settingsData}
       deletePage={deletePage}
       addPage={addPage}
-      saveSettings={saveSettings}
       movePage={movePage}
       getImageNameFor={getImageNameFor}
       checkWebsite={checkWebsite}
@@ -267,6 +266,12 @@
     padding: 3px 5px;
     border-radius: 10px;
     border: 1px solid gray;
+    background-color: transparent;
+  }
+  #settingsPages.darkModifier .settingsTextInput {
+    color: white;
+    outline: none;
+    border-color: #3a99ff;
   }
   .saveSettingsButton {
     margin-top: 8px;
@@ -348,6 +353,9 @@
     background-color: white;
     border: 1px solid lightgray;
   }
+  #settingsPages.darkModifier .settingsPagesListPage {
+    border-color: #3a99ff !important;
+  }
   .settingsDragHandle {
     margin-left: 4px;
   }
@@ -362,6 +370,10 @@
     width: 100%;
     border: 0;
     overflow-wrap: anywhere;
+    background-color: transparent;
+  }
+  #settingsPages.darkModifier .settingsPageLinkInput {
+    color: white;
   }
   .settingsPagesMoveButtons {
     display: flex;

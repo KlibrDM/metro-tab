@@ -39,6 +39,7 @@
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
       state.clock24Hour = settingsData.clock24Hour;
+      state.darkMode = settingsData.darkMode;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
@@ -69,6 +70,7 @@
       state.showCover = CONFIG.showCover;
       state.clockBackground = CONFIG.clockBackground;
       state.clock24Hour = CONFIG.clock24Hour;
+      state.darkMode = CONFIG.darkMode;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
       state.tileMinWidth = CONFIG.tileMinWidth;
@@ -283,6 +285,7 @@
     class="highZIndex"
     id="peekButton"
     aria-label="Peek behind"
+    class:darkModifier={settingsData.darkMode}
   >
     <i class="fas fa-eye" />
   </button>
@@ -293,12 +296,13 @@
   id="settingsButton"
   aria-label="Settings"
   class:highZIndex={isPanelShown}
+  class:darkModifier={settingsData.darkMode}
 >
   <i class="fas fa-sliders-h" />
 </button>
 
 {#if isPanelShown}
-  <div id="settingsPanel" transition:slide class:peekOpacity={isPeekPressed}>
+  <div id="settingsPanel" transition:slide class:peekOpacity={isPeekPressed} class:darkModifier={settingsData.darkMode}>
     <div id="settingsHeader">
       <button
         class="settingsHeaderButton"
@@ -345,7 +349,7 @@
       {:else if tabIndex === 2}
         <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 3}
-        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} />
+        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
       {:else if tabIndex === 4}
         <ImportExport {settingsData} {saveSettings} />
       {/if}
@@ -383,6 +387,13 @@
   #settingsButton:hover {
     background-color: rgba(0, 0, 0, 0.4);
   }
+  #settingsButton.darkModifier.highZIndex {
+    background-color: rgba(255, 255, 255, 0.75);
+    color: black;
+  }
+  #settingsButton.darkModifier.highZIndex:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+  }
   #peekButton {
     position: absolute;
     top: 2vh;
@@ -399,6 +410,16 @@
     border: 0;
     cursor: pointer;
   }
+  #peekButton:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  #peekButton.darkModifier.highZIndex {
+    background-color: rgba(255, 255, 255, 0.75);
+    color: black;
+  }
+  #peekButton.darkModifier.highZIndex:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+  }
   #settingsPanel {
     padding: 20px 40px;
     position: absolute;
@@ -413,6 +434,11 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    transition: 0.4s;
+  }
+  #settingsPanel.darkModifier {
+    background-color: rgb(3, 7, 15);
+    color: white;
   }
   .highZIndex {
     z-index: 60 !important;
@@ -434,10 +460,16 @@
     color: black;
   }
   .headerSelected {
-    color: rgb(58, 153, 255);
+    color: rgb(58, 153, 255) !important;
   }
   .headerSelected:hover {
-    color: rgb(58, 153, 255);
+    color: rgb(58, 153, 255) !important;
+  }
+  #settingsPanel.darkModifier .settingsHeaderButton {
+    color: white;
+  }
+  #settingsPanel.darkModifier .settingsHeaderButton:hover {
+    color: rgb(200, 200, 200);
   }
   #settingsContent {
     overflow-y: auto;

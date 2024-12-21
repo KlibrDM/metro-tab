@@ -29,7 +29,7 @@
 </script>
 
 <div id="settingsPageImageTypeModalContainer" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false; }}>
-  <div id="settingsPageImageTypeModal" on:click={(e) => { e.stopImmediatePropagation() }}>
+  <div id="settingsPageImageTypeModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
     <div id="imageTypeButtonGroup">
       <h4>Tile image type</h4>
       <button
@@ -172,6 +172,9 @@
     padding: 40px;
     border-radius: 10px;
   }
+  #settingsPageImageTypeModal.darkModifier {
+    background-color: rgb(3, 7, 15);
+  }
   .imageTypeButton {
     padding: 8px 20px;
     border-radius: 10px;
@@ -182,8 +185,12 @@
     transition: 0.3s;
   }
   .buttonSelected {
-    background-color: #3a99ff;
+    background-color: #3a99ff !important;
+    color: white !important;
+  }
+  #settingsPageImageTypeModal.darkModifier .imageTypeButton {
     color: white;
+    background-color: transparent;
   }
   #tilePreview {
     display: flex;

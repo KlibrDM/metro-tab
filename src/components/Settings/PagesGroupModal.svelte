@@ -51,7 +51,7 @@
 </script>
 
 <div id="settingsPageGroupModalContainer" on:click={() => { modalActive = false; }}>
-  <div id="settingsPageGroupModal" on:click={(e) => { e.stopImmediatePropagation() }}>
+  <div id="settingsPageGroupModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
     <h3>{group.name}</h3>
 
     {#if group.pages.length === 0}
@@ -212,6 +212,12 @@
     padding: 3px 5px;
     border-radius: 10px;
     border: 1px solid gray;
+    background-color: transparent;
+  }
+  #settingsPageGroupModal.darkModifier .settingsTextInput {
+    color: white;
+    outline: none;
+    border-color: #3a99ff;
   }
   .addPageButton {
     padding: 8px 20px;
@@ -245,6 +251,9 @@
     background-color: white;
     border: 1px solid lightgray;
   }
+  #settingsPageGroupModal.darkModifier .settingsPagesListPage {
+    border-color: #3a99ff !important;
+  }
   .settingsDragHandle {
     margin-left: 4px;
   }
@@ -259,6 +268,10 @@
     width: 100%;
     border: 0;
     overflow-wrap: anywhere;
+    background-color: transparent;
+  }
+  #settingsPageGroupModal.darkModifier .settingsPageLinkInput {
+    color: white;
   }
   .settingsPagesMoveButtons {
     display: flex;
@@ -330,6 +343,9 @@
     background-color: #fff;
     padding: 40px;
     border-radius: 10px;
+  }
+  #settingsPageGroupModal.darkModifier {
+    background-color: rgb(3, 7, 15);
   }
   #returnButtonContainer {
     display: flex;
