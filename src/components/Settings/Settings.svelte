@@ -8,6 +8,7 @@
   import Pages from "./Pages.svelte";
   import ImportExport from "./ImportExport.svelte";
   import SearchEngine from "./SearchEngine.svelte";
+  import About from "./About.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -339,6 +340,13 @@
       >
         Import/Export
       </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 5}
+        on:click={() => {changeTab(5);}}
+      >
+        About
+      </button>
     </div>
     <hr/>
     <div id="settingsContent">
@@ -352,6 +360,8 @@
         <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
       {:else if tabIndex === 4}
         <ImportExport {settingsData} {saveSettings} />
+      {:else if tabIndex === 5}
+        <About />
       {/if}
     </div>
   </div>
