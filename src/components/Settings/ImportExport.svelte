@@ -8,6 +8,28 @@
   let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true, importSearchEngine = true;
   let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportNotes = true, exportSearchEngine = true;
 
+  // Keep track of import errors
+  let importErrors = {
+    pages: false,
+    tileImages: false,
+    background: false,
+    visuals: false,
+    searchEngine: false,
+    notes: false,
+  };
+  let importFinishedSuccessfully = false; // False doesn't necesarily mean there were errors, just that no import was started
+
+  const clearImportErrors = () => {
+    importErrors = {
+      pages: false,
+      tileImages: false,
+      background: false,
+      visuals: false,
+      searchEngine: false,
+      notes: false,
+    };
+  }
+
   const exportData = () => {
     //Create export object based on what the user wants to export
     let exportDataObject = {};
@@ -69,6 +91,9 @@
     reader.onload = (e) => {
       try{
         settings = JSON.parse(e.target.result);
+
+        clearImportErrors();
+        importFinishedSuccessfully = false;
 
         //Use already existing settings and change what is needed
         let settingsToSave = settingsData;
@@ -145,6 +170,9 @@
           if(!errorsFound){
             settingsToSave.pages = settings.pages;
           }
+          else{
+            importErrors.pages = true;
+          }
         }
 
         //Check notes for errors then import
@@ -165,6 +193,9 @@
           if(!errorsFound){
             settingsToSave.notes = settings.notes;
           }
+          else{
+            importErrors.notes = true;
+          }
         }
 
         //Check search engine for errors then import
@@ -182,6 +213,9 @@
 
           if(!errorsFound){
             settingsToSave.searchEngine = settings.searchEngine;
+          }
+          else{
+            importErrors.searchEngine = true;
           }
         }
 
@@ -238,6 +272,9 @@
             settingsToSave.isBackgroundSolid = settings.isBackgroundSolid;
             settingsToSave.backgroundSolidColor = settings.backgroundSolidColor;
             settingsToSave.backgroundImage = settings.backgroundImage;
+          }
+          else{
+            importErrors.background = true;
           }
         }
 
@@ -511,6 +548,20 @@
             settingsToSave.coverColor = settings.coverColor;
             settingsToSave.coverTextColor = settings.coverTextColor;
           }
+          else{
+            importErrors.visuals = true;
+          }
+        }
+
+        if(!importErrors.pages
+          && !importErrors.tileImages
+          && !importErrors.background
+          && !importErrors.visuals
+          && !importErrors.searchEngine
+          && !importErrors.notes
+        ){
+          // If there are no errors, set flag for success message
+          importFinishedSuccessfully = true;
         }
 
         saveSettings(settingsToSave);
@@ -701,6 +752,52 @@
   </div>
 </div>
 
+{#if importFinishedSuccessfully}
+  <div class="IEAlerts">
+    <div class="IEAlert IEAlertSuccess">
+      <span>Settings imported successfully.</span>
+    </div>
+    <div class="IEAlert spacer"></div>
+  </div>
+{/if}
+
+{#if importErrors.pages
+  || importErrors.tileImages
+  || importErrors.background
+  || importErrors.visuals
+  || importErrors.searchEngine
+  || importErrors.notes
+}
+  <div class="IEAlerts">
+    <div class="IEAlert IEAlertError">
+      {#if importErrors.pages}
+        <span>There was an error importing pages.</span>
+      {/if}
+      {#if importErrors.tileImages}
+        <span>There was an error importing tile images.</span>
+      {/if}
+      {#if importErrors.background}
+        <span>There was an error importing the background.</span>
+      {/if}
+      {#if importErrors.visuals}
+        <span>There was an error importing visuals.</span>
+      {/if}
+      {#if importErrors.searchEngine}
+        <span>There was an error importing the search engine.</span>
+      {/if}
+      {#if importErrors.notes}
+        <span>There was an error importing notes.</span>
+      {/if}
+      {#if importErrors.pages && importErrors.background && importErrors.visuals && importErrors.searchEngine && importErrors.notes}
+        <span>Please verify that the file has a supported metro-tab-config format.</span>
+      {:else}
+        <span>All of the other checked options were successfully imported.</span>
+      {/if}
+    </div>
+    <div class="IEAlert spacer"></div>
+  </div>
+{/if}
+
 <style>
   .IEPage {
     display: flex;
@@ -754,22 +851,54 @@
   #exportButton:hover {
     background-color: rgb(230, 200, 22);
   }
+  .IEAlerts {
+    display: flex;
+    justify-content: center;
+    gap: calc(32px + 0.5em);
+    margin-top: 32px;
+  }
+  .IEAlert {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 15px 30px 20px 30px;
+    border-radius: 10px;
+    flex-grow: 1;
+    max-width: 25%;
+    overflow: hidden;
+  }
+  .IEAlertError {
+    color: rgb(115, 30, 35);
+    background-color: #ecc7ca;
+    border: 1px solid #d4a5aa;
+  }
+  .IEAlertSuccess {
+    color: rgb(20, 90, 35);
+    background-color: #d1eccf;
+    border: 1px solid #b5dfb5;
+  }
+  .IEAlert.spacer {
+    visibility: hidden;
+  }
   @media screen and (max-width: 800px) {
-    .IEPage {
+    .IEPage, .IEAlerts {
       gap: 8px;
     }
-    .IESection {
-      max-width: 100%;
+    .IESection, .IEAlert {
+      max-width: unset;
+      flex-basis: 100%;
     }
   }
   @media screen and (max-width: 450px) {
-    .IEPage {
+    .IEPage, .IEAlerts {
       flex-direction: column;
       margin-top: 16px;
       gap: 16px;
     }
-    .IESection {
+    .IESection, .IEAlert {
       max-width: 100%;
+      flex-basis: unset;
     }
   }
 </style>
