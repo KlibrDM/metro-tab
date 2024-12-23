@@ -35,7 +35,10 @@
 
 <!--Use clockbg class only if clockBackground is true-->
 <div id="time" class:clockbg={clockBackground}>
-  {hours}:<span id="minutes">{minutes}</span> <span id="ampm">{!clock24Hour ? ampm : ''}</span>
+  {hours}:<span id="minutes">{minutes}</span>
+  {#if !clock24Hour}
+    <span id="ampm">{ampm}</span>
+  {/if}
 </div>
 
 <style>
@@ -56,6 +59,7 @@
     font-size: 0.4em;
     font-weight: 600;
     color: rgb(236, 236, 236);
+    line-height: 1em;
   }
   .clockbg {
     background-color: rgba(0, 0, 0, 0.25);
