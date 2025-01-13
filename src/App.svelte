@@ -9,6 +9,7 @@
   import Settings from "./components/Settings/Settings.svelte";
   import Notes from "./components/Notes/Notes.svelte";
   import Entertainment from "./components/Entertainment.svelte";
+  import Hint from "./components/Hint.svelte";
   import { getBackgroundFormat } from "./data/tools";
 
   let backgroundImage;
@@ -40,6 +41,7 @@
   <Settings />
   <Notes />
   <Entertainment />
+  <Hint />
 </main>
 
 <style>

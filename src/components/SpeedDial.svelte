@@ -70,7 +70,7 @@
           {:else if page.isGroup && page.pages.length > 0}
 
             <div class="pageGroup" style="
-              gap: {groupTileGap}vh;
+              gap: {page.pages.length <= 12 ? groupTileGap : groupTileGap / 2}vh;
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
