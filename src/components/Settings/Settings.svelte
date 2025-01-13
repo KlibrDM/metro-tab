@@ -9,6 +9,7 @@
   import ImportExport from "./ImportExport.svelte";
   import SearchEngine from "./SearchEngine.svelte";
   import About from "./About.svelte";
+  import Themes from "./Themes.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -331,19 +332,26 @@
         class:headerSelected={tabIndex === 3}
         on:click={() => {changeTab(3);}}
       >
-        Search Engine
+        Themes
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 4}
         on:click={() => {changeTab(4);}}
       >
-        Import/Export
+        Search Engine
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 5}
         on:click={() => {changeTab(5);}}
+      >
+        Import/Export
+      </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 6}
+        on:click={() => {changeTab(6);}}
       >
         About
       </button>
@@ -357,10 +365,12 @@
       {:else if tabIndex === 2}
         <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 3}
-        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
+        <Themes {settingsData} />
       {:else if tabIndex === 4}
-        <ImportExport {settingsData} {saveSettings} />
+        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
       {:else if tabIndex === 5}
+        <ImportExport {settingsData} {saveSettings} />
+      {:else if tabIndex === 6}
         <About />
       {/if}
     </div>

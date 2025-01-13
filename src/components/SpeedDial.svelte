@@ -131,7 +131,7 @@
                       border-radius: {groupTileBorderRadius}vh;
                       min-width: 40px;
                       {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
-                      {!tileZoom ? "animation: none !important" : ''}
+                      {!tileZoom ? "animation: none !important;" : ''}
                       {groupTileGrow ? `
                         flex-grow: 1;
                         flex-basis: ${
