@@ -1,99 +1,33 @@
 <script>
   export let note;
   export let saveAllNotes;
-  export let deleteNote;
-  export let moveNote;
-  export let index;
-
-  let saveButtonState = 0; //local state to enable/disable save button
-
-  const showSaveButton = () => {
-    if (saveButtonState !== 1) {
-      saveButtonState = 1;
-    }
-  };
-
-  const saveNote = () => {
-    //Disable save button
-    saveButtonState = 0;
-    //Save the notes
-    saveAllNotes();
-  };
-
-  const strikeNote = () => {
-    //Toggle strike
-    note.completed = !note.completed;
-    //Activate save button
-    saveButtonState = 1;
-  };
+  export let overrideMaxHeight = undefined;
 </script>
 
-<div class="notes">
-  <div class="positionButtonArea">
-    <button
-      on:click={() => {
-        moveNote(index, "up");
-
-        //Disable save button. Moving the item will save it
-        saveButtonState = 0;
-      }}
-    >
-      <i class="fa-solid fa-angle-up" />
-    </button>
-
-    <button
-      on:click={() => {
-        moveNote(index, "down");
-
-        //Disable save button. Moving the item will save it
-        saveButtonState = 0;
-      }}
-    >
-      <i class="fa-solid fa-angle-down" />
-    </button>
-  </div>
-
-  <div class="notesWrapper">
+<div class="note">
+  {#if note.type === "task"}
+    <div class="checkbox">
+      <input
+        type="checkbox"
+        bind:checked={note.completed}
+        on:change={() => {
+          saveAllNotes();
+        }}
+      />
+    </div>
+  {/if}
+  <div class="noteWrapper">
     <!--Using a pre with hidden visibility for auto-resizing textarea-->
-    <pre aria-hidden="true">{note.text + "\n"}</pre>
+    <pre aria-hidden="true" style={overrideMaxHeight ? `max-height: ${overrideMaxHeight}px;` : ''}>{note.text + "\n"}</pre>
     <textarea
       placeholder="Type here..."
       bind:value={note.text}
       on:input={() => {
-        showSaveButton();
+        saveAllNotes();
       }}
       class:strikethrough={note.completed}
+      style={`color: ${note.textColor}; --placeholder-color: ${note.textColor}; ${overrideMaxHeight ? `max-height: ${overrideMaxHeight}px;` : ''}`}
     />
-  </div>
-
-  <div class="actionButtonArea">
-    <button
-      id="actionButtonSave"
-      on:click={() => {
-        saveNote();
-      }}
-      disabled={!saveButtonState}
-    >
-      <i class="fa-solid fa-check" />
-    </button>
-
-    <button
-      id="actionButtonStrike"
-      on:click={() => {
-        strikeNote();
-      }}
-    >
-      <i class="fa-solid fa-strikethrough" />
-    </button>
-
-    <button
-      id="actionButtonDelete"
-      on:click={() => {
-        deleteNote(index);
-      }}
-    >
-      <i class="fa-solid fa-trash-can" />
-    </button>
   </div>
 </div>
 
@@ -101,16 +35,18 @@
   .strikethrough {
     text-decoration: line-through;
   }
-  .notes {
+  .note {
     display: flex;
-    gap: 5px;
-    padding: 5px 10px 10px 5px;
-    border-radius: 5px;
-    background-color: rgb(255, 255, 136);
-  }
-  .notesWrapper {
     flex-grow: 1;
+    padding: 5px 5px 8px 5px;
+  }
+  .checkbox {
+    margin-top: 6px;
+  }
+  .noteWrapper {
     position: relative;
+    min-height: 32px;
+    width: 100%;
   }
   pre {
     margin: 0;
@@ -129,6 +65,9 @@
     resize: none;
     background-color: transparent;
   }
+  textarea::placeholder {
+    color: var(--placeholder-color);
+  }
   pre,
   textarea {
     font-family: inherit;
@@ -136,41 +75,5 @@
     white-space: pre-wrap;
     word-break: break-word;
     max-height: 240px;
-  }
-  .actionButtonArea {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .actionButtonArea button {
-    border: 0;
-    cursor: pointer;
-    background-color: transparent;
-    font-size: 1.1em;
-  }
-  #actionButtonSave {
-    color: rgb(21, 170, 21);
-  }
-  #actionButtonSave:disabled {
-    color: lightgray;
-  }
-  #actionButtonStrike {
-    color: orange;
-  }
-  #actionButtonDelete {
-    color: red;
-  }
-  .positionButtonArea {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 5px;
-  }
-  .positionButtonArea button {
-    border: 0;
-    cursor: pointer;
-    padding: 0px 2px;
-    color: gray;
-    background-color: transparent;
   }
 </style>

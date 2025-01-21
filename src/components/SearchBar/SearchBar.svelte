@@ -1,19 +1,47 @@
 <script>
   import Clock from "./Clock.svelte";
   import RandomGithub from "./RandomGithub.svelte";
+  import Note from "../Notes/Note.svelte";
   import { userData } from "../../store";
   import { searchEngineList } from "../../data/config";
+  import { saveNotes } from "../../data/storage";
+
+  export let remoteOpenNotes;
 
   let searchQuery = ""; //Binded to input
   let navbarOpacity;
   let navbarColor;
   let searchEngine;
+  let pinnedNote;
+
+  let innerHeight = 0;
 
   userData.subscribe((data) => {
     searchEngine = data.searchEngine;
     navbarOpacity = data.navbarOpacity;
     navbarColor = data.navbarColor;
+    pinnedNote = data.notes.find((note) => note.isPinned);
   });
+
+  const saveNoteChanges = () => {
+    userData.update((state) => {
+      let modifiedNote = state.notes.find((note) => note.isPinned);
+      modifiedNote.text = pinnedNote.text;
+      modifiedNote.completed = pinnedNote.completed;
+      state.notes = [...state.notes];
+
+      saveNotes(state.notes);
+      return state;
+    });
+  }
+
+  const unpinNote = () => {
+    userData.update((state) => {
+      state.notes.find((note) => note.isPinned).isPinned = false;
+      saveNotes(state.notes);
+      return state;
+    });
+  }
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -50,11 +78,23 @@
   }
 </script>
 
+<svelte:window bind:innerHeight />
+
 <div
   id="searchbarBox"
   style="background-color: rgba({navbarColor.r},{navbarColor.g},{navbarColor.b},{navbarOpacity})"
 >
-  <RandomGithub />
+  {#if pinnedNote}
+    <div id="note" style={`background-color: ${pinnedNote.backgroundColor}; color: ${pinnedNote.textColor};`}>
+      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840  ? 104 : 52} />
+      <div class="noteActions">
+        <button style={`color: ${pinnedNote.textColor};`} on:click={remoteOpenNotes}>Open notes</button>
+        <button style={`color: ${pinnedNote.textColor};`} on:click={unpinNote}>Unpin</button>
+      </div>
+    </div>
+  {:else}
+    <RandomGithub />
+  {/if}
   <form id="searchbar" on:submit={handleSearch}>
     <input
       id="searchInput"
@@ -135,10 +175,47 @@
     box-shadow: none;
     border-color: transparent;
   }
-
+  #note {
+    position: absolute;
+    left: 2vw;
+    width: clamp(200px, 17vw, 400px);
+    border-radius: 5px;
+  }
+  .noteActions {
+    display: flex;
+    gap: 6px;
+    margin-left: 6px;
+    margin-bottom: 6px;
+  }
+  .noteActions > button {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .noteActions > button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
   @media screen and (max-width: 799px) {
     #searchbar {
       width: 75vw;
+    }
+  }
+  @media screen and (max-width: 1199px) {
+    #note {
+      display: none;
+    }
+  }
+  @media screen and (max-height: 600px) {
+    #note {
+      top: 40px;
+    }
+  }
+  @media screen and (max-height: 450px) {
+    #note {
+      display: none;
     }
   }
 </style>

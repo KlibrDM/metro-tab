@@ -16,6 +16,8 @@
   let isBackgroundSolid = false;
   let backgroundSolidColor;
 
+  let remoteOpenNotes;
+
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
     isBackgroundSolid = data.isBackgroundSolid;
@@ -36,10 +38,10 @@
 >
   <Cover />
   <QuickNav />
-  <SearchBar />
+  <SearchBar remoteOpenNotes={remoteOpenNotes} />
   <SpeedDial />
   <Settings />
-  <Notes />
+  <Notes bind:remoteOpenNotes />
   <Entertainment />
   <Hint />
 </main>

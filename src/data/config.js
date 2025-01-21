@@ -203,6 +203,41 @@ export const entertainmentData = [
   },
 ];
 
+export const notesColors = [
+  {
+    background: "#ffff88",
+    text: "#000000",
+  },
+  {
+    background: "#96f0ff",
+    text: "#000000",
+  },
+  {
+    background: "#fac3dc",
+    text: "#000000",
+  },
+  {
+    background: "#63ffac",
+    text: "#000000",
+  },
+  {
+    background: "#f7b21b",
+    text: "#ffffff",
+  },
+  {
+    background: "#3a99ff",
+    text: "#ffffff",
+  },
+  {
+    background: "#ff5a78",
+    text: "#ffffff",
+  },
+  {
+    background: "#029e48",
+    text: "#ffffff",
+  },
+]
+
 export const backgrounds = [
   {
     name: "bg1",

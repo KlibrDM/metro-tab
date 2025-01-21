@@ -1,5 +1,5 @@
 <script>
-  import { getTileImage, getTileImageLinks, saveTileImage } from "../../data/storage";
+  import { getTileImage, getTileImageLinks, parseNotes, saveTileImage } from "../../data/storage";
 
   export let settingsData;
   export let saveSettings;
@@ -191,7 +191,7 @@
           }
 
           if(!errorsFound){
-            settingsToSave.notes = settings.notes;
+            settingsToSave.notes = parseNotes(settings.notes); // Will add default properties (for notes in v2.4.0 and older)
           }
           else{
             importErrors.notes = true;

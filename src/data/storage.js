@@ -235,6 +235,49 @@ if (data.pages) {
   localStorage.setItem("pages", JSON.stringify(data.pages));
 }
 
+/* Add new properties to old notes (missing on version 2.4.0 and before) */
+export const parseNotes = (notes) => {
+  if (notes && notes.length) {
+    notes.forEach(note => {
+      let type = "note"; // keep track of note type to determine default colors
+      if (!note.hasOwnProperty("text")) {
+        note.text = "";
+      }
+  
+      if (!note.hasOwnProperty("type")) {
+        note.type = type;
+      }
+      else {
+        // If note has a type, store it to determine default colors
+        type = note.type;
+      }
+  
+      if (!note.hasOwnProperty("textColor")) {
+        note.textColor = type === "note" ? CONFIG.notesColors[0].text : CONFIG.notesColors[1].text;
+      }
+      if (!note.hasOwnProperty("backgroundColor")) {
+        note.backgroundColor = type === "note" ? CONFIG.notesColors[0].background : CONFIG.notesColors[1].background;
+      }
+  
+      if (!note.hasOwnProperty("important")) {
+        note.important = false;
+      }
+      if (!note.hasOwnProperty("completed")) {
+        note.completed = false;
+      }
+      if (!note.hasOwnProperty("isPinned")) {
+        note.isPinned = false;
+      }
+    });
+  }
+  return notes;
+}
+
+data.notes = parseNotes(data.notes);
+if (data.notes && data.notes.length) {
+  localStorage.setItem("notes", JSON.stringify(data.notes));
+}
+
 //After loading the data, set it to state
 userData.set(data);
 
