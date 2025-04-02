@@ -1,11 +1,14 @@
 <script>
-  import { getTileImage, saveTileImage } from "../../data/storage";
+  import { deleteTileImage, getTileImage, saveTileImage } from "../../data/storage";
   import { clearOldExtension } from "../../data/tools";
 
   export let page;
   export let settingsData;
   export let unsavedPages;
   export let modalActive = false;
+
+  let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
+  let showLocalStorageInfo = false;
 
   let bg, fileinput;
   const onFileSelected = (e) => {
@@ -26,6 +29,17 @@
       }
     };
   };
+
+  const onDeleteImage = () => {
+    deleteTileImage(page.link);
+    page.tileImageType = "custom";
+    unsavedPages = true;
+  }
+
+  $: if (bg || page.tileImageType === 'custom') {
+    // On custom image change, recalculate local storage size
+    localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
+  }
 </script>
 
 <div id="settingsPageImageTypeModalContainer" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false; }}>
@@ -70,6 +84,31 @@
           on:change={(e) => onFileSelected(e)}
           bind:this={fileinput}
         />
+
+        {#if page.tileImageType === 'custom' && getTileImage(page.link)}
+          <button
+            class="deleteCustomImageButton"
+            on:click={onDeleteImage}
+          >
+            Delete image
+          </button>
+        {/if}
+
+        <div id="localStorageSpace">
+          <small>Local storage space</small>
+          <div id="spaceBar">
+            <div id="spaceBarUsed" class:danger={localStorageUsedSpace > 4} style={`width: ${localStorageUsedSpace*100/5}%`}></div>
+            <p id="spaceBarText">{localStorageUsedSpace} MB / 5.00 MB</p>
+          </div>
+          <button id="localStorageInfoButton" on:click={() => {showLocalStorageInfo = !showLocalStorageInfo}}>
+            <i class="fa-solid fa-info" />
+          </button>
+        </div>
+        {#if showLocalStorageInfo}
+          <small>
+            Local storage is used to store your settings, background images, tile custom images, and notes.
+          </small>
+        {/if}
       </div>
     {/if}
 
@@ -168,6 +207,8 @@
   }
   #settingsPageImageTypeModal {
     width: 600px;
+    max-height: 70vh;
+    overflow: auto;
     background-color: #fff;
     padding: 40px;
     border-radius: 10px;
@@ -231,6 +272,73 @@
     transition: 0.3s;
   }
   .customImageButton:hover {
+    background-color: rgb(230, 200, 22);
+  }
+  .deleteCustomImageButton {
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(210, 40, 40);
+    transition: 0.3s;
+  }
+  .deleteCustomImageButton:hover {
+    background-color: rgb(180, 30, 30);
+  }
+  #localStorageSpace {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  #localStorageSpace small {
+    margin-bottom: 4px;
+  }
+  #localStorageSpace p {
+    margin: 0;
+  }
+  #spaceBar {
+    width: 200px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: #ddd;
+    position: relative;
+  }
+  #spaceBarUsed {
+    min-width: 3%;
+    height: 15px;
+    border-radius: 10px;
+    background-color: #0b1;
+  }
+  #spaceBarUsed.danger {
+    background-color: rgb(255, 125, 70);
+  }
+  #spaceBarText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #333;
+  }
+  #localStorageInfoButton {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+    border-radius: 100%;
+    border: 0;
+    cursor: pointer;
+  }
+  #localStorageInfoButton:hover {
     background-color: rgb(230, 200, 22);
   }
   #solidBackgroundSettings p {

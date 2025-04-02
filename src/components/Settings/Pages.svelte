@@ -1,4 +1,5 @@
 <script>
+  import { deleteAllTileImages, getTileImage } from "../../data/storage";
   import PagesGroupModal from "./PagesGroupModal.svelte";
   import PagesImageModal from "./PagesImageModal.svelte";
 
@@ -18,6 +19,9 @@
   let draggedItem = undefined;
   let draggedItemIndex = undefined;
   let draggedOverIndex = undefined;
+
+  // Show delete tile image confirm after delete button was clicked
+  let showDeleteTileImageConfirm = false;
 
   // Tile image modal
   let imageModalActive = false;
@@ -50,6 +54,13 @@
       draggedItemIndex = undefined;
       draggedOverIndex = undefined;
     }
+  }
+
+  const onDeleteTileImageClick = () => {
+    deleteAllTileImages();
+    settingsData.pages = [...settingsData.pages];
+    showDeleteTileImageConfirm = false;
+    unsavedPages = true;
   }
 </script>
 
@@ -152,7 +163,11 @@
                 View Group
               </button>
             {:else}
-              <i on:click={() => { imageModalActive = true; selectedIndex = index; }} class="fa-solid fa-image pointer" />
+              <i
+                on:click={() => { imageModalActive = true; selectedIndex = index; }}
+                class="fa-solid fa-image pointer"
+                class:customImage={getTileImage(page.link)}
+              />
             {/if}
             <input type="checkbox" name="page" bind:checked={page.isActive} on:change={() => {unsavedPages = true}} />
             <input
@@ -195,8 +210,8 @@
       <button type="submit" class="addPageButton">Add</button>
     </form>
 
-    <div class="settingsActionButtonsWithError">
-      <div class="settingsActionButtons">
+    <div class="settingsActionButtons">
+      <div class="settingsActionButtonWithError">
         <button
           on:click={(e) => {
             saveSettings(settingsData, e);
@@ -207,6 +222,37 @@
         >
           Save
         </button>
+        {#if unsavedPages}
+          <small class="unsavedWarning">You have unsaved settings.</small>
+        {/if}
+      </div>
+
+      <div>
+        <button
+          class={showDeleteTileImageConfirm ? 'cancelDeleteTileImageButton' : 'deleteTileImageButton'}
+          on:click={() => {showDeleteTileImageConfirm = true}}
+        >
+          {#if showDeleteTileImageConfirm}
+            Are you sure?
+          {:else}
+            Delete all tile images
+          {/if}
+        </button>
+
+        {#if showDeleteTileImageConfirm}
+          <button
+            class="deleteTileImageButton"
+            on:click={onDeleteTileImageClick}
+          >
+            Yes
+          </button>
+          <button
+            class="cancelDeleteTileImageButton"
+            on:click={() => {showDeleteTileImageConfirm = false}}
+          >
+            No
+          </button>
+        {/if}
 
         <button
           class="createGroupButton"
@@ -218,10 +264,6 @@
           Create new group
         </button>
       </div>
-
-      {#if unsavedPages}
-        <small class="unsavedWarning">You have unsaved settings.</small>
-      {/if}
     </div>
   </div>
 
@@ -273,6 +315,11 @@
     outline: none;
     border-color: #3a99ff;
   }
+  .settingsActionButtonWithError {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .saveSettingsButton {
     margin-top: 8px;
     padding: 8px 20px;
@@ -310,6 +357,32 @@
   }
   .createGroupButton:hover {
     background-color: #2f84e0;
+  }
+  .deleteTileImageButton {
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(210, 40, 40);
+    transition: 0.5s;
+  }
+  .deleteTileImageButton:hover {
+    background-color: rgb(180, 30, 30);
+  }
+  .cancelDeleteTileImageButton {
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(220, 220, 220);
+    transition: 0.5s;
+  }
+  .cancelDeleteTileImageButton:hover {
+    background-color: rgb(200, 200, 200);
   }
   .addPageButton {
     padding: 8px 20px;
@@ -405,6 +478,12 @@
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+  .customImage {
+    color: #0d65c4;
+  }
+  #settingsPages.darkModifier .customImage {
+    color: #3a99ff;
   }
   .pageDeleteButton {
     border: 0;

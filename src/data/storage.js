@@ -42,7 +42,17 @@ export const saveBackgroundColor = (color) => {
 };
 
 export const saveNotes = (notes) => {
-  localStorage.setItem("notes", JSON.stringify(notes));
+  try {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
+  catch(err) {
+    if(err.name === "QuotaExceededError") {
+      alert("Local storage is full. Please clear some space.");
+    }
+    else {
+      alert("Error saving notes");
+    }
+  }
 };
 
 export const saveTileImage = (link, image) => {
@@ -55,6 +65,18 @@ export const saveSearchEngine = (engine) => {
 
 export const getTileImage = (link) => {
   return localStorage.getItem(link);
+}
+
+export const deleteTileImage = (link) => {
+  localStorage.removeItem(link);
+}
+
+export const deleteAllTileImages = () => {
+  for (let key in localStorage) {
+    if (key.indexOf("http") !== -1) {
+      localStorage.removeItem(key);
+    }
+  }
 }
 
 export const getTileImageLinks = () => {

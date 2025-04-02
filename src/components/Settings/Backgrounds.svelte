@@ -14,6 +14,9 @@
   let backgroundSolidColorChanged = false;
   let backgroundSources = new Set();
 
+  let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
+  let showLocalStorageInfo = false;
+
   //Add sources to set
   backgrounds.forEach((bg) => {
     if(sourceDetails.get(bg.source)){
@@ -29,6 +32,10 @@
   });
 
   $: backgroundImageUrl = "static/images/bg/thumbnails/" + backgroundImage + "." + getBackgroundFormat(backgroundImage);
+  $: if (backgroundImage) {
+    // On background image change, recalculate local storage size
+    localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
+  }
 </script>
 
 <h2>Background</h2>
@@ -78,6 +85,22 @@
   </div>
 </div>
 
+<div id="localStorageSpace">
+  <small>Local storage space</small>
+  <div id="spaceBar">
+    <div id="spaceBarUsed" class:danger={localStorageUsedSpace > 4} style={`width: ${localStorageUsedSpace*100/5}%`}></div>
+    <p id="spaceBarText">{localStorageUsedSpace} MB / 5.00 MB</p>
+  </div>
+  <button id="localStorageInfoButton" on:click={() => {showLocalStorageInfo = !showLocalStorageInfo}}>
+    <i class="fa-solid fa-info" />
+  </button>
+</div>
+{#if showLocalStorageInfo}
+  <small>
+    Local storage is used to store your settings, background images, tile custom images, and notes.
+  </small>
+{/if}
+
 <h2>Gallery</h2>
 {#each [...backgroundSources] as source}
   <small>
@@ -126,6 +149,60 @@
   #customBackgroundColorGroup {
     display: flex;
     gap: 5px;
+  }
+  #localStorageSpace {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  #localStorageSpace small {
+    margin-bottom: 4px;
+  }
+  #localStorageSpace p {
+    margin: 0;
+  }
+  #spaceBar {
+    width: 200px;
+    height: 15px;
+    border-radius: 10px;
+    background-color: #ddd;
+    position: relative;
+  }
+  #spaceBarUsed {
+    min-width: 3%;
+    height: 15px;
+    border-radius: 10px;
+    background-color: #0b1;
+  }
+  #spaceBarUsed.danger {
+    background-color: rgb(255, 125, 70);
+  }
+  #spaceBarText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #333;
+  }
+  #localStorageInfoButton {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+    border-radius: 100%;
+    border: 0;
+    cursor: pointer;
+  }
+  #localStorageInfoButton:hover {
+    background-color: rgb(230, 200, 22);
   }
   .settingsBackgroundColorInput {
     margin-top: 8px;
