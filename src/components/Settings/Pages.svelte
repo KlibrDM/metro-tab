@@ -401,6 +401,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    margin-bottom: 6px;
   }
   #settingsPages {
     display: flex;
@@ -503,8 +504,15 @@
   }
   .unsavedWarning {
     display: block;
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
     color: red;
+    line-height: 1rem;
+    padding: 6px 12px;
+    border-radius: 8px;
     margin-top: 8px;
+    animation: shake-bottom 4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both infinite;
+    animation-delay: 2s;
   }
   @media screen and (max-width: 450px) {
     .settingsPageInput {
