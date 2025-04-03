@@ -299,6 +299,8 @@
   aria-label="Settings"
   class:highZIndex={isPanelShown}
   class:darkModifier={settingsData.darkMode}
+  class:unsavedButtonWarning={unsavedSettings}
+  data-tooltip={unsavedSettings ? "You have unsaved settings" : undefined}
 >
   <i class="fas fa-sliders-h" />
 </button>
@@ -413,6 +415,23 @@
   }
   #settingsButton.darkModifier.highZIndex:hover {
     background-color: rgba(255, 255, 255, 0.85);
+  }
+  #settingsButton.unsavedButtonWarning {
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 1);
+  }
+  #settingsButton.unsavedButtonWarning[data-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: max-content;
+    content: attr(data-tooltip);
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: red;
+    line-height: 1rem;
+    padding: 6px 12px;
+    border-radius: 8px;
   }
   #peekButton {
     position: absolute;
