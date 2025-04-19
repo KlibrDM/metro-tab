@@ -43,7 +43,7 @@
 
     if(firstRender) {
       // Set the selected category index based on local storage when the component mounts
-      if(pages.filter((page) => page.categoryId === undefined).length > 0) {
+      if(pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0) {
         selectedCategoryIndex = storageCategoryIndex > categories.length ? 0 : storageCategoryIndex;
       }
       else {
@@ -150,7 +150,7 @@
           </div>
         {/each}
 
-        {#if pages.filter((page) => page.categoryId === undefined).length > 0}
+        {#if pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0}
           <div
             class="category"
             class:selected={selectedCategoryIndex === categories.length}
@@ -184,7 +184,7 @@
     right: 0;
   }
   .categoriesContainer:not(:has(.categoryNavigation)) .categories {
-    padding: 0px 12px;
+    padding: 0px 16px;
   }
   .categories {
     display: flex;

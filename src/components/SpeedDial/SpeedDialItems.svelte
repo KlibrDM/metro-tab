@@ -20,6 +20,11 @@
 
 <div class="speedDialBox" class:isShown={isShown} class:largePadding={categories.length}>
   <div class="buttons" style="gap: {tileGap}vh">
+    {#if !pages.filter(page => page.isActive).length}
+      <div class="noPagesAvailableWarning">
+        No pages available in this category
+      </div>
+    {/if}
     {#each pages as page}
       {#if page.isActive}
         {#if !page.isGroup}
@@ -179,6 +184,15 @@
   }
   .speedDialBox.largePadding {
     padding-bottom: 48px;
+  }
+  .noPagesAvailableWarning {
+    max-width: 400px;
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: 2px solid;
+    border-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
   }
   .buttons {
     width: 75vw;
