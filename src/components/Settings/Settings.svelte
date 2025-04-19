@@ -2,6 +2,7 @@
   import { userData } from "../../store";
   import * as CONFIG from "../../data/config";
   import { saveConfig, saveBackground, saveBackgroundColor, saveSearchEngine } from "../../data/storage";
+  import { v4 as uuid } from "uuid";
 
   import SettingsForm from "./SettingsForm.svelte";
   import Backgrounds from "./Backgrounds.svelte";
@@ -10,6 +11,7 @@
   import SearchEngine from "./SearchEngine.svelte";
   import About from "./About.svelte";
   import Themes from "./Themes.svelte";
+  import Categories from "./Categories.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -135,6 +137,55 @@
       state.isBackgroundSolid = true;
       return state;
     });
+  };
+
+  const addCategory = (addCategoryInput, event) => {
+    event.preventDefault();
+
+    //Add category to the list
+    settingsData.categories.push({
+      id: uuid(),
+      name: addCategoryInput
+    });
+
+    //Trigger list re-render
+    settingsData.categories = settingsData.categories;
+  };
+
+  const deleteCategory = (index) => {
+    //Delete 1 element from specified index
+    settingsData.categories.splice(index, 1);
+
+    //Trigger list re-render
+    settingsData.categories = settingsData.categories;
+  };
+
+  const moveCategory = (index, direction) => {
+    const list = settingsData.categories;
+
+    //Return if the move is not possible
+    if (direction === "up" && index === 0) {
+      return;
+    }
+    if (direction === "down" && index === list.length - 1) {
+      return;
+    }
+
+    //Get current item
+    let item = list[index];
+
+    //Remove current item from old location
+    list.splice(index, 1);
+
+    //Add current item in the direction
+    if (direction === "up") {
+      list.splice(index - 1, 0, item);
+    } else if (direction === "down") {
+      list.splice(index + 1, 0, item);
+    }
+
+    //Trigger list re-render
+    settingsData.categories = settingsData.categories;
   };
 
   const createGroup = () => {
@@ -320,40 +371,47 @@
         class:headerSelected={tabIndex === 1}
         on:click={() => {changeTab(1);}}
       >
-        Background
+        Categories
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 2}
         on:click={() => {changeTab(2);}}
       >
-        Visuals
+        Background
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 3}
         on:click={() => {changeTab(3);}}
       >
-        Themes
+        Visuals
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 4}
         on:click={() => {changeTab(4);}}
       >
-        Search Engine
+        Themes
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 5}
         on:click={() => {changeTab(5);}}
       >
-        Import/Export
+        Search Engine
       </button>
       <button
         class="settingsHeaderButton"
         class:headerSelected={tabIndex === 6}
         on:click={() => {changeTab(6);}}
+      >
+        Import/Export
+      </button>
+      <button
+        class="settingsHeaderButton"
+        class:headerSelected={tabIndex === 7}
+        on:click={() => {changeTab(7);}}
       >
         About
       </button>
@@ -363,16 +421,18 @@
       {#if tabIndex === 0}
         <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} {getImageNameFor} {checkWebsite} {escapeHTML} bind:unsavedPages={unsavedSettings} />
       {:else if tabIndex === 1}
-        <Backgrounds {changeBackground} {changeBackgroundColor} />
+        <Categories {settingsData} {addCategory} {deleteCategory} {moveCategory} {saveSettings} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 2}
-        <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
+        <Backgrounds {changeBackground} {changeBackgroundColor} />
       {:else if tabIndex === 3}
-        <Themes {settingsData} />
+        <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 4}
-        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
+        <Themes {settingsData} />
       {:else if tabIndex === 5}
-        <ImportExport {settingsData} {saveSettings} />
+        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
       {:else if tabIndex === 6}
+        <ImportExport {settingsData} {saveSettings} />
+      {:else if tabIndex === 7}
         <About />
       {/if}
     </div>
@@ -486,6 +546,7 @@
     display: flex;
     gap: 15px;
     overflow-x: auto;
+    margin-right: 64px;
   }
   .settingsHeaderButton {
     background-color: transparent;
@@ -494,6 +555,7 @@
     cursor: pointer;
     transition: 0.3s;
     font-size: 1em;
+    flex-shrink: 0;
   }
   .settingsHeaderButton:hover {
     color: black;
@@ -519,6 +581,14 @@
   @media screen and (max-width: 450px) {
     #settingsPanel {
       padding: 20px;
+    }
+    #settingsHeader {
+      margin-right: 84px;
+    }
+  }
+  @media screen and (max-width: 960px) {
+    #settingsHeader {
+      padding-bottom: 4px;
     }
   }
 </style>

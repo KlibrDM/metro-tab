@@ -27,6 +27,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("coverColor", JSON.stringify(data.coverColor));
   localStorage.setItem("coverTextColor", JSON.stringify(data.coverTextColor));
   localStorage.setItem("notes", JSON.stringify(data.notes));
+  localStorage.setItem("categories", JSON.stringify(data.categories));
   localStorage.setItem("pages", JSON.stringify(data.pages));
   localStorage.setItem("searchEngine", data.searchEngine);
 };
@@ -87,6 +88,18 @@ export const getTileImageLinks = () => {
     }
   }
   return links;
+}
+
+export const saveCurrentSelectedCategoryIndex = (index) => {
+  localStorage.setItem("currentSelectedCategoryIndex", index);
+}
+
+export const getCurrentSelectedCategoryIndex = () => {
+  let index = localStorage.getItem("currentSelectedCategoryIndex");
+  if (index === null) {
+    return 0;
+  }
+  return parseInt(index);
 }
 
 /*Load data from localstorage
@@ -197,6 +210,10 @@ const data = {
   notes:
     JSON.parse(localStorage.getItem("notes")) ||
     CONFIG.notes,
+
+  categories:
+    JSON.parse(localStorage.getItem("categories")) ||
+    CONFIG.categories,
 
   pages:
     JSON.parse(localStorage.getItem("pages")) ||

@@ -152,6 +152,22 @@
                 }}
               />
             {/if}
+
+            {#if settingsData.categories.length > 0}
+              <div class="settingsPageCategorySelect">
+                <select
+                  bind:value={page.categoryId}
+                  on:change={() => {
+                    unsavedPages = true;
+                  }}
+                >
+                  <option value={undefined}>Uncategorized</option>
+                  {#each settingsData.categories as category}
+                    <option value={category.id}>{category.name}</option>
+                  {/each}
+                </select>
+              </div>
+            {/if}
           </div>
           <div class="settingsPageListButtons">
             {#if page.isGroup}
@@ -473,6 +489,9 @@
   .settingsPagesMoveButtons button:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+  }
+  .settingsPageCategorySelect select {
+    max-width: 140px;
   }
   .settingsPageListButtons {
     align-self: center;

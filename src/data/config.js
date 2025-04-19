@@ -99,6 +99,8 @@ export const searchEngineList = [
 
 export const notes = [];
 
+export const categories = [];
+
 export const pages = [
   {
     link: "https://www.google.com",

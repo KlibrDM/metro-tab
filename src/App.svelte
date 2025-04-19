@@ -5,7 +5,7 @@
   import Cover from "./components/Cover.svelte";
   import QuickNav from "./components/QuickNav.svelte";
   import SearchBar from "./components/SearchBar/SearchBar.svelte";
-  import SpeedDial from "./components/SpeedDial.svelte";
+  import SpeedDial from "./components/SpeedDial/SpeedDial.svelte";
   import Settings from "./components/Settings/Settings.svelte";
   import Notes from "./components/Notes/Notes.svelte";
   import Entertainment from "./components/Entertainment.svelte";

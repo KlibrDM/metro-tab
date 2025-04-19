@@ -35,6 +35,7 @@
     let exportDataObject = {};
     if(exportPages){
       exportDataObject.pages = settingsData.pages;
+      exportDataObject.categories = settingsData.categories;
     }
     if(exportNotes){
       exportDataObject.notes = settingsData.notes;
@@ -166,9 +167,26 @@
             errorsFound = true;
           }
 
+          if(settings.categories) {
+            settings.categories.forEach(category => {
+              if(!category.hasOwnProperty('id') || !category.hasOwnProperty('name')){
+                errorsFound = true;
+              }
+            });
+          }
+          else {
+            //If there are no categories in the settings, remove the category from the pages
+            settings.pages.forEach(page => {
+              if(page.hasOwnProperty('categoryId')){
+                delete page.categoryId;
+              }
+            });
+          }
+
           //If no errors found, add pages to settings
           if(!errorsFound){
             settingsToSave.pages = settings.pages;
+            settingsToSave.categories = settings.categories || [];
           }
           else{
             importErrors.pages = true;
@@ -585,7 +603,7 @@
         class="settingsCheckbox"
         bind:checked={importPages}
       />
-      <label for="import_pages">Import Pages</label>
+      <label for="import_pages">Import Pages & Categories</label>
     </div>
 
     <div>
@@ -644,7 +662,7 @@
     </div>
 
     <small>
-      * Importing notes and pages will overwrite your existing ones<br>
+      * Importing notes, pages and categories will overwrite your existing ones<br>
       * Export your current settings before importing, otherwise you won't be able to revert the changes<br>
       * Settings from older versions of the extension may not be fully compatible
     </small>
@@ -677,7 +695,7 @@
         class="settingsCheckbox"
         bind:checked={exportPages}
       />
-      <label for="export_pages">Export Pages</label>
+      <label for="export_pages">Export Pages & Categories</label>
     </div>
 
     <div>
@@ -771,7 +789,7 @@
   <div class="IEAlerts">
     <div class="IEAlert IEAlertError">
       {#if importErrors.pages}
-        <span>There was an error importing pages.</span>
+        <span>There was an error importing pages & categories.</span>
       {/if}
       {#if importErrors.tileImages}
         <span>There was an error importing tile images.</span>
