@@ -64,8 +64,8 @@
   $:if(selectedCategoryId) {
     const categoryIndex = categories.findIndex((category) => category.id === selectedCategoryId);
     if (categoryIndex === -1) {
-      selectedCategoryIndex = 0;
-      selectedCategoryId = undefined;
+      selectedCategoryIndex = selectedCategoryIndex === categories.length ? categories.length : 0;
+      selectedCategoryId = selectedCategoryIndex === categories.length ? "0000" : categories.length ? categories[0].id : undefined;
     }
     else {
       selectedCategoryIndex = categoryIndex;
@@ -156,7 +156,7 @@
             class:selected={selectedCategoryIndex === categories.length}
             on:click={() => {
               selectedCategoryIndex = categories.length;
-              selectedCategoryId = undefined;
+              selectedCategoryId = "0000";
             }}
           >
             Uncategorized
