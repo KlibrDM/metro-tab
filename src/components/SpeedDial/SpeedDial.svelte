@@ -51,6 +51,14 @@
       }
       firstRender = false;
     }
+
+    // After categories layout changes, check if navigation should be shown
+    setTimeout(() => {
+      const categoriesList = document.querySelector("#categoriesList");
+      if (categoriesList) {
+        showCategoryNavigation = categoriesList.scrollWidth > categoriesList.clientWidth;
+      }
+    }, 0);
   });
 
   const onCategoryNavigationClick = (directionMultiplier) => {

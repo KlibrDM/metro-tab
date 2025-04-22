@@ -23,6 +23,8 @@
   // Show delete tile image confirm after delete button was clicked
   let showDeleteTileImageConfirm = false;
 
+  let highlightedCategoryId = undefined;
+
   // Tile image modal
   let imageModalActive = false;
   let selectedIndex = -1;
@@ -78,6 +80,7 @@
       >
         <div
           class="settingsPagesListPage"
+          class:highlighted={(page.categoryId && highlightedCategoryId === page.categoryId) || (!page.categoryId && highlightedCategoryId === "0000")}
           style="
             border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
             background: {
@@ -201,6 +204,30 @@
     {/each}
   </div>
 
+  {#if settingsData.categories && settingsData.categories.length > 0}
+    <div id="highlightCategoriesSection">
+      <p>Highlight category</p>
+      <div class="highlightCategoriesContainer">
+        {#each settingsData.categories as category}
+          <div
+            class="highlightCategory"
+            class:selected={highlightedCategoryId === category.id}
+            on:click={() => { highlightedCategoryId = highlightedCategoryId === category.id ? undefined : category.id }}
+          >
+            {category.name}
+          </div>
+        {/each}
+        <div
+          class="highlightCategory"
+          class:selected={highlightedCategoryId === "0000"}
+          on:click={() => { highlightedCategoryId = highlightedCategoryId === "0000" ? undefined : "0000" }}
+        >
+          Uncategorized
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <div id="settingsPageOptions">
     <h4>Add new page</h4>
     <form
@@ -314,7 +341,7 @@
     margin-block-end: 0.4em;
   }
   h4 {
-    margin-block-start: 0.4em;
+    margin-block-start: 0.2em;
     margin-block-end: 0.4em;
   }
   .pointer {
@@ -442,9 +469,16 @@
     border-radius: 10px;
     background-color: white;
     border: 1px solid lightgray;
+    transition: 0.3s;
   }
   #settingsPages.darkModifier .settingsPagesListPage {
     border-color: #3a99ff !important;
+  }
+  .settingsPagesListPage.highlighted {
+    background-color: #d3e8ff !important;
+  }
+  #settingsPages.darkModifier .settingsPagesListPage.highlighted {
+    background-color: #093166 !important;
   }
   .settingsDragHandle {
     margin-left: 4px;
@@ -532,6 +566,51 @@
     margin-top: 8px;
     animation: shake-bottom 4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both infinite;
     animation-delay: 2s;
+  }
+  #highlightCategoriesSection {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  #highlightCategoriesSection p {
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .highlightCategoriesContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 4px;
+    overflow: auto;
+  }
+  .highlightCategory {
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: rgb(225, 225, 225);
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-shrink: 0;
+  }
+  .highlightCategory:hover {
+    background-color: rgb(215, 215, 215);
+  }
+  .highlightCategory.selected {
+    background-color: #3a99ff !important;
+    color: white !important;
+  }
+  .highlightCategory.selected:hover {
+    background-color: #2880de !important;
+    color: white !important;
+  }
+  #settingsPages.darkModifier .highlightCategory {
+    background-color: #243958;
+    color: white;
+  }
+  #settingsPages.darkModifier .highlightCategory:hover {
+    background-color: #324b70;
+    color: white;
   }
   @media screen and (max-width: 450px) {
     .settingsPageInput {
