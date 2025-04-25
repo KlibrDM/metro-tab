@@ -201,7 +201,7 @@
     border-radius: 100px;
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.35);
     transition: 0.3s;
     z-index: 5;
   }
@@ -231,12 +231,14 @@
     cursor: pointer;
     transition: 0.3s;
     flex-shrink: 0;
+    font-size: 1.1em;
   }
   .category:hover {
     color: rgb(230, 230, 230);
   }
   .category.selected {
     color: #3a99ff;
+    text-shadow: 0px 0px 2px #3a99ff;
   }
   .category.selected:hover {
     color: #2880de;

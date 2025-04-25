@@ -406,7 +406,7 @@
         class:headerSelected={tabIndex === 6}
         on:click={() => {changeTab(6);}}
       >
-        Import/Export
+        Backup
       </button>
       <button
         class="settingsHeaderButton"

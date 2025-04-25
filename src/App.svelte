@@ -10,6 +10,7 @@
   import Notes from "./components/Notes/Notes.svelte";
   import Entertainment from "./components/Entertainment.svelte";
   import Hint from "./components/Hint.svelte";
+  import BackupReminder from "./components/BackupReminder.svelte";
   import { getBackgroundFormat } from "./data/tools";
 
   let backgroundImage;
@@ -44,6 +45,7 @@
   <Notes bind:remoteOpenNotes />
   <Entertainment />
   <Hint />
+  <BackupReminder />
 </main>
 
 <style>

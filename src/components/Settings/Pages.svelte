@@ -592,6 +592,7 @@
     cursor: pointer;
     transition: 0.3s;
     flex-shrink: 0;
+    user-select: none;
   }
   .highlightCategory:hover {
     background-color: rgb(215, 215, 215);

@@ -91,15 +91,51 @@ export const getTileImageLinks = () => {
 }
 
 export const saveCurrentSelectedCategoryIndex = (index) => {
-  localStorage.setItem("currentSelectedCategoryIndex", index);
+  localStorage.setItem("local_currentSelectedCategoryIndex", index);
 }
 
 export const getCurrentSelectedCategoryIndex = () => {
-  let index = localStorage.getItem("currentSelectedCategoryIndex");
+  let index = localStorage.getItem("local_currentSelectedCategoryIndex");
   if (index === null) {
     return 0;
   }
   return parseInt(index);
+}
+
+export const setLastBackupDate = (date) => {
+  localStorage.setItem("local_lastBackupDate", date.toISOString());
+}
+
+export const getLastBackupDate = () => {
+  let date = localStorage.getItem("local_lastBackupDate");
+  if (date === null) {
+    return null;
+  }
+  return new Date(date);
+}
+
+export const setBackupReminderDate = (date) => {
+  localStorage.setItem("local_backupReminderDate", date.toISOString());
+}
+
+export const getBackupReminderDate = () => {
+  let reminderDate = localStorage.getItem("local_backupReminderDate");
+  if (reminderDate === null) {
+    return null;
+  }
+  return new Date(reminderDate);
+}
+
+export const getIsDefaultBackupDate = () => {
+  let isDefaultBackupDate = localStorage.getItem("local_isDefaultBackupDate");
+  if (isDefaultBackupDate === null) {
+    return true;
+  }
+  return JSON.parse(isDefaultBackupDate);
+}
+
+export const unsetIsDefaultBackupDate = () => {
+  localStorage.setItem("local_isDefaultBackupDate", false);
 }
 
 /*Load data from localstorage
@@ -319,6 +355,12 @@ if (data.notes && data.notes.length) {
 
 //After loading the data, set it to state
 userData.set(data);
+
+//If no last backup date is set, set it to now (this is most likely the first time the extension is used)
+if (localStorage.getItem("local_lastBackupDate") === null) {
+  localStorage.setItem("local_lastBackupDate", new Date().toISOString());
+  localStorage.setItem("local_isDefaultBackupDate", true);
+}
 
 //Cookie management functions to restore legacy data
 function getCookie(name) {

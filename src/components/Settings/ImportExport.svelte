@@ -1,8 +1,12 @@
 <script>
-  import { getTileImage, getTileImageLinks, parseNotes, saveTileImage } from "../../data/storage";
+  import moment from "moment";
+  import { getIsDefaultBackupDate, getLastBackupDate, getTileImage, getTileImageLinks, parseNotes, saveTileImage, setLastBackupDate, unsetIsDefaultBackupDate } from "../../data/storage";
 
   export let settingsData;
   export let saveSettings;
+
+  let lastBackupDate = getLastBackupDate();
+  let isDefaultBackupDate = getIsDefaultBackupDate();
 
   let settings, fileInput;
   let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true, importSearchEngine = true;
@@ -28,6 +32,19 @@
       searchEngine: false,
       notes: false,
     };
+  }
+
+  const updateLastBackupDate = () => {
+    //Set the last backup date
+    const date = new Date();
+    setLastBackupDate(date);
+    lastBackupDate = date;
+
+    //If the last backup date is the default date, set it to false and unset the default date
+    if(isDefaultBackupDate){
+      isDefaultBackupDate = false;
+      unsetIsDefaultBackupDate();
+    }
   }
 
   const exportData = () => {
@@ -76,6 +93,9 @@
         exportDataObject[link] = getTileImage(link);
       });
     }
+
+    //Update last backup date
+    updateLastBackupDate();
 
     //Set the anchor tag to download the file
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportDataObject));
@@ -582,6 +602,9 @@
           importFinishedSuccessfully = true;
         }
 
+        // Update last backup date
+        updateLastBackupDate();
+
         saveSettings(settingsToSave);
       }
       catch{
@@ -592,236 +615,273 @@
 </script>
 
 <div class="IEPage" class:darkModifier={settingsData.darkMode}>
-  <div class="IESection">
-    <h2>Import Settings</h2>
-    
-    <div>
-      <input
-        type="checkbox"
-        id="import_pages"
-        name="import_pages"
-        class="settingsCheckbox"
-        bind:checked={importPages}
-      />
-      <label for="import_pages">Import Pages & Categories</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="import_tileImages"
-        name="import_tileImages"
-        class="settingsCheckbox"
-        bind:checked={importTileImages}
-      />
-      <label for="import_tileImages">Import Tile Images</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="import_background"
-        name="import_background"
-        class="settingsCheckbox"
-        bind:checked={importBackground}
-      />
-      <label for="import_background">Import Background</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="import_visuals"
-        name="import_visuals"
-        class="settingsCheckbox"
-        bind:checked={importVisuals}
-      />
-      <label for="import_visuals">Import Visuals</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="import_searchEngine"
-        name="import_searchEngine"
-        class="settingsCheckbox"
-        bind:checked={importSearchEngine}
-      />
-      <label for="import_searchEngine">Import Search Engine</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="import_notes"
-        name="import_notes"
-        class="settingsCheckbox"
-        bind:checked={importNotes}
-      />
-      <label for="import_notes">Import Notes</label>
-    </div>
-
-    <small>
-      * Importing notes, pages and categories will overwrite your existing ones<br>
-      * Export your current settings before importing, otherwise you won't be able to revert the changes<br>
-      * Settings from older versions of the extension may not be fully compatible
-    </small>
-
-    <button
-      id="importButton"
-      on:click={() => {
-        fileInput.click();
-      }}
-    >
-      Import
-    </button>
-    <input
-      style="display:none"
-      type="file"
-      accept=".json"
-      on:change={(e) => onFileSelected(e)}
-      bind:this={fileInput}
-    />
+  <div class="IEHeaderSection">
+    <h2 class="IEHeaderSectionTitle">Backup</h2>
+    <strong>Last backup: {isDefaultBackupDate ? "—" : lastBackupDate ? moment(lastBackupDate).format("DD MMMM YYYY HH:mm") : "—"}</strong>
+    <p>* Importing or exporting settings will reset the last backup date</p>
+    <p>* Export your current settings before importing, otherwise you won't be able to revert the changes</p>
+    <p>* Settings from older versions of the extension may not be fully compatible</p>
   </div>
 
-  <div class="IESection">
-    <h2>Export Settings</h2>
-    
-    <div>
+  <div class="IESections">
+    <div class="IESection">
+      <h2>Import Settings</h2>
+      
+      <div>
+        <input
+          type="checkbox"
+          id="import_pages"
+          name="import_pages"
+          class="settingsCheckbox"
+          bind:checked={importPages}
+        />
+        <label for="import_pages">Import Pages & Categories</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_tileImages"
+          name="import_tileImages"
+          class="settingsCheckbox"
+          bind:checked={importTileImages}
+        />
+        <label for="import_tileImages">Import Tile Images</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_background"
+          name="import_background"
+          class="settingsCheckbox"
+          bind:checked={importBackground}
+        />
+        <label for="import_background">Import Background</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_visuals"
+          name="import_visuals"
+          class="settingsCheckbox"
+          bind:checked={importVisuals}
+        />
+        <label for="import_visuals">Import Visuals</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_searchEngine"
+          name="import_searchEngine"
+          class="settingsCheckbox"
+          bind:checked={importSearchEngine}
+        />
+        <label for="import_searchEngine">Import Search Engine</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_notes"
+          name="import_notes"
+          class="settingsCheckbox"
+          bind:checked={importNotes}
+        />
+        <label for="import_notes">Import Notes</label>
+      </div>
+
+      <small>
+        * Importing notes, pages and categories will overwrite your existing ones
+      </small>
+
+      <button
+        id="importButton"
+        on:click={() => {
+          fileInput.click();
+        }}
+      >
+        Import
+      </button>
       <input
-        type="checkbox"
-        id="export_pages"
-        name="export_pages"
-        class="settingsCheckbox"
-        bind:checked={exportPages}
+        style="display:none"
+        type="file"
+        accept=".json"
+        on:change={(e) => onFileSelected(e)}
+        bind:this={fileInput}
       />
-      <label for="export_pages">Export Pages & Categories</label>
     </div>
 
-    <div>
-      <input
-        type="checkbox"
-        id="export_tileImages"
-        name="export_tileImages"
-        class="settingsCheckbox"
-        bind:checked={exportTileImages}
-      />
-      <label for="export_tileImages">Export Tile Images</label>
+    <div class="IESection">
+      <h2>Export Settings</h2>
+      
+      <div>
+        <input
+          type="checkbox"
+          id="export_pages"
+          name="export_pages"
+          class="settingsCheckbox"
+          bind:checked={exportPages}
+        />
+        <label for="export_pages">Export Pages & Categories</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="export_tileImages"
+          name="export_tileImages"
+          class="settingsCheckbox"
+          bind:checked={exportTileImages}
+        />
+        <label for="export_tileImages">Export Tile Images</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="export_background"
+          name="export_background"
+          class="settingsCheckbox"
+          bind:checked={exportBackground}
+        />
+        <label for="export_background">Export Background</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="export_visuals"
+          name="export_visuals"
+          class="settingsCheckbox"
+          bind:checked={exportVisuals}
+        />
+        <label for="export_visuals">Export Visuals</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="export_searchEngine"
+          name="export_searchEngine"
+          class="settingsCheckbox"
+          bind:checked={exportSearchEngine}
+        />
+        <label for="export_searchEngine">Export Search Engine</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="export_notes"
+          name="export_notes"
+          class="settingsCheckbox"
+          bind:checked={exportNotes}
+        />
+        <label for="export_notes">Export Notes</label>
+      </div>
+
+      <small>
+        * Make sure you aren't storing any sensitive information in your notes before exporting them
+      </small>
+
+      <button
+        id="exportButton"
+        on:click={() => {
+          exportData();
+        }}
+      >
+        Export
+      </button>
+      <!-- svelte-ignore a11y-missing-content -->
+      <a id="downloadAnchorElem" style="display:none"></a>
     </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="export_background"
-        name="export_background"
-        class="settingsCheckbox"
-        bind:checked={exportBackground}
-      />
-      <label for="export_background">Export Background</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="export_visuals"
-        name="export_visuals"
-        class="settingsCheckbox"
-        bind:checked={exportVisuals}
-      />
-      <label for="export_visuals">Export Visuals</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="export_searchEngine"
-        name="export_searchEngine"
-        class="settingsCheckbox"
-        bind:checked={exportSearchEngine}
-      />
-      <label for="export_searchEngine">Export Search Engine</label>
-    </div>
-
-    <div>
-      <input
-        type="checkbox"
-        id="export_notes"
-        name="export_notes"
-        class="settingsCheckbox"
-        bind:checked={exportNotes}
-      />
-      <label for="export_notes">Export Notes</label>
-    </div>
-
-    <small>
-      * Make sure you aren't storing any sensitive information in your notes before exporting them
-    </small>
-
-    <button
-      id="exportButton"
-      on:click={() => {
-        exportData();
-      }}
-    >
-      Export
-    </button>
-    <!-- svelte-ignore a11y-missing-content -->
-    <a id="downloadAnchorElem" style="display:none"></a>
   </div>
+
+  {#if importFinishedSuccessfully}
+    <div class="IEAlerts">
+      <div class="IEAlert IEAlertSuccess">
+        <span>Settings imported successfully.</span>
+      </div>
+      <div class="IEAlert spacer"></div>
+    </div>
+  {/if}
+
+  {#if importErrors.pages
+    || importErrors.tileImages
+    || importErrors.background
+    || importErrors.visuals
+    || importErrors.searchEngine
+    || importErrors.notes
+  }
+    <div class="IEAlerts">
+      <div class="IEAlert IEAlertError">
+        {#if importErrors.pages}
+          <span>There was an error importing pages & categories.</span>
+        {/if}
+        {#if importErrors.tileImages}
+          <span>There was an error importing tile images.</span>
+        {/if}
+        {#if importErrors.background}
+          <span>There was an error importing the background.</span>
+        {/if}
+        {#if importErrors.visuals}
+          <span>There was an error importing visuals.</span>
+        {/if}
+        {#if importErrors.searchEngine}
+          <span>There was an error importing the search engine.</span>
+        {/if}
+        {#if importErrors.notes}
+          <span>There was an error importing notes.</span>
+        {/if}
+        {#if importErrors.pages && importErrors.background && importErrors.visuals && importErrors.searchEngine && importErrors.notes}
+          <span>Please verify that the file has a supported metro-tab-config format.</span>
+        {:else}
+          <span>All of the other checked options were successfully imported.</span>
+        {/if}
+      </div>
+      <div class="IEAlert spacer"></div>
+    </div>
+  {/if}
 </div>
-
-{#if importFinishedSuccessfully}
-  <div class="IEAlerts">
-    <div class="IEAlert IEAlertSuccess">
-      <span>Settings imported successfully.</span>
-    </div>
-    <div class="IEAlert spacer"></div>
-  </div>
-{/if}
-
-{#if importErrors.pages
-  || importErrors.tileImages
-  || importErrors.background
-  || importErrors.visuals
-  || importErrors.searchEngine
-  || importErrors.notes
-}
-  <div class="IEAlerts">
-    <div class="IEAlert IEAlertError">
-      {#if importErrors.pages}
-        <span>There was an error importing pages & categories.</span>
-      {/if}
-      {#if importErrors.tileImages}
-        <span>There was an error importing tile images.</span>
-      {/if}
-      {#if importErrors.background}
-        <span>There was an error importing the background.</span>
-      {/if}
-      {#if importErrors.visuals}
-        <span>There was an error importing visuals.</span>
-      {/if}
-      {#if importErrors.searchEngine}
-        <span>There was an error importing the search engine.</span>
-      {/if}
-      {#if importErrors.notes}
-        <span>There was an error importing notes.</span>
-      {/if}
-      {#if importErrors.pages && importErrors.background && importErrors.visuals && importErrors.searchEngine && importErrors.notes}
-        <span>Please verify that the file has a supported metro-tab-config format.</span>
-      {:else}
-        <span>All of the other checked options were successfully imported.</span>
-      {/if}
-    </div>
-    <div class="IEAlert spacer"></div>
-  </div>
-{/if}
 
 <style>
   .IEPage {
     display: flex;
-    justify-content: center;
-    gap: calc(32px + 0.5em);
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
     margin-top: 32px;
+  }
+  .IEHeaderSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 10px 30px 25px 30px;
+    flex-grow: 1;
+    width: clamp(400px, 55%, 1200px);
+    box-sizing: border-box;
+  }
+  .IEPage.darkModifier .IEHeaderSection {
+    border-color: #3a99ff;
+  }
+  .IEHeaderSection p {
+    margin: 0;
+  }
+  .IEHeaderSectionTitle {
+    margin-block-start: 0.4rem;
+    margin-block-end: 0.4rem;
+  }
+  .IESections {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    width: clamp(400px, 55%, 1200px);
   }
   .IEPage.darkModifier .IESection {
     border-color: #3a99ff;
@@ -835,7 +895,7 @@
     border-radius: 10px;
     padding: 10px 30px 25px 30px;
     flex-grow: 1;
-    max-width: 25%;
+    flex-basis: 50%;
   }
   h2 {
     margin-block-start: 0.4em;
@@ -872,8 +932,8 @@
   .IEAlerts {
     display: flex;
     justify-content: center;
-    gap: calc(32px + 0.5em);
-    margin-top: 32px;
+    gap: 32px;
+    width: clamp(400px, 55%, 1200px);
   }
   .IEAlert {
     display: flex;
@@ -883,7 +943,7 @@
     padding: 15px 30px 20px 30px;
     border-radius: 10px;
     flex-grow: 1;
-    max-width: 25%;
+    flex-basis: 50%;
     overflow: hidden;
   }
   .IEAlertError {
@@ -899,24 +959,17 @@
   .IEAlert.spacer {
     visibility: hidden;
   }
-  @media screen and (max-width: 800px) {
-    .IEPage, .IEAlerts {
+  @media screen and (max-width: 1200px) {
+    .IEPage, .IESections, .IEAlerts {
       gap: 8px;
     }
-    .IESection, .IEAlert {
-      max-width: unset;
-      flex-basis: 100%;
+    .IEHeaderSection, .IESections, .IEAlerts {
+      width: 100%;
     }
   }
-  @media screen and (max-width: 450px) {
-    .IEPage, .IEAlerts {
+  @media screen and (max-width: 600px) {
+    .IEPage, .IESections, .IEAlerts {
       flex-direction: column;
-      margin-top: 16px;
-      gap: 16px;
-    }
-    .IESection, .IEAlert {
-      max-width: 100%;
-      flex-basis: unset;
     }
   }
 </style>
