@@ -12,12 +12,14 @@
   let navbarOpacity;
   let navbarColor;
   let searchEngine;
+  let customSearchEngineUrl;
   let pinnedNote;
 
   let innerHeight = 0;
 
   userData.subscribe((data) => {
     searchEngine = data.searchEngine;
+    customSearchEngineUrl = data.customSearchEngineUrl;
     navbarOpacity = data.navbarOpacity;
     navbarColor = data.navbarColor;
     pinnedNote = data.notes.find((note) => note.isPinned);
@@ -46,20 +48,34 @@
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery !== "") {
-      const selectedSearchEngine = searchEngineList.find(
-        (item) => item.name === searchEngine
-      );
-
-      if (selectedSearchEngine) {
-        window.location.assign(
-          selectedSearchEngine.link + escapeHTML(searchQuery)
+      if (searchEngine === "custom"
+        && customSearchEngineUrl
+        && customSearchEngineUrl.length > 0
+        && customSearchEngineUrl.indexOf("%s") !== -1
+        && (customSearchEngineUrl.substring(0, 7) === "http://" || customSearchEngineUrl.substring(0, 8) === "https://")
+      ) {
+        const customSearchEngineUrlWithQuery = customSearchEngineUrl.replaceAll(
+          "%s",
+          encodeURIComponent(searchQuery)
         );
+        window.location.assign(customSearchEngineUrlWithQuery);
       }
       else {
-        // Fall back to google if search engine not found
-        window.location.assign(
-          "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+        const selectedSearchEngine = searchEngineList.find(
+          (item) => item.name === searchEngine
         );
+
+        if (selectedSearchEngine) {
+          window.location.assign(
+            selectedSearchEngine.link + escapeHTML(searchQuery)
+          );
+        }
+        else {
+          // Fall back to google if search engine not found
+          window.location.assign(
+            "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+          );
+        }
       }
     }
   };

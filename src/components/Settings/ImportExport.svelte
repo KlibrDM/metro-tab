@@ -59,6 +59,9 @@
     }
     if(exportSearchEngine){
       exportDataObject.searchEngine = settingsData.searchEngine;
+      if(settingsData.customSearchEngineUrl && settingsData.customSearchEngineUrl.length > 0) {
+        exportDataObject.customSearchEngineUrl = settingsData.customSearchEngineUrl;
+      }
     }
     if(exportBackground){
       exportDataObject.isBackgroundSolid = settingsData.isBackgroundSolid;
@@ -249,8 +252,22 @@
             errorsFound = true;
           }
 
+          //Custom Search Engine URL is optional, but if it exists, it must be a string and contain %s
+          if(settings.hasOwnProperty('customSearchEngineUrl')){
+            if(typeof settings.customSearchEngineUrl !== 'string'
+              || settings.customSearchEngineUrl.length === 0
+              || settings.customSearchEngineUrl.indexOf("%s") === -1
+              || (settings.customSearchEngineUrl.substring(0, 7) !== "http://" && settings.customSearchEngineUrl.substring(0, 8) !== "https://")
+            ){
+              errorsFound = true;
+            }
+          }
+
           if(!errorsFound){
             settingsToSave.searchEngine = settings.searchEngine;
+            if(settings.hasOwnProperty('customSearchEngineUrl')) {
+              settingsToSave.customSearchEngineUrl = settings.customSearchEngineUrl;
+            }
           }
           else{
             importErrors.searchEngine = true;

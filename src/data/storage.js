@@ -60,8 +60,11 @@ export const saveTileImage = (link, image) => {
   localStorage.setItem(link, image);
 }
 
-export const saveSearchEngine = (engine) => {
+export const saveSearchEngine = (engine, customSearchEngineUrl) => {
   localStorage.setItem("searchEngine", engine);
+  if (customSearchEngineUrl) {
+    localStorage.setItem("customSearchEngineUrl", customSearchEngineUrl);
+  }
 }
 
 export const getTileImage = (link) => {
@@ -258,6 +261,10 @@ const data = {
   searchEngine:
     localStorage.getItem("searchEngine") ||
     CONFIG.searchEngine,
+
+  customSearchEngineUrl:
+    localStorage.getItem("customSearchEngineUrl") ||
+    CONFIG.customSearchEngineUrl
 };
 
 /*Import pages data from legacy 1.1 version

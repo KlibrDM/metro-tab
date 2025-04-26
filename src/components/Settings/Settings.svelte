@@ -97,14 +97,15 @@
     saveConfig(settingsData);
   };
 
-  const changeSearchEngine = (engine) => {
+  const changeSearchEngine = (engine, customEngineUrl) => {
     userData.update((state) => {
       state.searchEngine = engine;
+      state.customSearchEngineURL = customEngineUrl;
       return state;
     });
 
     //Save to localstorage
-    saveSearchEngine(engine);
+    saveSearchEngine(engine, customEngineUrl);
   };
 
   const changeBackground = (bg) => {
@@ -429,7 +430,7 @@
       {:else if tabIndex === 4}
         <Themes {settingsData} />
       {:else if tabIndex === 5}
-        <SearchEngine currentSearchEngine={settingsData.searchEngine} {changeSearchEngine} darkMode={settingsData.darkMode} />
+        <SearchEngine {settingsData} {changeSearchEngine} />
       {:else if tabIndex === 6}
         <ImportExport {settingsData} {saveSettings} />
       {:else if tabIndex === 7}
