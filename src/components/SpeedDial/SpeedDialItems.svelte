@@ -16,9 +16,10 @@
   export let groupTileGap;
   export let groupTileBorderRadius;
   export let groupTileGrow;
+  export let showSearchBar;
 </script>
 
-<div class="speedDialBox" class:isShown={isShown} class:largePadding={categories.length}>
+<div class="speedDialBox" class:isShown={isShown} class:hiddenSearchBar={!showSearchBar} class:largePadding={categories.length}>
   <div class="buttons" style="gap: {tileGap}vh">
     {#if !pages.filter(page => page.isActive).length}
       <div class="noPagesAvailableWarning">
@@ -184,6 +185,9 @@
   }
   .speedDialBox.largePadding {
     padding-bottom: 48px;
+  }
+  .speedDialBox.hiddenSearchBar {
+    min-height: calc(100vh - 140px);
   }
   .noPagesAvailableWarning {
     max-width: 400px;

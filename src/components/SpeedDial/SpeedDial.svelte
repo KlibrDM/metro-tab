@@ -19,6 +19,7 @@
   let groupTileGap;
   let groupTileBorderRadius;
   let groupTileGrow;
+  let showSearchBar;
 
   let selectedCategoryIndex = 0;
   let selectedCategoryId = undefined;
@@ -40,6 +41,7 @@
     groupTileGap = data.groupTileGap;
     groupTileBorderRadius = data.groupTileBorderRadius;
     groupTileGrow = data.groupTileGrow;
+    showSearchBar = data.showSearchBar;
 
     if(firstRender) {
       // Set the selected category index based on local storage when the component mounts
@@ -114,6 +116,7 @@
       groupTileGap={groupTileGap}
       groupTileBorderRadius={groupTileBorderRadius}
       groupTileGrow={groupTileGrow}
+      showSearchBar={showSearchBar}
     />
   {/each}
 
@@ -132,6 +135,7 @@
     groupTileGap={groupTileGap}
     groupTileBorderRadius={groupTileBorderRadius}
     groupTileGrow={groupTileGrow}
+    showSearchBar={showSearchBar}
   />
 </div>
 

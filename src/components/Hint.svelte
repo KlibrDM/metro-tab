@@ -92,7 +92,7 @@
 <style>
   #hintButton {
     position: absolute;
-    top: 2vh;
+    top: 20px;
     right: 145px;
     width: 30px;
     height: 30px;

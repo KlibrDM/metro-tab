@@ -1,6 +1,7 @@
 <script>
   import { userData } from "../../store";
 
+  export let showSearchBar;
   let clockBackground;
   let clock24Hour;
 
@@ -34,7 +35,7 @@
 </script>
 
 <!--Use clockbg class only if clockBackground is true-->
-<div id="time" class:clockbg={clockBackground}>
+<div id="time" class:hiddenSearchBar={!showSearchBar} class:clockbg={clockBackground}>
   {hours}:<span id="minutes">{minutes}</span>
   {#if !clock24Hour}
     <span id="ampm">{ampm}</span>
@@ -51,6 +52,9 @@
     padding: 3px 5px;
     line-height: 1.2em;
   }
+  #time.hiddenSearchBar {
+    bottom: 12px;
+  }
   #minutes {
     font-size: 0.7em;
     color: rgb(236, 236, 236);
@@ -66,7 +70,7 @@
   }
 
   @media screen and (max-width: 799px) {
-    #time {
+    #time:not(.hiddenSearchBar) {
       display: none;
     }
   }
@@ -75,6 +79,7 @@
     #time {
       font-size: 2.2em;
       line-height: 0.8em;
+      bottom: 3vh;
     }
   }
 </style>

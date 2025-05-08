@@ -44,6 +44,7 @@
       state.clockBackground = settingsData.clockBackground;
       state.clock24Hour = settingsData.clock24Hour;
       state.darkMode = settingsData.darkMode;
+      state.showSearchBar = settingsData.showSearchBar;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
@@ -75,6 +76,7 @@
       state.clockBackground = CONFIG.clockBackground;
       state.clock24Hour = CONFIG.clock24Hour;
       state.darkMode = CONFIG.darkMode;
+      state.showSearchBar = CONFIG.showSearchBar;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
       state.tileMinWidth = CONFIG.tileMinWidth;
@@ -452,7 +454,7 @@
   }
   #settingsButton {
     position: absolute;
-    top: 2vh;
+    top: 20px;
     right: 25px;
     width: 30px;
     height: 30px;
@@ -496,7 +498,7 @@
   }
   #peekButton {
     position: absolute;
-    top: 2vh;
+    top: 20px;
     right: 65px;
     width: 30px;
     height: 30px;
@@ -548,6 +550,7 @@
     gap: 15px;
     overflow-x: auto;
     margin-right: 64px;
+    flex-shrink: 0;
   }
   .settingsHeaderButton {
     background-color: transparent;

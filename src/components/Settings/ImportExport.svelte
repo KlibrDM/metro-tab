@@ -74,6 +74,7 @@
       exportDataObject.clockBackground = settingsData.clockBackground;
       exportDataObject.clock24Hour = settingsData.clock24Hour;
       exportDataObject.darkMode = settingsData.darkMode;
+      exportDataObject.showSearchBar = settingsData.showSearchBar;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
       exportDataObject.tileMinWidth = settingsData.tileMinWidth;
@@ -382,6 +383,15 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('showSearchBar')){
+            if(typeof settings.showSearchBar !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('tileZoom')){
             if(typeof settings.tileZoom !== 'boolean'){
               errorsFound = true;
@@ -587,6 +597,7 @@
             settingsToSave.clockBackground = settings.clockBackground;
             settingsToSave.clock24Hour = settings.clock24Hour;
             settingsToSave.darkMode = settings.darkMode;
+            settingsToSave.showSearchBar = settings.showSearchBar;
             settingsToSave.tileZoom = settings.tileZoom;
             settingsToSave.tileGrow = settings.tileGrow;
             settingsToSave.tileMinWidth = settings.tileMinWidth;

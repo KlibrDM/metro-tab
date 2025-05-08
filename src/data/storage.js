@@ -8,6 +8,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("clockBackground", data.clockBackground);
   localStorage.setItem("clock24Hour", data.clock24Hour);
   localStorage.setItem("darkMode", data.darkMode);
+  localStorage.setItem("showSearchBar", data.showSearchBar);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
@@ -169,6 +170,11 @@ const data = {
     localStorage.getItem("darkMode") === null
     ? CONFIG.darkMode
     : localStorage.getItem("darkMode") === "true",
+
+  showSearchBar:
+    localStorage.getItem("showSearchBar") === null
+    ? CONFIG.showSearchBar
+    : localStorage.getItem("showSearchBar") === "true",
 
   isBackgroundSolid:
     localStorage.getItem("isBackgroundSolid") === null

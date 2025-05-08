@@ -350,7 +350,7 @@
 <style>
   #notesButton {
     position: absolute;
-    top: 2vh;
+    top: 20px;
     right: 65px;
     width: 30px;
     height: 30px;

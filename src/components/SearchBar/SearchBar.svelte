@@ -9,6 +9,7 @@
   export let remoteOpenNotes;
 
   let searchQuery = ""; //Binded to input
+  let showSearchBar;
   let navbarOpacity;
   let navbarColor;
   let searchEngine;
@@ -18,6 +19,7 @@
   let innerHeight = 0;
 
   userData.subscribe((data) => {
+    showSearchBar = data.showSearchBar;
     searchEngine = data.searchEngine;
     customSearchEngineUrl = data.customSearchEngineUrl;
     navbarOpacity = data.navbarOpacity;
@@ -98,11 +100,12 @@
 
 <div
   id="searchbarBox"
+  class:hiddenSearchBar={!showSearchBar}
   style="background-color: rgba({navbarColor.r},{navbarColor.g},{navbarColor.b},{navbarOpacity})"
 >
   {#if pinnedNote}
     <div id="note" style={`background-color: ${pinnedNote.backgroundColor}; color: ${pinnedNote.textColor};`}>
-      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840  ? 104 : 52} />
+      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840 && showSearchBar ? 104 : 52} />
       <div class="noteActions">
         <button style={`color: ${pinnedNote.textColor};`} on:click={remoteOpenNotes}>Open notes</button>
         <button style={`color: ${pinnedNote.textColor};`} on:click={unpinNote}>Unpin</button>
@@ -123,7 +126,7 @@
       <i class="fas fa-search" style="color: white" />
     </button>
   </form>
-  <Clock />
+  <Clock showSearchBar={showSearchBar} />
 </div>
 
 <style>
@@ -135,6 +138,9 @@
     align-items: center;
     position: relative;
   }
+  #searchbarBox.hiddenSearchBar {
+    flex-basis: 140px;
+  }
   #searchbar {
     width: 50vw;
     border-radius: 100px;
@@ -143,6 +149,9 @@
     display: flex;
     background-color: rgba(0, 0, 0, 0.25);
     transition: 0.3s;
+  }
+  #searchbarBox.hiddenSearchBar #searchbar {
+    display: none;
   }
   #searchbar:hover {
     background-color: rgba(0, 0, 0, 0.35);
@@ -197,6 +206,10 @@
     width: clamp(200px, 17vw, 400px);
     border-radius: 5px;
   }
+  #searchbarBox.hiddenSearchBar #note {
+    bottom: 8px;
+    width: clamp(200px, 24vw, 400px);
+  }
   .noteActions {
     display: flex;
     gap: 6px;
@@ -214,12 +227,17 @@
   .noteActions > button:hover {
     background-color: rgba(0, 0, 0, 0.3);
   }
+  @media screen and (max-width: 1199px) {
+    #searchbarBox:not(.hiddenSearchBar) #note {
+      display: none;
+    }
+  }
   @media screen and (max-width: 799px) {
     #searchbar {
       width: 75vw;
     }
   }
-  @media screen and (max-width: 1199px) {
+  @media screen and (max-width: 599px) {
     #note {
       display: none;
     }
@@ -227,6 +245,16 @@
   @media screen and (max-height: 600px) {
     #note {
       top: 40px;
+    }
+    #searchbarBox.hiddenSearchBar #note {
+      top: 8px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #searchbarBox.hiddenSearchBar {
+      flex-basis: 110px;
     }
   }
   @media screen and (max-height: 450px) {

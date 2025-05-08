@@ -142,6 +142,26 @@
 
     <div class="settingsInput">
       <div class="imagePlaceholder">
+        <img src="static/images/settings/s_show_search_bar.png" alt="Set show search bar" />
+      </div>
+      <hr/>
+      <div class="settingsInputGroup">
+        <label for="set_showSearchBar">Show search bar</label>
+        <input
+          type="checkbox"
+          id="set_showSearchBar"
+          name="set_showSearchBar"
+          class="settingsCheckbox"
+          bind:checked={settingsData.showSearchBar}
+          on:input={() => {
+            unsavedSettings = true;
+          }}
+        />
+      </div>
+    </div>
+
+    <div class="settingsInput">
+      <div class="imagePlaceholder">
         <img src="static/images/settings/s_tile_zoom.png" alt="Set tile zoom on hover" />
       </div>
       <hr/>

@@ -52,7 +52,7 @@
 <style>
   #entertainmentButton {
     position: absolute;
-    top: 2vh;
+    top: 20px;
     right: 105px;
     width: 30px;
     height: 30px;
