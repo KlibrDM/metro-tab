@@ -1,6 +1,7 @@
 <script>
   import moment from "moment";
-  import { getIsDefaultBackupDate, getLastBackupDate, getTileImage, getTileImageLinks, parseNotes, saveTileImage, setLastBackupDate, unsetIsDefaultBackupDate } from "../../data/storage";
+  import { deleteAllTileImages, getIsDefaultBackupDate, getLastBackupDate, getTileImage, getTileImageLinks, parseNotes, saveBackground, saveTileImage, setLastBackupDate, unsetIsDefaultBackupDate } from "../../data/storage";
+  import { backgroundImage as DEFAULT_BACKGROUND_IMAGE } from "../../data/config";
 
   export let settingsData;
   export let saveSettings;
@@ -275,16 +276,10 @@
           }
         }
 
-        //Import all valid tile images
+        //Before trying to import background, delete previous tile images if "import tile images" is checked
+        //to prevent edge case where import fails due to not having enough space for custom background image
         if(importTileImages){
-          for(let key in settings) {
-            if(key.indexOf("http") !== -1) {
-              const image = settings[key];
-              if(typeof image === 'string' && image.length > 0){
-                saveTileImage(key, image);
-              }
-            }
-          }
+          deleteAllTileImages();
         }
 
         //Check backgrounds for errors then import
@@ -319,6 +314,10 @@
             if(typeof settings.backgroundImage !== 'string' || settings.backgroundImage.length === 0){
               errorsFound = true;
             }
+            else {
+              //If valid, clear up space ASAP
+              saveBackground(DEFAULT_BACKGROUND_IMAGE);
+            }
           }
           else{
             errorsFound = true;
@@ -331,6 +330,18 @@
           }
           else{
             importErrors.background = true;
+          }
+        }
+
+        //Import all valid tile images
+        if(importTileImages){
+          for(let key in settings) {
+            if(key.indexOf("http") !== -1) {
+              const image = settings[key];
+              if(typeof image === 'string' && image.length > 0){
+                saveTileImage(key, image);
+              }
+            }
           }
         }
 
@@ -635,8 +646,13 @@
 
         saveSettings(settingsToSave);
       }
-      catch{
-        alert("Invalid configuration file.");
+      catch(e) {
+        if(e.name === "QuotaExceededError") {
+          alert("Not enough space in local storage to import settings. Please remove some custom tile images or the custom background image and try again.")
+        }
+        else {
+          alert("Invalid configuration file.");
+        }
       }
     };
   };

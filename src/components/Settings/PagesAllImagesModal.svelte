@@ -78,13 +78,28 @@
         <div class="tileImage">
           <img src={getTileImage(tileImage.link)} alt="Tile preview" />
           <div class="tileImageActions">
-            <p>{tileImage.link}</p>
+            <p class="tileImageLink">{tileImage.link}</p>
             <p>{tileImage.size} MB</p>
-            {#if flatMapPages.some((page) => page.link === tileImage.link && page.tileImageType !== 'custom')}
+            {#if flatMapPages.filter((page) => page.link === tileImage.link).length > 1}
+              <!-- If the page appears multiple times -->
               <div class="warningMessage">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                <p>This page is not using the custom image.</p>
+                <p>This page appears multiple times.</p>
               </div>
+              {#if flatMapPages.some((page) => page.link === tileImage.link && page.tileImageType !== 'custom')}
+                <!-- Show a different message than if the page appears only once -->
+                <div class="warningMessage">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <p>At least one of the pages is not using the custom image.</p>
+                </div>
+              {/if}
+            {:else}
+              {#if flatMapPages.some((page) => page.link === tileImage.link && page.tileImageType !== 'custom')}
+                <div class="warningMessage">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <p>This page is not using the custom image.</p>
+                </div>
+              {/if}
             {/if}
             {#if !flatMapPages.some((page) => page.link === tileImage.link)}
               <div class="errorMessage">
@@ -208,6 +223,8 @@
   .tileImageActions p {
     margin-block-start: 0;
     margin-block-end: 0.2em;
+  }
+  .tileImageLink {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
