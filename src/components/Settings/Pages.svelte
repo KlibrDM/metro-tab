@@ -1,7 +1,8 @@
 <script>
-  import { deleteAllTileImages, getTileImage } from "../../data/storage";
+  import { getTileImage } from "../../data/storage";
   import PagesGroupModal from "./PagesGroupModal.svelte";
   import PagesImageModal from "./PagesImageModal.svelte";
+  import PagesAllImagesModal from "./PagesAllImagesModal.svelte";
 
   export let settingsData;
   export let deletePage;
@@ -33,6 +34,9 @@
   let groupModalActive = false;
   let selectedGroupIndex = -1;
 
+  // All tile images modal
+  let allImagesModalActive = false;
+
   const handleDragEnd = (index) => {
     // If the dragged item is dropped on itself, return early
     if (index === draggedOverIndex) {
@@ -56,13 +60,6 @@
       draggedItemIndex = undefined;
       draggedOverIndex = undefined;
     }
-  }
-
-  const onDeleteTileImageClick = () => {
-    deleteAllTileImages();
-    settingsData.pages = [...settingsData.pages];
-    showDeleteTileImageConfirm = false;
-    unsavedPages = true;
   }
 </script>
 
@@ -272,30 +269,11 @@
 
       <div>
         <button
-          class={showDeleteTileImageConfirm ? 'cancelDeleteTileImageButton' : 'deleteTileImageButton'}
-          on:click={() => {showDeleteTileImageConfirm = true}}
+          class="viewAllTileImagesButton"
+          on:click={() => {allImagesModalActive = true}}
         >
-          {#if showDeleteTileImageConfirm}
-            Are you sure?
-          {:else}
-            Delete all tile images
-          {/if}
+          View all tile images
         </button>
-
-        {#if showDeleteTileImageConfirm}
-          <button
-            class="deleteTileImageButton"
-            on:click={onDeleteTileImageClick}
-          >
-            Yes
-          </button>
-          <button
-            class="cancelDeleteTileImageButton"
-            on:click={() => {showDeleteTileImageConfirm = false}}
-          >
-            No
-          </button>
-        {/if}
 
         <button
           class="createGroupButton"
@@ -331,6 +309,14 @@
       escapeHTML={escapeHTML}
       bind:unsavedPages={unsavedPages}
       bind:modalActive={groupModalActive}
+    />
+  {/if}
+
+  {#if allImagesModalActive}
+    <PagesAllImagesModal
+      settingsData={settingsData}
+      bind:unsavedPages={unsavedPages}
+      bind:modalActive={allImagesModalActive}
     />
   {/if}
 </div>
@@ -401,31 +387,17 @@
   .createGroupButton:hover {
     background-color: #2f84e0;
   }
-  .deleteTileImageButton {
-    margin-top: 8px;
-    padding: 8px 20px;
-    border: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    background-color: rgb(210, 40, 40);
-    transition: 0.5s;
-  }
-  .deleteTileImageButton:hover {
-    background-color: rgb(180, 30, 30);
-  }
-  .cancelDeleteTileImageButton {
-    margin-top: 8px;
+  .viewAllTileImagesButton {
     padding: 8px 20px;
     border: 0;
     border-radius: 10px;
     cursor: pointer;
     color: black;
-    background-color: rgb(220, 220, 220);
-    transition: 0.5s;
+    background-color: rgb(238, 218, 34);
+    transition: 0.3s;
   }
-  .cancelDeleteTileImageButton:hover {
-    background-color: rgb(200, 200, 200);
+  .viewAllTileImagesButton:hover {
+    background-color: rgb(230, 200, 22);
   }
   .addPageButton {
     padding: 8px 20px;
