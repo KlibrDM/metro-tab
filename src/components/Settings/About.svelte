@@ -8,11 +8,21 @@
   });
 
   const reviewClick = () => {
-    window.location.assign("https://chromewebstore.google.com/detail/onhhmnkghemlcnlglcnjkhebiclbklpl/reviews");
+    if(navigator.userAgent.indexOf("Firefox") === -1) {
+      window.location.assign("https://chromewebstore.google.com/detail/onhhmnkghemlcnlglcnjkhebiclbklpl/reviews");
+    }
+    else {
+      window.location.assign("https://addons.mozilla.org/en-US/firefox/addon/metro-speed-dial-new-tab-page");
+    }
   }
 
   const supportClick = () => {
-    window.location.assign("https://chromewebstore.google.com/detail/onhhmnkghemlcnlglcnjkhebiclbklpl/support");
+    if(navigator.userAgent.indexOf("Firefox") === -1) {
+      window.location.assign("https://chromewebstore.google.com/detail/onhhmnkghemlcnlglcnjkhebiclbklpl/support");
+    }
+    else {
+      window.location.assign("https://github.com/KlibrDM/metro-tab/issues");
+    }
   }
 </script>
 

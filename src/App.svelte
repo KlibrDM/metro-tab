@@ -38,7 +38,10 @@
     : "background-image: url(" + backgroundImageUrl + ");"}
 >
   <Cover />
-  <QuickNav />
+  <!-- Show QuickNav only if not Firefox -->
+  {#if navigator.userAgent.indexOf("Firefox") === -1}
+    <QuickNav />
+  {/if}
   <SearchBar remoteOpenNotes={remoteOpenNotes} />
   <SpeedDial />
   <Settings />
