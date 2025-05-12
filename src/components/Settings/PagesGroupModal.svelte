@@ -251,8 +251,14 @@
     background-color: white;
     border: 1px solid lightgray;
   }
+  .settingsPagesListPage:hover {
+    background-color: #f0f0f0 !important;
+  }
   #settingsPageGroupModal.darkModifier .settingsPagesListPage {
     border-color: #3a99ff !important;
+  }
+  #settingsPageGroupModal.darkModifier .settingsPagesListPage:hover {
+    background-color: #0c1b3a !important;
   }
   .settingsDragHandle {
     margin-left: 4px;

@@ -443,14 +443,26 @@
     border: 1px solid lightgray;
     transition: 0.3s;
   }
+  .settingsPagesListPage:hover {
+    background-color: #f0f0f0 !important;
+  }
   #settingsPages.darkModifier .settingsPagesListPage {
     border-color: #3a99ff !important;
+  }
+  #settingsPages.darkModifier .settingsPagesListPage:hover {
+    background-color: #0c1b3a !important;
   }
   .settingsPagesListPage.highlighted {
     background-color: #d3e8ff !important;
   }
+  .settingsPagesListPage.highlighted:hover {
+    background-color: #bddcfd !important;
+  }
   #settingsPages.darkModifier .settingsPagesListPage.highlighted {
     background-color: #093166 !important;
+  }
+  #settingsPages.darkModifier .settingsPagesListPage.highlighted:hover {
+    background-color: #0d3f81 !important;
   }
   .settingsDragHandle {
     margin-left: 4px;

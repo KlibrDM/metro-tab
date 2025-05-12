@@ -266,9 +266,16 @@
     border-radius: 10px;
     background-color: white;
     border: 1px solid lightgray;
+    transition: 0.3s;
+  }
+  .settingsCategoriesListCategory:hover {
+    background-color: #f0f0f0 !important;
   }
   #settingsCategories.darkModifier .settingsCategoriesListCategory {
     border-color: #3a99ff !important;
+  }
+  #settingsCategories.darkModifier .settingsCategoriesListCategory:hover {
+    background-color: #0c1b3a !important;
   }
   .settingsDragHandle {
     margin-left: 4px;

@@ -108,9 +108,16 @@
     padding: 4px 4px;
     border-radius: 10px;
     border: 1px solid lightgray;
+    transition: 0.3s;
+  }
+  .item:hover {
+    background-color: #f0f0f0 !important;
   }
   #settingsSearchEngine.darkModifier .item {
     border-color: #3a99ff;
+  }
+  #settingsSearchEngine.darkModifier .item:hover {
+    background-color: #0c1b3a !important;
   }
   .item p {
     margin: 0;
