@@ -41,7 +41,8 @@
             href={page.link}
             class="pageButton"
             aria-label={page.link}
-            style="{
+            style="
+              {
                 page.tileImageType === 'custom' && getTileImage(page.link)
                 ? 'background-image: url(' + (getTileImage(page.link) || '') + ');'
                 : page.tileImageType !== 'none'
@@ -60,7 +61,7 @@
               }
               {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
               background-color: {page.backgroundColor};
-              color: {page.textColor};
+              color: {useFrostedGlass ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : page.textColor};
               font-size: {tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
@@ -69,16 +70,18 @@
               border-radius: {tileBorderRadius}vh;
               {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
               {!tileZoom ? "animation: none !important" : ''}
-              "
+            "
           >
             {#if useFrostedGlass && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
               <div
                 class="frostedGlassIcon"
                 style={`
                   background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                  border-radius: ${tileBorderRadius}vh;
                   mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
                   ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
-              `}></div>
+                `}
+              ></div>
             {/if}
             {page.tileImageType === 'none' ? page.tileName : ''}
           </a>
@@ -121,7 +124,8 @@
                   href={subpage.link}
                   class="pageButton"
                   aria-label={subpage.link}
-                  style="{
+                  style="
+                    {
                       subpage.tileImageType === 'custom' && getTileImage(subpage.link)
                       ? 'background-image: url(' + (getTileImage(subpage.link) || '') + ');'
                       : subpage.tileImageType !== 'none'
@@ -140,7 +144,7 @@
                     }
                     {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
                     background-color: {subpage.backgroundColor};
-                    color: {subpage.textColor};
+                    color: {useFrostedGlass ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : subpage.textColor};
                     font-size: {
                       tileMinWidth
                       / (subpage.tileName.length * 0.8 <= 1.8 ? 1.8 : subpage.tileName.length * 0.8)
@@ -181,15 +185,18 @@
                                 : "15%"
                       };
                     ` : ''}
-                ">
+                  "
+                >
                   {#if useFrostedGlass && (subpage.tileImageType === 'predefined' || (subpage.tileImageType === 'custom' && !getTileImage(subpage.link)))}
                     <div
                       class="frostedGlassIcon"
                       style={`
                         background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                        border-radius: ${tileBorderRadius}vh;
                         mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(subpage.imageName)}.webp");
                         ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
-                    `}></div>
+                      `}
+                    ></div>
                   {/if}
                   {subpage.tileImageType === 'none' ? subpage.tileName : ''}
                 </a>

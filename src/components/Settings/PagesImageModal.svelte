@@ -1,6 +1,7 @@
 <script>
   import { deleteTileImage, getTileImage, saveTileImage } from "../../data/storage";
-  import { clearOldExtension } from "../../data/tools";
+  import { clearOldExtension, getBackgroundFormat } from "../../data/tools";
+  import { userData } from "../../store";
 
   export let page;
   export let settingsData;
@@ -9,6 +10,16 @@
 
   let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
   let showLocalStorageInfo = false;
+
+  let backgroundImage;
+  let isBackgroundSolid = false;
+  let backgroundSolidColor;
+
+  userData.subscribe((data) => {
+    backgroundImage = data.backgroundImage;
+    isBackgroundSolid = data.isBackgroundSolid;
+    backgroundSolidColor = data.backgroundSolidColor;
+  });
 
   let bg, fileinput;
   const onFileSelected = (e) => {
@@ -64,6 +75,9 @@
       >
         Text
       </button>
+      {#if settingsData.useFrostedGlass}
+        <p id="frostedGlassActiveInfo">* Frosted glass design is enabled.</p>
+      {/if}
     </div>
 
     {#if page.tileImageType === 'custom' }
@@ -126,7 +140,7 @@
           maxlength="20"
           required={true}
         />
-        <p>Background color</p>
+        <p>Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}</p>
         <input
           type="color"
           id="set_pageBackgroundColor"
@@ -135,7 +149,7 @@
           on:change={() => { unsavedPages = true; }}
           required={true}
         />
-        <p>Text color</p>
+        <p>Text color {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
         <input
           type="color"
           id="set_pageTextColor"
@@ -149,28 +163,60 @@
 
     <h4>Preview</h4>
     <div
-      id="tilePreview"
-      style="
-        {
-          page.tileImageType === 'custom' && getTileImage(page.link)
-          ? 'background-image: url(' + (getTileImage(page.link) || '') + ')'
-          : page.tileImageType !== 'none'
-            ? 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif")'
-            : ''
-        };
-        background-color: {page.backgroundColor};
-        color: {page.textColor};
-        font-size: {settingsData.tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
-        width: {settingsData.tileMinWidth}vh;
-        height: {settingsData.tileHeight}vh;
-        border: {settingsData.tileBorder}px solid rgb({settingsData.tileBorderColor.r},{settingsData.tileBorderColor.g},{settingsData.tileBorderColor.b});
-        border-radius: {settingsData.tileBorderRadius}vh;
-        {settingsData.tileHeight < settingsData.tileMinWidth ? 'background-size: 180% auto;' : ''}
-        {!settingsData.tileZoom ? "animation: none !important" : ''}
-      "
+      id="tilePreviewContainer"
+      style={isBackgroundSolid
+        ? "background-color: " + backgroundSolidColor + ";"
+        : backgroundImage.length > 5
+          ? "background-image: url(" + backgroundImage + ");"
+          : "background-image: url(" + "static/images/bg/" + backgroundImage + "." + getBackgroundFormat(backgroundImage) + ");"}
     >
-      {page.tileImageType === 'none' ? page.tileName : ''}
+      <div
+        id="tilePreview"
+        style="
+          {
+            page.tileImageType === 'custom' && getTileImage(page.link)
+            ? 'background-image: url(' + (getTileImage(page.link) || '') + ');'
+            : page.tileImageType !== 'none'
+              ? settingsData.useFrostedGlass
+                ? ''
+                : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
+              : ''
+          }
+          {
+            settingsData.useFrostedGlass ? `
+              backdrop-filter: blur(${settingsData.frostedGlassStrength}px);
+              -webkit-backdrop-filter: blur(${settingsData.frostedGlassStrength}px);
+              background-color: rgba(${settingsData.frostedGlassColor.r}, ${settingsData.frostedGlassColor.g}, ${settingsData.frostedGlassColor.b}, ${settingsData.frostedGlassOpacity}) !important;
+            `
+            : ''
+          }
+          {settingsData.showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
+          background-color: {page.backgroundColor};
+          color: {settingsData.useFrostedGlass ? `rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b})` : page.textColor};
+          font-size: {settingsData.tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
+          width: {settingsData.tileMinWidth}vh;
+          height: {settingsData.tileHeight}vh;
+          border: {settingsData.tileBorder}px solid rgb({settingsData.tileBorderColor.r},{settingsData.tileBorderColor.g},{settingsData.tileBorderColor.b});
+          border-radius: {settingsData.tileBorderRadius}vh;
+          {settingsData.tileHeight < settingsData.tileMinWidth ? 'background-size: 180% auto;' : ''}
+          {!settingsData.tileZoom ? "animation: none !important" : ''}
+        "
+      >
+        {#if settingsData.useFrostedGlass && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
+          <div
+            class="frostedGlassIcon"
+            style={`
+              background-color: rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b});
+              border-radius: ${settingsData.tileBorderRadius}vh;
+              mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
+              ${settingsData.tileHeight < settingsData.tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+            `}
+          ></div>
+        {/if}
+        {page.tileImageType === 'none' ? page.tileName : ''}
+      </div>
     </div>
+
     <div id="returnButtonContainer">
       <button
         id="returnButton"
@@ -233,6 +279,16 @@
     color: white;
     background-color: transparent;
   }
+  #tilePreviewContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 24px;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
   #tilePreview {
     display: flex;
     justify-content: center;
@@ -241,7 +297,12 @@
     min-width: 40px;
     background-position: center;
     background-size: cover;
-    box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);
+  }
+  .frostedGlassIcon {
+    width: 100%;
+    height: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
   }
   #returnButtonContainer {
     display: flex;
@@ -344,5 +405,9 @@
   #solidBackgroundSettings p {
     margin-block-start: 0.4em;
     margin-block-end: 0.2em;
+  }
+  #frostedGlassActiveInfo {
+    margin-block-start: 0.2em;
+    margin-block-end: 0;
   }
 </style>
