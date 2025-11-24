@@ -17,6 +17,12 @@
   export let groupTileBorderRadius;
   export let groupTileGrow;
   export let showSearchBar;
+  export let showElementsShadow;
+  export let useFrostedGlass;
+  export let frostedGlassStrength;
+  export let frostedGlassOpacity;
+  export let frostedGlassColor;
+  export let frostedGlassAccentColor;
 </script>
 
 <div class="speedDialBox" class:isShown={isShown} class:hiddenSearchBar={!showSearchBar} class:largePadding={categories.length}>
@@ -37,11 +43,22 @@
             aria-label={page.link}
             style="{
                 page.tileImageType === 'custom' && getTileImage(page.link)
-                ? 'background-image: url(' + (getTileImage(page.link) || '') + ')'
+                ? 'background-image: url(' + (getTileImage(page.link) || '') + ');'
                 : page.tileImageType !== 'none'
-                  ? 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif")'
+                  ? useFrostedGlass
+                    ? ''
+                    : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
                   : ''
-              };
+              }
+              {
+                useFrostedGlass ? `
+                  backdrop-filter: blur(${frostedGlassStrength}px);
+                  -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+                  background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+                `
+                : ''
+              }
+              {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
               background-color: {page.backgroundColor};
               color: {page.textColor};
               font-size: {tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
@@ -54,6 +71,15 @@
               {!tileZoom ? "animation: none !important" : ''}
               "
           >
+            {#if useFrostedGlass && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
+              <div
+                class="frostedGlassIcon"
+                style={`
+                  background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                  mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
+                  ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+              `}></div>
+            {/if}
             {page.tileImageType === 'none' ? page.tileName : ''}
           </a>
 
@@ -97,11 +123,22 @@
                   aria-label={subpage.link}
                   style="{
                       subpage.tileImageType === 'custom' && getTileImage(subpage.link)
-                      ? 'background-image: url(' + (getTileImage(subpage.link) || '') + ')'
+                      ? 'background-image: url(' + (getTileImage(subpage.link) || '') + ');'
                       : subpage.tileImageType !== 'none'
-                        ? 'background-image: url("static/images/thumbnails/' + clearOldExtension(subpage.imageName) + '.avif")'
+                        ? useFrostedGlass
+                          ? ''
+                          : 'background-image: url("static/images/thumbnails/' + clearOldExtension(subpage.imageName) + '.avif");'
                         : ''
-                    };
+                    }
+                    {
+                      useFrostedGlass ? `
+                        backdrop-filter: blur(${frostedGlassStrength}px);
+                        -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+                        background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+                      `
+                      : ''
+                    }
+                    {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
                     background-color: {subpage.backgroundColor};
                     color: {subpage.textColor};
                     font-size: {
@@ -145,6 +182,15 @@
                       };
                     ` : ''}
                 ">
+                  {#if useFrostedGlass && (subpage.tileImageType === 'predefined' || (subpage.tileImageType === 'custom' && !getTileImage(subpage.link)))}
+                    <div
+                      class="frostedGlassIcon"
+                      style={`
+                        background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                        mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(subpage.imageName)}.webp");
+                        ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+                    `}></div>
+                  {/if}
                   {subpage.tileImageType === 'none' ? subpage.tileName : ''}
                 </a>
               {/if}
@@ -217,7 +263,6 @@
     z-index: 0;
     flex-basis: 0;
     line-height: 0;
-    box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);
   }
   .pageButton:hover {
     animation: pop-out 0.25s;
@@ -233,5 +278,11 @@
   .pageGroup {
     flex-basis: 0;
     line-height: 0;
+  }
+  .frostedGlassIcon {
+    width: 100%;
+    height: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
   }
 </style>

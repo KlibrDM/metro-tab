@@ -4,6 +4,12 @@ export const showCover = true;
 export const clockBackground = true;
 export const clock24Hour = true;
 export const darkMode = false;
+export const useFrostedGlass = false;
+export const frostedGlassStrength = 8;
+export const frostedGlassOpacity = 0.3;
+export const frostedGlassColor = { r: 255, g: 255, b: 255 };
+export const frostedGlassAccentColor = { r: 255, g: 255, b: 255 };
+export const showElementsShadow = true;
 export const showSearchBar = true;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
@@ -698,6 +704,7 @@ export const themes = [
     changesBackground: true,
     changesColors: true,
     settings: {
+      useFrostedGlass: false,
       clockBackground: clockBackground,
       isBackgroundSolid: isBackgroundSolid,
       backgroundSolidColor: backgroundSolidColor,
@@ -730,6 +737,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: true,
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#03070f",
@@ -760,6 +768,7 @@ export const themes = [
     changesBackground: true,
     changesColors: true,
     settings: {
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#013273",
@@ -790,6 +799,7 @@ export const themes = [
     changesBackground: true,
     changesColors: true,
     settings: {
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#f0c864",
@@ -822,6 +832,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: true,
+      useFrostedGlass: false,
       clockBackground: false,
       isBackgroundSolid: false,
       backgroundSolidColor: "#1e1432",
@@ -854,6 +865,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: false,
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#ff5a78",
@@ -886,6 +898,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: false,
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#fac3dc",
@@ -918,6 +931,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: true,
+      useFrostedGlass: false,
       clockBackground: true,
       isBackgroundSolid: false,
       backgroundSolidColor: "#ffbe28",
@@ -950,6 +964,7 @@ export const themes = [
     changesColors: true,
     settings: {
       darkMode: true,
+      useFrostedGlass: false,
       clockBackground: false,
       isBackgroundSolid: false,
       backgroundSolidColor: "#14648c",
@@ -971,6 +986,7 @@ export const themes = [
     changesBackground: true,
     changesColors: true,
     settings: {
+      useFrostedGlass: false,
       clockBackground: false,
       isBackgroundSolid: false,
       backgroundSolidColor: "#280078",
@@ -1001,6 +1017,7 @@ export const themes = [
     changesBackground: true,
     changesColors: true,
     settings: {
+      useFrostedGlass: false,
       clockBackground: false,
       isBackgroundSolid: false,
       backgroundSolidColor: "#3a99ff",

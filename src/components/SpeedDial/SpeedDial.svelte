@@ -20,6 +20,12 @@
   let groupTileBorderRadius;
   let groupTileGrow;
   let showSearchBar;
+  let showElementsShadow;
+  let useFrostedGlass;
+  let frostedGlassStrength;
+  let frostedGlassOpacity;
+  let frostedGlassColor;
+  let frostedGlassAccentColor;
 
   let selectedCategoryIndex = 0;
   let selectedCategoryId = undefined;
@@ -42,6 +48,12 @@
     groupTileBorderRadius = data.groupTileBorderRadius;
     groupTileGrow = data.groupTileGrow;
     showSearchBar = data.showSearchBar;
+    showElementsShadow = data.showElementsShadow;
+    useFrostedGlass = data.useFrostedGlass;
+    frostedGlassStrength = data.frostedGlassStrength;
+    frostedGlassOpacity = data.frostedGlassOpacity;
+    frostedGlassColor = data.frostedGlassColor;
+    frostedGlassAccentColor = data.frostedGlassAccentColor;
 
     if(firstRender) {
       // Set the selected category index based on local storage when the component mounts
@@ -117,6 +129,12 @@
       groupTileBorderRadius={groupTileBorderRadius}
       groupTileGrow={groupTileGrow}
       showSearchBar={showSearchBar}
+      showElementsShadow={showElementsShadow}
+      useFrostedGlass={useFrostedGlass}
+      frostedGlassStrength={frostedGlassStrength}
+      frostedGlassOpacity={frostedGlassOpacity}
+      frostedGlassColor={frostedGlassColor}
+      frostedGlassAccentColor={frostedGlassAccentColor}
     />
   {/each}
 
@@ -136,6 +154,12 @@
     groupTileBorderRadius={groupTileBorderRadius}
     groupTileGrow={groupTileGrow}
     showSearchBar={showSearchBar}
+    showElementsShadow={showElementsShadow}
+    useFrostedGlass={useFrostedGlass}
+    frostedGlassStrength={frostedGlassStrength}
+    frostedGlassOpacity={frostedGlassOpacity}
+    frostedGlassColor={frostedGlassColor}
+    frostedGlassAccentColor={frostedGlassAccentColor}
   />
 </div>
 

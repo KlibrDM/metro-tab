@@ -44,6 +44,12 @@
       state.clockBackground = settingsData.clockBackground;
       state.clock24Hour = settingsData.clock24Hour;
       state.darkMode = settingsData.darkMode;
+      state.useFrostedGlass = settingsData.useFrostedGlass;
+      state.frostedGlassStrength = settingsData.frostedGlassStrength;
+      state.frostedGlassOpacity = settingsData.frostedGlassOpacity;
+      state.frostedGlassColor = settingsData.frostedGlassColor;
+      state.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
+      state.showElementsShadow = settingsData.showElementsShadow;
       state.showSearchBar = settingsData.showSearchBar;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
@@ -76,6 +82,12 @@
       state.clockBackground = CONFIG.clockBackground;
       state.clock24Hour = CONFIG.clock24Hour;
       state.darkMode = CONFIG.darkMode;
+      state.useFrostedGlass = CONFIG.useFrostedGlass;
+      state.frostedGlassStrength = CONFIG.frostedGlassStrength;
+      state.frostedGlassOpacity = CONFIG.frostedGlassOpacity;
+      state.frostedGlassColor = CONFIG.frostedGlassColor;
+      state.frostedGlassAccentColor = CONFIG.frostedGlassAccentColor;
+      state.showElementsShadow = CONFIG.showElementsShadow;
       state.showSearchBar = CONFIG.showSearchBar;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;

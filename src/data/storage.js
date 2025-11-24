@@ -8,6 +8,12 @@ export const saveConfig = (data) => {
   localStorage.setItem("clockBackground", data.clockBackground);
   localStorage.setItem("clock24Hour", data.clock24Hour);
   localStorage.setItem("darkMode", data.darkMode);
+  localStorage.setItem("useFrostedGlass", data.useFrostedGlass);
+  localStorage.setItem("frostedGlassStrength", data.frostedGlassStrength);
+  localStorage.setItem("frostedGlassOpacity", data.frostedGlassOpacity);
+  localStorage.setItem("frostedGlassColor", JSON.stringify(data.frostedGlassColor));
+  localStorage.setItem("frostedGlassAccentColor", JSON.stringify(data.frostedGlassAccentColor));
+  localStorage.setItem("showElementsShadow", data.showElementsShadow);
   localStorage.setItem("showSearchBar", data.showSearchBar);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
@@ -170,6 +176,32 @@ const data = {
     localStorage.getItem("darkMode") === null
     ? CONFIG.darkMode
     : localStorage.getItem("darkMode") === "true",
+
+  useFrostedGlass:
+    localStorage.getItem("useFrostedGlass") === null
+    ? CONFIG.useFrostedGlass
+    : localStorage.getItem("useFrostedGlass") === "true",
+
+  frostedGlassStrength:
+    localStorage.getItem("frostedGlassStrength") ||
+    CONFIG.frostedGlassStrength,
+
+  frostedGlassOpacity:
+    localStorage.getItem("frostedGlassOpacity") ||
+    CONFIG.frostedGlassOpacity,
+
+  frostedGlassColor:
+    JSON.parse(localStorage.getItem("frostedGlassColor")) ||
+    CONFIG.frostedGlassColor,
+
+  frostedGlassAccentColor:
+    JSON.parse(localStorage.getItem("frostedGlassAccentColor")) ||
+    CONFIG.frostedGlassAccentColor,
+
+  showElementsShadow:
+    localStorage.getItem("showElementsShadow") === null
+    ? CONFIG.showElementsShadow
+    : localStorage.getItem("showElementsShadow") === "true",
 
   showSearchBar:
     localStorage.getItem("showSearchBar") === null

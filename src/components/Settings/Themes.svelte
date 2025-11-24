@@ -8,6 +8,12 @@
   const applyTheme = (settings) => {
     userData.update((state) => {
       state.darkMode = settings.darkMode !== undefined ? settings.darkMode : state.darkMode;
+      state.useFrostedGlass = settings.useFrostedGlass !== undefined ? settings.useFrostedGlass : state.useFrostedGlass;
+      state.frostedGlassStrength = settings.frostedGlassStrength !== undefined ? settings.frostedGlassStrength : state.frostedGlassStrength;
+      state.frostedGlassOpacity = settings.frostedGlassOpacity !== undefined ? settings.frostedGlassOpacity : state.frostedGlassOpacity;
+      state.frostedGlassColor = settings.frostedGlassColor !== undefined ? settings.frostedGlassColor : state.frostedGlassColor;
+      state.frostedGlassAccentColor = settings.frostedGlassAccentColor !== undefined ? settings.frostedGlassAccentColor : state.frostedGlassAccentColor;
+      state.showElementsShadow = settings.showElementsShadow !== undefined ? settings.showElementsShadow : state.showElementsShadow;
       state.clockBackground = settings.clockBackground !== undefined ? settings.clockBackground : state.clockBackground;
       state.isBackgroundSolid = settings.isBackgroundSolid !== undefined ? settings.isBackgroundSolid : state.isBackgroundSolid;
       state.backgroundSolidColor = settings.backgroundSolidColor !== undefined ? settings.backgroundSolidColor : state.backgroundSolidColor;
@@ -34,7 +40,6 @@
     saveConfig({...settingsData, ...settings});
   }
 </script>
-
 
 <div id="settingsThemes">
   <h2>Themes</h2>

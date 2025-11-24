@@ -12,6 +12,12 @@
   let showSearchBar;
   let navbarOpacity;
   let navbarColor;
+  let showElementsShadow;
+  let useFrostedGlass;
+  let frostedGlassStrength;
+  let frostedGlassOpacity;
+  let frostedGlassColor;
+  let frostedGlassAccentColor;
   let searchEngine;
   let customSearchEngineUrl;
   let pinnedNote;
@@ -24,6 +30,12 @@
     customSearchEngineUrl = data.customSearchEngineUrl;
     navbarOpacity = data.navbarOpacity;
     navbarColor = data.navbarColor;
+    showElementsShadow = data.showElementsShadow;
+    useFrostedGlass = data.useFrostedGlass;
+    frostedGlassStrength = data.frostedGlassStrength;
+    frostedGlassOpacity = data.frostedGlassOpacity;
+    frostedGlassColor = data.frostedGlassColor;
+    frostedGlassAccentColor = data.frostedGlassAccentColor;
     pinnedNote = data.notes.find((note) => note.isPinned);
   });
 
@@ -114,7 +126,24 @@
   {:else}
     <RandomGithub />
   {/if}
-  <form id="searchbar" on:submit={handleSearch}>
+  <form
+    id="searchbar"
+    style={`
+      ${
+        useFrostedGlass
+          ? `
+            color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+            border: none;
+            backdrop-filter: blur(${frostedGlassStrength}px);
+            -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+            background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+          `
+          : ''
+      }
+      ${showElementsShadow ? 'box-shadow: 0px 0px 6px rgba(20, 20, 20, 0.4);' : ''}
+    `}
+    on:submit={handleSearch}
+  >
     <input
       id="searchInput"
       type="search"
@@ -123,10 +152,10 @@
       bind:value={searchQuery}
     />
     <button id="searchButton" aria-label="Search">
-      <i class="fas fa-search" style="color: white" />
+      <i class="fas fa-search" />
     </button>
   </form>
-  <Clock showSearchBar={showSearchBar} />
+  <Clock />
 </div>
 
 <style>
@@ -146,6 +175,7 @@
     border-radius: 100px;
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.4);
+    color: white;
     display: flex;
     background-color: rgba(0, 0, 0, 0.25);
     transition: 0.3s;
@@ -158,7 +188,7 @@
   }
   #searchInput {
     background-color: rgba(0, 0, 0, 0);
-    color: white;
+    color: inherit;
     text-indent: calc(8px + 0.8vw);
     border: 0;
     min-height: 40px;
@@ -168,13 +198,13 @@
     font-size: calc(8px + 1.4vh);
   }
   #searchInput::placeholder {
-    color: white;
+    color: inherit;
   }
   #searchInput:-ms-input-placeholder {
-    color: white;
+    color: inherit;
   }
   #searchInput::-ms-input-placeholder {
-    color: white;
+    color: inherit;
   }
   #searchInput:focus {
     outline: none;
@@ -190,7 +220,7 @@
     background-color: rgba(0, 0, 0, 0);
     border: 0;
     cursor: pointer;
-    color: white;
+    color: inherit;
     font-size: calc(8px + 1vh);
   }
   #searchButton:focus {

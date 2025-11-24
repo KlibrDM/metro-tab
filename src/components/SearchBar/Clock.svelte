@@ -1,11 +1,24 @@
 <script>
   import { userData } from "../../store";
 
-  export let showSearchBar;
+  let showSearchBar;
+  let showElementsShadow;
+  let useFrostedGlass;
+  let frostedGlassStrength;
+  let frostedGlassOpacity;
+  let frostedGlassColor;
+  let frostedGlassAccentColor;
   let clockBackground;
   let clock24Hour;
 
   userData.subscribe((data) => {
+    showSearchBar = data.showSearchBar;
+    showElementsShadow = data.showElementsShadow;
+    useFrostedGlass = data.useFrostedGlass;
+    frostedGlassStrength = data.frostedGlassStrength;
+    frostedGlassOpacity = data.frostedGlassOpacity;
+    frostedGlassColor = data.frostedGlassColor;
+    frostedGlassAccentColor = data.frostedGlassAccentColor;
     clockBackground = data.clockBackground;
     clock24Hour = data.clock24Hour;
   });
@@ -35,7 +48,24 @@
 </script>
 
 <!--Use clockbg class only if clockBackground is true-->
-<div id="time" class:hiddenSearchBar={!showSearchBar} class:clockbg={clockBackground}>
+<div
+  id="time"
+  class:hiddenSearchBar={!showSearchBar}
+  class:clockbg={clockBackground}
+  style={`
+    ${
+      useFrostedGlass && clockBackground
+        ? `
+          color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+          backdrop-filter: blur(${frostedGlassStrength}px);
+          -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+          background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+        `
+        : ''
+    }
+    ${clockBackground && showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
+  `}
+>
   {hours}:<span id="minutes">{minutes}</span>
   {#if !clock24Hour}
     <span id="ampm">{ampm}</span>
@@ -57,12 +87,10 @@
   }
   #minutes {
     font-size: 0.7em;
-    color: rgb(236, 236, 236);
   }
   #ampm {
     font-size: 0.4em;
     font-weight: 600;
-    color: rgb(236, 236, 236);
     line-height: 1em;
   }
   .clockbg {

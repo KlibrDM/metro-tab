@@ -75,6 +75,12 @@
       exportDataObject.clockBackground = settingsData.clockBackground;
       exportDataObject.clock24Hour = settingsData.clock24Hour;
       exportDataObject.darkMode = settingsData.darkMode;
+      exportDataObject.useFrostedGlass = settingsData.useFrostedGlass;
+      exportDataObject.frostedGlassStrength = settingsData.frostedGlassStrength;
+      exportDataObject.frostedGlassOpacity = settingsData.frostedGlassOpacity;
+      exportDataObject.frostedGlassColor = settingsData.frostedGlassColor;
+      exportDataObject.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
+      exportDataObject.showElementsShadow = settingsData.showElementsShadow;
       exportDataObject.showSearchBar = settingsData.showSearchBar;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
@@ -394,6 +400,24 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('useFrostedGlass')){
+            if(typeof settings.useFrostedGlass !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('showElementsShadow')){
+            if(typeof settings.showElementsShadow !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('showSearchBar')){
             if(typeof settings.showSearchBar !== 'boolean'){
               errorsFound = true;
@@ -500,6 +524,26 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('frostedGlassStrength')){
+            settings.frostedGlassStrength = parseFloat(settings.frostedGlassStrength);
+            if(typeof settings.frostedGlassStrength !== 'number' || settings.frostedGlassStrength < 0 || settings.frostedGlassStrength > 30){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('frostedGlassOpacity')){
+            settings.frostedGlassOpacity = parseFloat(settings.frostedGlassOpacity);
+            if(typeof settings.frostedGlassOpacity !== 'number' || settings.frostedGlassOpacity < 0 || settings.frostedGlassOpacity > 1){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('navbarOpacity')){
             settings.navbarOpacity = parseFloat(settings.navbarOpacity);
             if(typeof settings.navbarOpacity !== 'number' || settings.navbarOpacity < 0 || settings.navbarOpacity > 1){
@@ -522,6 +566,52 @@
               }
               settings.tileBorderColor.b = parseFloat(settings.tileBorderColor.b);
               if(typeof settings.tileBorderColor.b !== 'number' || settings.tileBorderColor.b < 0 || settings.tileBorderColor.b > 255){
+                errorsFound = true;
+              }
+            }
+            else{
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('frostedGlassColor')){
+            if(settings.frostedGlassColor.hasOwnProperty('r') && settings.frostedGlassColor.hasOwnProperty('g') && settings.frostedGlassColor.hasOwnProperty('b')){
+              settings.frostedGlassColor.r = parseFloat(settings.frostedGlassColor.r);
+              if(typeof settings.frostedGlassColor.r !== 'number' || settings.frostedGlassColor.r < 0 || settings.frostedGlassColor.r > 255){
+                errorsFound = true;
+              }
+              settings.frostedGlassColor.g = parseFloat(settings.frostedGlassColor.g);
+              if(typeof settings.frostedGlassColor.g !== 'number' || settings.frostedGlassColor.g < 0 || settings.frostedGlassColor.g > 255){
+                errorsFound = true;
+              }
+              settings.frostedGlassColor.b = parseFloat(settings.frostedGlassColor.b);
+              if(typeof settings.frostedGlassColor.b !== 'number' || settings.frostedGlassColor.b < 0 || settings.frostedGlassColor.b > 255){
+                errorsFound = true;
+              }
+            }
+            else{
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
+          if(settings.hasOwnProperty('frostedGlassAccentColor')){
+            if(settings.frostedGlassAccentColor.hasOwnProperty('r') && settings.frostedGlassAccentColor.hasOwnProperty('g') && settings.frostedGlassAccentColor.hasOwnProperty('b')){
+              settings.frostedGlassAccentColor.r = parseFloat(settings.frostedGlassAccentColor.r);
+              if(typeof settings.frostedGlassAccentColor.r !== 'number' || settings.frostedGlassAccentColor.r < 0 || settings.frostedGlassAccentColor.r > 255){
+                errorsFound = true;
+              }
+              settings.frostedGlassAccentColor.g = parseFloat(settings.frostedGlassAccentColor.g);
+              if(typeof settings.frostedGlassAccentColor.g !== 'number' || settings.frostedGlassAccentColor.g < 0 || settings.frostedGlassAccentColor.g > 255){
+                errorsFound = true;
+              }
+              settings.frostedGlassAccentColor.b = parseFloat(settings.frostedGlassAccentColor.b);
+              if(typeof settings.frostedGlassAccentColor.b !== 'number' || settings.frostedGlassAccentColor.b < 0 || settings.frostedGlassAccentColor.b > 255){
                 errorsFound = true;
               }
             }
@@ -608,6 +698,12 @@
             settingsToSave.clockBackground = settings.clockBackground;
             settingsToSave.clock24Hour = settings.clock24Hour;
             settingsToSave.darkMode = settings.darkMode;
+            settingsToSave.useFrostedGlass = settings.useFrostedGlass;
+            settingsToSave.frostedGlassStrength = settings.frostedGlassStrength;
+            settingsToSave.frostedGlassOpacity = settings.frostedGlassOpacity;
+            settingsToSave.frostedGlassColor = settings.frostedGlassColor;
+            settingsToSave.frostedGlassAccentColor = settings.frostedGlassAccentColor;
+            settingsToSave.showElementsShadow = settings.showElementsShadow;
             settingsToSave.showSearchBar = settings.showSearchBar;
             settingsToSave.tileZoom = settings.tileZoom;
             settingsToSave.tileGrow = settings.tileGrow;
