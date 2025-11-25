@@ -25,7 +25,17 @@
   export let frostedGlassAccentColor;
 </script>
 
-<div class="speedDialBox" class:isShown={isShown} class:hiddenSearchBar={!showSearchBar} class:largePadding={categories.length}>
+<div
+  class="speedDialBox"
+  class:isShown={isShown}
+  class:hiddenSearchBar={!showSearchBar}
+  class:largePadding={categories.length}
+  style={
+    useFrostedGlass
+      ? "transition: none !important;"
+      : ""
+  }
+>
   <div class="buttons" style="gap: {tileGap}vh">
     {#if !pages.filter(page => page.isActive).length}
       <div class="noPagesAvailableWarning">

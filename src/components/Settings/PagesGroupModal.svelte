@@ -23,6 +23,7 @@
 
   // Group modal
   export let modalActive = false;
+  let clickedOutsideModal = false;
 
   const handleDragEnd = (index) => {
     // If the dragged item is dropped on itself, return early
@@ -48,10 +49,23 @@
       draggedOverIndex = undefined;
     }
   }
+
+  document.addEventListener('mousedown', (e) => {
+    clickedOutsideModal = e.target.id === 'settingsPageGroupModalContainer';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if(clickedOutsideModal) { modalActive = false; }
+    clickedOutsideModal = false;
+  });
 </script>
 
-<div id="settingsPageGroupModalContainer" on:click={() => { modalActive = false; }}>
+<div id="settingsPageGroupModalContainer">
   <div id="settingsPageGroupModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
+    <button id="settingsPageGroupCloseButton">
+      <i class="fa-solid fa-xmark" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false }}></i>
+    </button>
+
     <h3>{group.name}</h3>
 
     {#if group.pages.length === 0}
@@ -349,9 +363,24 @@
     background-color: #fff;
     padding: 40px;
     border-radius: 10px;
+    position: relative;
   }
   #settingsPageGroupModal.darkModifier {
     background-color: rgb(3, 7, 15);
+  }
+  #settingsPageGroupCloseButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 0;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(140, 140, 140);
+    transition: 0.3s;
+  }
+  #settingsPageGroupCloseButton:hover {
+    color: rgb(80, 80, 80);
   }
   #returnButtonContainer {
     display: flex;

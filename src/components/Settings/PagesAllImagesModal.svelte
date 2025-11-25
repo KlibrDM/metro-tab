@@ -5,6 +5,8 @@
   export let unsavedPages;
   export let modalActive = false;
 
+  let clickedOutsideModal = false;
+
   // Show delete tile image confirm after delete button was clicked
   let showDeleteTileImageConfirm = false;
 
@@ -48,10 +50,23 @@
     allTileImageDetails = getTileImageDetails(allTileImageLinks);
     localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
   }
+
+  document.addEventListener('mousedown', (e) => {
+    clickedOutsideModal = e.target.id === 'settingsPageAllTileImagesModalContainer';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if(clickedOutsideModal) { modalActive = false; }
+    clickedOutsideModal = false;
+  });
 </script>
 
-<div id="settingsPageAllTileImagesModalContainer" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false; }}>
+<div id="settingsPageAllTileImagesModalContainer">
   <div id="settingsPageAllTileImagesModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
+    <button id="settingsPageAllTileImagesCloseButton">
+      <i class="fa-solid fa-xmark" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false }}></i>
+    </button>
+
     <div id="settingsPageAllTileImagesHeader">
       <h4>All tile images</h4>
       <div>
@@ -189,9 +204,24 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
   #settingsPageAllTileImagesModal.darkModifier {
     background-color: rgb(3, 7, 15);
+  }
+  #settingsPageAllTileImagesCloseButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 0;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(140, 140, 140);
+    transition: 0.3s;
+  }
+  #settingsPageAllTileImagesCloseButton:hover {
+    color: rgb(80, 80, 80);
   }
   #settingsPageAllTileImagesHeader {
     margin-bottom: 8px;

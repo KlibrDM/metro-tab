@@ -11,6 +11,8 @@
   let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
   let showLocalStorageInfo = false;
 
+  let clickedOutsideModal = false;
+
   let backgroundImage;
   let isBackgroundSolid = false;
   let backgroundSolidColor;
@@ -47,14 +49,27 @@
     unsavedPages = true;
   }
 
+  document.addEventListener('mousedown', (e) => {
+    clickedOutsideModal = e.target.id === 'settingsPageImageTypeModalContainer';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if(clickedOutsideModal) { modalActive = false; }
+    clickedOutsideModal = false;
+  });
+
   $: if (bg || page.tileImageType === 'custom') {
     // On custom image change, recalculate local storage size
     localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
   }
 </script>
 
-<div id="settingsPageImageTypeModalContainer" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false; }}>
+<div id="settingsPageImageTypeModalContainer">
   <div id="settingsPageImageTypeModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
+    <button id="settingsPageImageTypeCloseButton">
+      <i class="fa-solid fa-xmark" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false }}></i>
+    </button>
+
     <div id="imageTypeButtonGroup">
       <h4>Tile image type</h4>
       <button
@@ -258,9 +273,24 @@
     background-color: #fff;
     padding: 40px;
     border-radius: 10px;
+    position: relative;
   }
   #settingsPageImageTypeModal.darkModifier {
     background-color: rgb(3, 7, 15);
+  }
+  #settingsPageImageTypeCloseButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 0;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(140, 140, 140);
+    transition: 0.3s;
+  }
+  #settingsPageImageTypeCloseButton:hover {
+    color: rgb(80, 80, 80);
   }
   .imageTypeButton {
     padding: 8px 20px;
