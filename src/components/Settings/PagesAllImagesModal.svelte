@@ -289,7 +289,7 @@
     transition: 0.5s;
   }
   .deleteTileImageButton:hover {
-    background-color: rgb(180, 30, 30);
+    background-color: rgb(175, 30, 30);
   }
   .deleteAllTileImageButton {
     padding: 8px 20px;

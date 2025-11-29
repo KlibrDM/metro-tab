@@ -1,8 +1,8 @@
 <script>
-  import { getTileImage } from "../../data/storage";
   import PagesGroupModal from "./PagesGroupModal.svelte";
   import PagesImageModal from "./PagesImageModal.svelte";
   import PagesAllImagesModal from "./PagesAllImagesModal.svelte";
+  import { clearOldExtension } from "../../data/tools";
 
   export let settingsData;
   export let deletePage;
@@ -20,9 +20,6 @@
   let draggedItem = undefined;
   let draggedItemIndex = undefined;
   let draggedOverIndex = undefined;
-
-  // Show delete tile image confirm after delete button was clicked
-  let showDeleteTileImageConfirm = false;
 
   let highlightedCategoryId = undefined;
 
@@ -78,6 +75,7 @@
         <div
           class="settingsPagesListPage"
           class:highlighted={(page.categoryId && highlightedCategoryId === page.categoryId) || (!page.categoryId && highlightedCategoryId === "0000")}
+          class:hiddenPage={!page.isActive}
           style="
             border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
             background: {
@@ -116,11 +114,24 @@
                 <i class="fa-solid fa-angle-down" />
               </button>
             </div>
+
+            {#if !page.isGroup}
+              <div class="tilePreview">
+                <div
+                  class="tileIcon"
+                  style={`
+                    background-color: ${settingsData.darkMode ? 'white' : 'black'};
+                    mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
+                  `}
+                ></div>
+              </div>
+            {/if}
+
             {#if page.isGroup}
-              <i class="fa-regular fa-folder" />
+              <i class="fa-regular fa-folder tileFolderIcon" />
               <input
                 type="text"
-                id="set_newGroupNameBox"
+                id={`set_newGroupNameBox_${index}`}
                 class="settingsPageLinkInput"
                 bind:value={page.name}
                 placeholder="Type the nanme of the group"
@@ -133,10 +144,11 @@
                   page.name = escapeHTML(page.name);
                 }}
               />
+              <span style="flex-shrink: 0; font-size: 0.9em;">({page.pages.length} {page.pages.length === 1 ? "page" : "pages"})</span>
             {:else}
               <input
                 type="text"
-                id="set_newLinkBox"
+                id={`set_newLinkBox_${index}`}
                 class="settingsPageLinkInput"
                 bind:value={page.link}
                 placeholder="Type the address of the page"
@@ -156,6 +168,8 @@
             {#if settingsData.categories.length > 0}
               <div class="settingsPageCategorySelect">
                 <select
+                  name={`categorySelect_${index}`}
+                  id={`categorySelect_${index}`}
                   bind:value={page.categoryId}
                   on:change={() => {
                     unsavedPages = true;
@@ -169,32 +183,38 @@
               </div>
             {/if}
           </div>
+
           <div class="settingsPageListButtons">
-            {#if page.isGroup}
-              <span>{page.pages.length} {page.pages.length === 1 ? "page" : "pages"}</span>
+            <div class="settingsPageListButtonsGroup">
+              {#if page.isGroup}
+                <button
+                  on:click={() => { groupModalActive = true; selectedGroupIndex = index; }}
+                  class="viewGroupButton"
+                >
+                  View group
+                </button>
+              {:else}
+                <button
+                  on:click={() => { imageModalActive = true; selectedIndex = index; }}
+                  class="changeTileImageButton"
+                  class:changeTileImageButtonCustomImage={page.tileImageType === "custom"}
+                >
+                  Change image
+                </button>
+              {/if}
               <button
-                on:click={() => { groupModalActive = true; selectedGroupIndex = index; }}
-                class="viewGroupButton"
+                on:click={() => { page.isActive = !page.isActive; unsavedPages = true; }}
+                class="togglePageVisibilityButton"
               >
-                View Group
+                {page.isActive ? "Hide" : "Show"}
               </button>
-            {:else}
-              <i
-                on:click={() => { imageModalActive = true; selectedIndex = index; }}
-                class="fa-solid fa-image pointer"
-                class:customImage={getTileImage(page.link)}
-              />
-            {/if}
-            <input type="checkbox" name="page" bind:checked={page.isActive} on:change={() => {unsavedPages = true}} />
-            <input
-              on:click={() => {
-                deletePage(settingsData.pages, index);
-                unsavedPages = true;
-              }}
-              type="button"
+            </div>
+            <button
+              on:click={() => { deletePage(settingsData.pages, index); unsavedPages = true; }}
               class="pageDeleteButton"
-              value="X"
-            />
+            >
+              <i class="fa-solid fa-trash" />
+            </button>
           </div>
         </div>
       </div>
@@ -330,9 +350,6 @@
     margin-block-start: 0.2em;
     margin-block-end: 0.4em;
   }
-  .pointer {
-    cursor: pointer;
-  }
   .settingsTextInput {
     padding: 3px 5px;
     border-radius: 10px;
@@ -360,18 +377,6 @@
     transition: 0.3s;
   }
   .saveSettingsButton:hover {
-    background-color: #0c2;
-  }
-  .viewGroupButton {
-    padding: 8px 20px;
-    border: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    background-color: #0b1;
-    transition: 0.3s;
-  }
-  .viewGroupButton:hover {
     background-color: #0c2;
   }
   .createGroupButton {
@@ -427,6 +432,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    padding-right: 8px;
   }
   .settingsPagesListPageContainer:not(:first-child) {
     padding-top: 3px;
@@ -464,6 +470,10 @@
   #settingsPages.darkModifier .settingsPagesListPage.highlighted:hover {
     background-color: #0d3f81 !important;
   }
+  .settingsPagesListPage.hiddenPage {
+    border-style: dashed;
+    opacity: 0.6;
+  }
   .settingsDragHandle {
     margin-left: 4px;
   }
@@ -498,7 +508,7 @@
     transition: 0.3s;
   }
   .settingsPagesMoveButtons button:hover {
-    background-color: rgb(238, 195, 25);
+    background-color: rgb(230, 200, 22);
   }
   .settingsPagesMoveButtons button:first-child {
     border-top-left-radius: 5px;
@@ -514,20 +524,94 @@
   .settingsPageListButtons {
     align-self: center;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 5px;
   }
-  .customImage {
-    color: #0d65c4;
+  .settingsPageListButtonsGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 130px;
   }
-  #settingsPages.darkModifier .customImage {
-    color: #3a99ff;
+  .viewGroupButton {
+    padding: 4px 20px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    background-color: #3a99ff;
+    transition: 0.3s;
+  }
+  .viewGroupButton:hover {
+    background-color: #2f84e0;
+  }
+  .changeTileImageButton {
+    padding: 4px 20px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    background-color: #0b1;
+    transition: 0.3s;
+  }
+  .changeTileImageButton:hover {
+    background-color: #0c2;
+  }
+  .changeTileImageButtonCustomImage {
+    background-color: #3a99ff;
+  }
+  .changeTileImageButtonCustomImage:hover {
+    background-color: #2f84e0;
+  }
+  .togglePageVisibilityButton {
+    padding: 4px 20px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+  }
+  .togglePageVisibilityButton:hover {
+    background-color: rgb(230, 200, 22);
   }
   .pageDeleteButton {
+    padding: 4px 12px;
     border: 0;
-    background-color: transparent;
-    color: red;
+    border-radius: 8px;
     cursor: pointer;
+    color: white;
+    background-color: rgb(210, 40, 40);
+    transition: 0.3s;
+  }
+  .pageDeleteButton:hover {
+    background-color: rgb(175, 30, 30);
+  }
+  .tilePreview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-width: 40px;
+    background-position: center;
+    background-size: cover;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+  }
+  .tileIcon {
+    width: 100%;
+    height: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 80% auto;
+  }
+  .tileFolderIcon {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    align-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
   }
   .settingsPageInput {
     display: flex;

@@ -376,7 +376,7 @@
     transition: 0.3s;
   }
   .deleteCustomImageButton:hover {
-    background-color: rgb(180, 30, 30);
+    background-color: rgb(175, 30, 30);
   }
   #localStorageSpace {
     display: flex;

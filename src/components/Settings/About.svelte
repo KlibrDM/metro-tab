@@ -65,6 +65,7 @@
     display: flex;
     flex-direction: column;
     color: black;
+    padding-right: 8px;
   }
   .about.darkModifier {
     color: white;

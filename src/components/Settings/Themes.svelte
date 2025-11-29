@@ -144,6 +144,7 @@
     grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
     gap: 5px;
     overflow-y: auto;
+    padding-right: 8px;
   }
   .item {
     display: flex;
@@ -188,6 +189,6 @@
     transition: 0.3s;
   }
   .itemButton:hover {
-    background-color: rgb(238, 195, 25);
+    background-color: rgb(230, 200, 22);
   }
 </style>

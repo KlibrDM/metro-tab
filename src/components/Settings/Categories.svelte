@@ -109,7 +109,7 @@
 
             <input
               type="text"
-              id="set_newCategoryBox"
+              id={`set_newCategoryBox_${index}`}
               class="settingsCategoryInput"
               bind:value={category.name}
               placeholder="Type the name of the category"
@@ -121,12 +121,12 @@
             />
           </div>
           <div class="settingsCategoryListButtons">
-            <input
+            <button
               on:click={() => deleteCategoryInterceptor(category.id, index)}
-              type="button"
               class="categoryDeleteButton"
-              value="X"
-            />
+            >
+              <i class="fa-solid fa-trash" />
+            </button>
           </div>
         </div>
       </div>
@@ -244,6 +244,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    padding-right: 8px;
   }
   .settingsCategoriesListEmpty {
     color: #333;
@@ -311,7 +312,7 @@
     transition: 0.3s;
   }
   .settingsCategoriesMoveButtons button:hover {
-    background-color: rgb(238, 195, 25);
+    background-color: rgb(230, 200, 22);
   }
   .settingsCategoriesMoveButtons button:first-child {
     border-top-left-radius: 5px;
@@ -328,10 +329,16 @@
     gap: 10px;
   }
   .categoryDeleteButton {
+    padding: 8px 8px;
     border: 0;
-    background-color: transparent;
-    color: red;
+    border-radius: 8px;
     cursor: pointer;
+    color: white;
+    background-color: rgb(210, 40, 40);
+    transition: 0.3s;
+  }
+  .categoryDeleteButton:hover {
+    background-color: rgb(175, 30, 30);
   }
   .settingsNewCategoryInput {
     display: flex;

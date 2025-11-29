@@ -797,6 +797,7 @@
   }
   .settingsFormContainer {
     overflow-y: auto;
+    padding-right: 8px;
   }
   .settingsFormGroup {
     display: grid;

@@ -113,6 +113,9 @@
   .item:hover {
     background-color: #f0f0f0 !important;
   }
+  #settingsSearchEngine {
+    padding-right: 8px;
+  }
   #settingsSearchEngine.darkModifier .item {
     border-color: #3a99ff;
   }
@@ -146,7 +149,7 @@
     flex-shrink: 0;
   }
   .itemButton:hover {
-    background-color: rgb(238, 195, 25);
+    background-color: rgb(230, 200, 22);
   }
   .itemButton:disabled {
     color: rgb(60, 60, 60);

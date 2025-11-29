@@ -994,6 +994,8 @@
     align-items: center;
     gap: 32px;
     margin-top: 32px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   .IEHeaderSection {
     display: flex;
