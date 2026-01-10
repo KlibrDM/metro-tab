@@ -227,17 +227,15 @@
     transition: 0.3s;
   }
   .settingsBackgrounds {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 3px;
     padding: 15px;
-    flex-wrap: wrap;
     margin-bottom: 10px;
   }
   .backgroundImageSelectorPlaceholder {
-    width: 180px;
-    min-height: 115px;
-    max-width: 220px;
-    flex-grow: 1;
+    min-width: 180px;
+    min-height: 100px;
   }
   .backgroundImageSelector {
     width: 100%;
@@ -250,6 +248,16 @@
     filter: drop-shadow(0px 0px 2px rgb(80, 80, 80));
     transform: scale(1.1);
     z-index: 2;
+  }
+  @media screen and (max-width: 600px) {
+    .settingsBackgrounds {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 220px));
+    }
+    .backgroundImageSelectorPlaceholder {
+      min-width: 120px;
+      min-height: 60px;
+      max-width: 220px;
+    }
   }
   @media screen and (max-width: 450px) {
     #customBackgroundsContainer {
