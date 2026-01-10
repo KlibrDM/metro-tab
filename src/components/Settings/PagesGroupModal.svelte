@@ -1,5 +1,5 @@
 <script>
-  import { clearOldExtension } from "../../data/tools";
+  import { checkWebsite, clearOldExtension, escapeHTML, getImageNameForLink } from "../../data/tools";
   import PagesImageModal from "./PagesImageModal.svelte";
 
   export let group;
@@ -7,9 +7,6 @@
   export let deletePage;
   export let addPage;
   export let movePage;
-  export let getImageNameFor;
-  export let checkWebsite;
-  export let escapeHTML;
   export let unsavedPages;
   let addPageInput = ""; //Binded to input
 
@@ -148,7 +145,7 @@
                 }}
                 on:change={() => {
                   page.link = escapeHTML(checkWebsite(page.link));
-                  page.imageName = getImageNameFor(page.link);
+                  page.imageName = getImageNameForLink(page.link);
                   page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
                 }}
               />

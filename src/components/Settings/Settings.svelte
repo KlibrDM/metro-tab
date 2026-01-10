@@ -2,6 +2,7 @@
   import { userData } from "../../store";
   import * as CONFIG from "../../data/config";
   import { saveConfig, saveBackground, saveBackgroundColor, saveSearchEngine } from "../../data/storage";
+  import { checkWebsite, escapeHTML, getImageNameForLink } from "../../data/tools";
   import { v4 as uuid } from "uuid";
 
   import SettingsForm from "./SettingsForm.svelte";
@@ -51,6 +52,7 @@
       state.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
       state.showElementsShadow = settingsData.showElementsShadow;
       state.showSearchBar = settingsData.showSearchBar;
+      state.showPageQuickAdd = settingsData.showPageQuickAdd;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileMinWidth = settingsData.tileMinWidth;
@@ -89,6 +91,7 @@
       state.frostedGlassAccentColor = CONFIG.frostedGlassAccentColor;
       state.showElementsShadow = CONFIG.showElementsShadow;
       state.showSearchBar = CONFIG.showSearchBar;
+      state.showPageQuickAdd = CONFIG.showPageQuickAdd;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
       state.tileMinWidth = CONFIG.tileMinWidth;
@@ -220,7 +223,7 @@
 
     //Will add http:// if user didn't already do it
     let linkToAdd = checkWebsite(addPageInput);
-    let imageName = getImageNameFor(linkToAdd);
+    let imageName = getImageNameForLink(linkToAdd);
 
     //Update pages state
     list.push({
@@ -270,71 +273,6 @@
     //Trigger list re-render
     settingsData.pages = settingsData.pages;
   };
-
-  const checkWebsite = (pageName) => {
-    if (pageName.substring(0, 4) === "http") {
-      return pageName;
-    } else {
-      return "http://" + pageName;
-    }
-  };
-
-  const getImageNameFor = (link) => {
-    //Get page name from provided link
-    let name = extractWebsiteName(link).toLowerCase();
-
-    if (CONFIG.knownPages.includes(name)) {
-      //Return the image name if the extension has it
-      return name;
-    } else if ("1234567890qwertyuiopasdfghjklzxcvbnm".includes(name[0])) {
-      //Return the image for the first letter
-      return name[0];
-    } else {
-      return "_";
-    }
-  };
-
-  const extractWebsiteName = (link) => {
-    let sitename = link;
-
-    //Remove http(s)://
-    sitename = sitename.substring(sitename.indexOf("://") + 3);
-
-    //Remove www. if existent
-    if (sitename.substring(0, 3) === "www") {
-      sitename = sitename.substring(4);
-    }
-
-    //Remove port if existent
-    if (sitename.lastIndexOf(":") !== -1) {
-      sitename = sitename.substring(0, sitename.lastIndexOf(":"));
-    }
-
-    //Remove ending (.com etc) (if found)
-    if (sitename.lastIndexOf(".") !== -1) {
-      sitename = sitename.substring(0, sitename.lastIndexOf("."));
-    }
-
-    //Do it twice for those that have .co or .com
-    if (sitename.slice(-3) === ".co" || sitename.slice(-4) === ".com") {
-      sitename = sitename.substring(0, sitename.lastIndexOf("."));
-    }
-
-    return sitename;
-  };
-
-  function escapeHTML(string) {
-    let entityMap = {
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
-      "`": "&#x60;",
-    };
-    return String(string).replace(/[<>"'`]/g, function (s) {
-      return entityMap[s];
-    });
-  }
 
   //Transition
   function slide() {
@@ -434,7 +372,7 @@
     <hr/>
     <div id="settingsContent">
       {#if tabIndex === 0}
-        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} {getImageNameFor} {checkWebsite} {escapeHTML} bind:unsavedPages={unsavedSettings} />
+        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} bind:unsavedPages={unsavedSettings} />
       {:else if tabIndex === 1}
         <Categories {settingsData} {addCategory} {deleteCategory} {moveCategory} {saveSettings} bind:unsavedSettings={unsavedSettings} />
       {:else if tabIndex === 2}

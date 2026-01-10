@@ -2,16 +2,13 @@
   import PagesGroupModal from "./PagesGroupModal.svelte";
   import PagesImageModal from "./PagesImageModal.svelte";
   import PagesAllImagesModal from "./PagesAllImagesModal.svelte";
-  import { clearOldExtension } from "../../data/tools";
+  import { checkWebsite, clearOldExtension, escapeHTML, getImageNameForLink } from "../../data/tools";
 
   export let settingsData;
   export let deletePage;
   export let addPage;
   export let saveSettings;
   export let movePage;
-  export let getImageNameFor;
-  export let checkWebsite;
-  export let escapeHTML;
   export let unsavedPages;
   export let createGroup;
 
@@ -159,7 +156,7 @@
                 }}
                 on:change={() => {
                   page.link = escapeHTML(checkWebsite(page.link));
-                  page.imageName = getImageNameFor(page.link);
+                  page.imageName = getImageNameForLink(page.link);
                   page.tileName = page.imageName[0].toUpperCase() + page.imageName.slice(1);
                 }}
               />
@@ -324,9 +321,6 @@
       deletePage={deletePage}
       addPage={addPage}
       movePage={movePage}
-      getImageNameFor={getImageNameFor}
-      checkWebsite={checkWebsite}
-      escapeHTML={escapeHTML}
       bind:unsavedPages={unsavedPages}
       bind:modalActive={groupModalActive}
     />

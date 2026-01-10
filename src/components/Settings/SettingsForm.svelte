@@ -189,6 +189,26 @@
 
       <div class="settingsInput">
         <div class="imagePlaceholder">
+          <img src="static/images/settings/s_show_page_quick_add.webp" alt="Set show page quick add" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_showPageQuickAdd">Show page quick add</label>
+          <input
+            type="checkbox"
+            id="set_showPageQuickAdd"
+            name="set_showPageQuickAdd"
+            class="settingsCheckbox"
+            bind:checked={settingsData.showPageQuickAdd}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
           <img src="static/images/settings/s_tile_zoom.webp" alt="Set tile zoom on hover" />
         </div>
         <hr/>

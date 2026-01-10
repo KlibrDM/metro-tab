@@ -4,6 +4,7 @@
 
   export let pages = [];
   export let categories = [];
+  export let openQuickAdd;
   export let isShown = false;
   export let tileZoom;
   export let tileGrow;
@@ -17,6 +18,7 @@
   export let groupTileBorderRadius;
   export let groupTileGrow;
   export let showSearchBar;
+  export let showPageQuickAdd;
   export let showElementsShadow;
   export let useFrostedGlass;
   export let frostedGlassStrength;
@@ -37,7 +39,7 @@
   }
 >
   <div class="buttons" style="gap: {tileGap}vh">
-    {#if !pages.filter(page => page.isActive).length}
+    {#if !showPageQuickAdd && !pages.filter(page => page.isActive).length}
       <div class="noPagesAvailableWarning">
         No pages available in this category
       </div>
@@ -217,6 +219,42 @@
         {/if}
       {/if}
     {/each}
+
+    {#if showPageQuickAdd}
+      <button
+        class="pageButton"
+        style="
+          {
+            useFrostedGlass ? `
+              backdrop-filter: blur(${frostedGlassStrength}px);
+              -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+              background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+            `
+            : `
+              background-color: rgb(0, 0, 0);
+            `
+          }
+          {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
+          color: {useFrostedGlass ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : 'white'};
+          font-size: {tileMinWidth / 2.4}vh;
+          flex-grow: {tileGrow ? 1 : 0};
+          min-width: {tileMinWidth}vh;
+          height: {tileHeight}vh;
+          border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
+          border-radius: {tileBorderRadius}vh;
+          cursor: pointer;
+          {!tileZoom ? "animation: none !important" : ''}
+        "
+        on:click={openQuickAdd}
+      >
+        <i
+          class="fa-solid fa-plus"
+          style={`
+            border-radius: ${tileBorderRadius}vh;
+          `}
+        />
+      </button>
+    {/if}
   </div>
 </div>
 
@@ -280,6 +318,7 @@
     z-index: 0;
     flex-basis: 0;
     line-height: 0;
+    box-sizing: content-box;
   }
   .pageButton:hover {
     animation: pop-out 0.25s;

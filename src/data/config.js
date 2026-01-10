@@ -11,6 +11,7 @@ export const frostedGlassColor = { r: 255, g: 255, b: 255 };
 export const frostedGlassAccentColor = { r: 255, g: 255, b: 255 };
 export const showElementsShadow = true;
 export const showSearchBar = true;
+export const showPageQuickAdd = false;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "sl1";

@@ -1,4 +1,4 @@
-import { backgrounds } from "./config";
+import { backgrounds, knownPages } from "./config";
 
 export const getBackgroundFormat = (bg) => {
   const backgroundImageElem = backgrounds.find((background) => background.name === bg);
@@ -7,7 +7,7 @@ export const getBackgroundFormat = (bg) => {
     backgroundImageFormat = backgroundImageElem.format;
   }
   return backgroundImageFormat;
-}
+};
 
 export const toHex = (color) => {
   let hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
@@ -30,4 +30,69 @@ export const clearOldExtension = (fileName) => {
   else{
     return fileName;
   }
-}
+};
+
+export const checkWebsite = (pageName) => {
+  if (pageName.substring(0, 4) === "http") {
+    return pageName;
+  } else {
+    return "http://" + pageName;
+  }
+};
+
+export const getImageNameForLink = (link) => {
+  //Get page name from provided link
+  let name = extractWebsiteName(link).toLowerCase();
+
+  if (knownPages.includes(name)) {
+    //Return the image name if the extension has it
+    return name;
+  } else if ("1234567890qwertyuiopasdfghjklzxcvbnm".includes(name[0])) {
+    //Return the image for the first letter
+    return name[0];
+  } else {
+    return "_";
+  }
+};
+
+export const extractWebsiteName = (link) => {
+  let sitename = link;
+
+  //Remove http(s)://
+  sitename = sitename.substring(sitename.indexOf("://") + 3);
+
+  //Remove www. if existent
+  if (sitename.substring(0, 3) === "www") {
+    sitename = sitename.substring(4);
+  }
+
+  //Remove port if existent
+  if (sitename.lastIndexOf(":") !== -1) {
+    sitename = sitename.substring(0, sitename.lastIndexOf(":"));
+  }
+
+  //Remove ending (.com etc) (if found)
+  if (sitename.lastIndexOf(".") !== -1) {
+    sitename = sitename.substring(0, sitename.lastIndexOf("."));
+  }
+
+  //Do it twice for those that have .co or .com
+  if (sitename.slice(-3) === ".co" || sitename.slice(-4) === ".com") {
+    sitename = sitename.substring(0, sitename.lastIndexOf("."));
+  }
+
+  return sitename;
+};
+
+export const escapeHTML = (string) => {
+  let entityMap = {
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+    "`": "&#x60;",
+  };
+  return String(string).replace(/[<>"'`]/g, function (s) {
+    return entityMap[s];
+  });
+};

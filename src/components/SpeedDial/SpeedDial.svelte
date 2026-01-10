@@ -1,6 +1,7 @@
 <script>
   import { getCurrentSelectedCategoryIndex, saveCurrentSelectedCategoryIndex } from "../../data/storage";
   import { userData } from "../../store";
+  import PageQuickAddModal from "./PageQuickAddModal.svelte";
   import SpeedDialItems from "./SpeedDialItems.svelte";
 
   const storageCategoryIndex = getCurrentSelectedCategoryIndex();
@@ -20,6 +21,7 @@
   let groupTileBorderRadius;
   let groupTileGrow;
   let showSearchBar;
+  let showPageQuickAdd;
   let showElementsShadow;
   let useFrostedGlass;
   let frostedGlassStrength;
@@ -30,6 +32,8 @@
   let selectedCategoryIndex = 0;
   let selectedCategoryId = undefined;
   let showCategoryNavigation = false;
+
+  let isQuickAddOpen = false;
 
   let windowInnerWidth = 0;
 
@@ -48,6 +52,7 @@
     groupTileBorderRadius = data.groupTileBorderRadius;
     groupTileGrow = data.groupTileGrow;
     showSearchBar = data.showSearchBar;
+    showPageQuickAdd = data.showPageQuickAdd;
     showElementsShadow = data.showElementsShadow;
     useFrostedGlass = data.useFrostedGlass;
     frostedGlassStrength = data.frostedGlassStrength;
@@ -116,6 +121,7 @@
     <SpeedDialItems
       pages={pages.filter((page) => page.categoryId === category.id)}
       categories={categories}
+      openQuickAdd={() => {isQuickAddOpen = true;}}
       isShown={selectedCategoryIndex === index}
       tileZoom={tileZoom}
       tileGrow={tileGrow}
@@ -129,6 +135,7 @@
       groupTileBorderRadius={groupTileBorderRadius}
       groupTileGrow={groupTileGrow}
       showSearchBar={showSearchBar}
+      showPageQuickAdd={showPageQuickAdd}
       showElementsShadow={showElementsShadow}
       useFrostedGlass={useFrostedGlass}
       frostedGlassStrength={frostedGlassStrength}
@@ -141,6 +148,7 @@
   <SpeedDialItems
     pages={categories.length ? pages.filter((page) => page.categoryId === undefined) : pages}
     categories={categories}
+    openQuickAdd={() => {isQuickAddOpen = true;}}
     isShown={selectedCategoryIndex === categories.length}
     tileZoom={tileZoom}
     tileGrow={tileGrow}
@@ -154,6 +162,7 @@
     groupTileBorderRadius={groupTileBorderRadius}
     groupTileGrow={groupTileGrow}
     showSearchBar={showSearchBar}
+    showPageQuickAdd={showPageQuickAdd}
     showElementsShadow={showElementsShadow}
     useFrostedGlass={useFrostedGlass}
     frostedGlassStrength={frostedGlassStrength}
@@ -207,6 +216,15 @@
       {/if}
     </div>
   </div>
+{/if}
+
+{#if isQuickAddOpen}
+  <PageQuickAddModal
+    pages={pages}  
+    categories={categories}
+    selectedCategoryIndex={selectedCategoryIndex}
+    bind:modalActive={isQuickAddOpen}
+  />
 {/if}
 
 <style>

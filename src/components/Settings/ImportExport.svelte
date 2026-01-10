@@ -82,6 +82,7 @@
       exportDataObject.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
       exportDataObject.showElementsShadow = settingsData.showElementsShadow;
       exportDataObject.showSearchBar = settingsData.showSearchBar;
+      exportDataObject.showPageQuickAdd = settingsData.showPageQuickAdd;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
       exportDataObject.tileMinWidth = settingsData.tileMinWidth;
@@ -427,6 +428,15 @@
             errorsFound = true;
           }
 
+          if(settings.hasOwnProperty('showPageQuickAdd')){
+            if(typeof settings.showPageQuickAdd !== 'boolean'){
+              errorsFound = true;
+            }
+          }
+          else{
+            errorsFound = true;
+          }
+
           if(settings.hasOwnProperty('tileZoom')){
             if(typeof settings.tileZoom !== 'boolean'){
               errorsFound = true;
@@ -705,6 +715,7 @@
             settingsToSave.frostedGlassAccentColor = settings.frostedGlassAccentColor;
             settingsToSave.showElementsShadow = settings.showElementsShadow;
             settingsToSave.showSearchBar = settings.showSearchBar;
+            settingsToSave.showPageQuickAdd = settings.showPageQuickAdd;
             settingsToSave.tileZoom = settings.tileZoom;
             settingsToSave.tileGrow = settings.tileGrow;
             settingsToSave.tileMinWidth = settings.tileMinWidth;

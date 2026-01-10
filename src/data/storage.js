@@ -15,6 +15,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("frostedGlassAccentColor", JSON.stringify(data.frostedGlassAccentColor));
   localStorage.setItem("showElementsShadow", data.showElementsShadow);
   localStorage.setItem("showSearchBar", data.showSearchBar);
+  localStorage.setItem("showPageQuickAdd", data.showPageQuickAdd);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
@@ -61,6 +62,10 @@ export const saveNotes = (notes) => {
       alert("Error saving notes");
     }
   }
+};
+
+export const savePages = (pages) => {
+  localStorage.setItem("pages", JSON.stringify(pages));
 };
 
 export const saveTileImage = (link, image) => {
@@ -207,6 +212,11 @@ const data = {
     localStorage.getItem("showSearchBar") === null
     ? CONFIG.showSearchBar
     : localStorage.getItem("showSearchBar") === "true",
+
+  showPageQuickAdd:
+    localStorage.getItem("showPageQuickAdd") === null
+    ? CONFIG.showPageQuickAdd
+    : localStorage.getItem("showPageQuickAdd") === "true",
 
   isBackgroundSolid:
     localStorage.getItem("isBackgroundSolid") === null
