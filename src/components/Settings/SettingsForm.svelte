@@ -1,5 +1,6 @@
 <script>
   import { toHex, toRGB } from "../../data/tools";
+  import Tooltip from "../Tooltip.svelte";
 
   export let settingsData;
   export let saveSettings;
@@ -65,6 +66,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set your name or any text you want to be displayed on the cover screen when opening a new tab.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -84,6 +90,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Enable or disable the cover screen (slide effect) when opening a new tab.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -105,6 +116,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Show a background behind the clock to improve visibility. Highly recommended on backgrounds that have low contrast with the clock text.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -124,6 +140,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Toggle between 12 hour and 24 hour format for the clock.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -145,6 +166,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Toggle dark mode for menus and dialogs. The elements on the main page are not affected by this setting.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -164,6 +190,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Show or hide shadows for various elements like tiles, search bar and clock. This shadow is more visible when using frosted glass design.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -185,6 +216,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Show or hide the search bar on the main page.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -204,6 +240,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Show a special tile that allows quick adding of new pages directly from the main page.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -225,6 +266,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Enable or disable the zoom effect when hovering over tiles.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -244,6 +290,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Allow tiles to expand and fill available space in their rows. This will make tiles larger than the specified minimum width when there is extra space.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -281,6 +332,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the width of the tiles. Increasing this value will make the tiles wider. If &quot;Tile fill space&quot; is enabled, tiles will expand beyond this width to fill available space.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -316,6 +372,11 @@
               }}
             />
           </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the height of the tiles. Increasing this value will make the tiles taller.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -353,6 +414,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the space between tiles. Increasing this value will create more space between tiles.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -388,6 +454,11 @@
               }}
             />
           </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the border radius of the tiles. Increasing this value will make the tile corners more rounded.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -425,6 +496,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the border size of the tiles. Increasing this value will make the tile borders thicker.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -445,6 +521,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the color of the tile borders. Only visible if the tile border size is greater than 0.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -464,6 +545,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Allow tiles in a group to expand and fill available space in their rows. Group tiles might not respect the desired aspect ratio when this setting is enabled.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -501,6 +587,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the space between tiles in a group. Increasing this value will create more space between tiles in a group.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -536,6 +627,11 @@
               }}
             />
           </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the border radius of the tiles in a group. Increasing this value will make the tile corners more rounded. Since group tiles are smaller than regular tiles, you might want to have a different border radius for them.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -573,6 +669,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the opacity of the navbar. Lower values make it more transparent, while higher values make it more opaque. 0 is fully transparent and 1 is fully opaque.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -592,6 +693,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the color of the navbar. Only visible if the navbar opacity is greater than 0.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -613,6 +719,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the background color of the cover screen.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -633,10 +744,21 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the color of the text on the cover screen.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
     </div>
 
-    <h2>Frosted Glass Design</h2>
+    
+    <div class="settingsSectionTitleWithHint">
+      <h2>Frosted Glass Design</h2>
+      <Tooltip maxWidth="800" text="The frosted glass design adds a blur and transparency effect to various elements like tiles, search bar and clock, giving them a frosted glass appearance. This design might not be a good fit for all backgrounds. The frosted glass color, opacity and accent color might need to be adjusted to have all elements clearly visible, depending on the background used.">
+        <i class="fa-solid fa-circle-info hintIcon" />
+      </Tooltip>
+    </div>
     <div class="settingsFormGroup" class:darkModifier={settingsData.darkMode}>
       <div class="settingsInput">
         <div class="imagePlaceholder">
@@ -655,6 +777,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Toggle the frosted glass design for various elements like tiles, search bar and clock. This design adds a blur and transparency effect to these elements, giving them a frosted glass appearance.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
 
@@ -692,6 +819,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the strength of the frosted glass effect. Increasing this value will make the frosted glass effect more pronounced by increasing the blur amount. There is no blur at 0.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -728,6 +860,11 @@
             />
           </div>
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the tile opacity when using the frosted glass design. Lower values make the tiles more transparent, while higher values make the tiles more opaque.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -748,6 +885,11 @@
             }}
           />
         </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the background color of the tiles when using the frosted glass design.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
       </div>
 
       <div class="settingsInput">
@@ -767,6 +909,11 @@
               unsavedSettings = true;
             }}
           />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the accent color for icons and text when using the frosted glass design.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
         </div>
       </div>
     </div>
@@ -831,9 +978,23 @@
     align-items: center;
     border: 1px solid lightgray;
     border-radius: 15px;
+    position: relative;
   }
   .settingsFormGroup.darkModifier .settingsInput {
     border-color: #3a99ff;
+  }
+  .settingsFormHintContainer {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+  }
+  .hintIcon {
+    color: #3a99ff;
+  }
+  .settingsSectionTitleWithHint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .imagePlaceholder {
     width: 250px;

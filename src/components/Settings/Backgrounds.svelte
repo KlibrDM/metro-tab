@@ -3,6 +3,7 @@
   import { backgrounds, sourceDetails } from "../../data/config";
   import { getBackgroundFormat } from "../../data/tools";
   import CustomBackgrounds from "./CustomBackgrounds.svelte";
+  import Tooltip from "../Tooltip.svelte";
 
   export let changeBackground;
   export let changeBackgroundColor;
@@ -15,7 +16,6 @@
   let backgroundSources = new Set();
 
   let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
-  let showLocalStorageInfo = false;
 
   //Add sources to set
   backgrounds.forEach((bg) => {
@@ -91,15 +91,10 @@
     <div id="spaceBarUsed" class:danger={localStorageUsedSpace > 4} style={`width: ${localStorageUsedSpace*100/5}%`}></div>
     <p id="spaceBarText">{localStorageUsedSpace} MB / 5.00 MB</p>
   </div>
-  <button id="localStorageInfoButton" on:click={() => {showLocalStorageInfo = !showLocalStorageInfo}}>
-    <i class="fa-solid fa-info" />
-  </button>
+  <Tooltip text="Local storage is used to store your settings, background images, tile custom images, and notes.">
+    <i class="fa-solid fa-circle-info hintIcon" />
+  </Tooltip>
 </div>
-{#if showLocalStorageInfo}
-  <small>
-    Local storage is used to store your settings, background images, tile custom images, and notes.
-  </small>
-{/if}
 
 <h2>Gallery</h2>
 {#each [...backgroundSources] as source}
@@ -188,21 +183,9 @@
     font-weight: bold;
     color: #333;
   }
-  #localStorageInfoButton {
-    width: 22px;
-    height: 22px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-    background-color: rgb(238, 218, 34);
-    transition: 0.3s;
-    border-radius: 100%;
-    border: 0;
-    cursor: pointer;
-  }
-  #localStorageInfoButton:hover {
-    background-color: rgb(230, 200, 22);
+  .hintIcon {
+    color: #3a99ff;
+    margin-bottom: 4px;
   }
   .settingsBackgroundColorInput {
     margin-top: 8px;
