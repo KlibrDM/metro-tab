@@ -243,6 +243,7 @@
           border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
           border-radius: {tileBorderRadius}vh;
           cursor: pointer;
+          padding: 0;
           {!tileZoom ? "animation: none !important" : ''}
         "
         on:click={openQuickAdd}

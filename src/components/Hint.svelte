@@ -8,7 +8,7 @@
     darkMode = data.darkMode;
   });
 
-  const hintsLength = 9;
+  const hintsLength = 10;
   // Start from a random hint
   let hintIndex = Math.floor(Math.random() * hintsLength);
 
@@ -56,18 +56,20 @@
       {:else if hintIndex === 1}
         <span>You can change visual settings such as tile size, border radius, and colors by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Visuals" tab.</span>
       {:else if hintIndex === 2}
-        <span>You can add more pages to the speed dial by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Pages" tab.</span>
+        <span>You can activate the Frosted Glass design by clicking on the <i class="fas fa-sliders-h" /> icon, going into the "Visuals" tab and scrolling down to the "Frosted Glass Design" section.</span>
       {:else if hintIndex === 3}
-        <span>You can group your pages into categories. You can create categories by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Categories" tab.</span>
+        <span>You can add more pages to the speed dial by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Pages" tab.</span>
       {:else if hintIndex === 4}
-        <span>If you created categories, you can navigate to the "Pages" tab and select the category for each page by changing it from "Uncategorized" to any other category.</span>
+        <span>You can group your pages into categories. You can create categories by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Categories" tab.</span>
       {:else if hintIndex === 5}
-        <span>You can select a different theme by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Themes" tab.</span>
+        <span>If you created categories, you can navigate to the "Pages" tab and select the category for each page by changing it from "Uncategorized" to any other category.</span>
       {:else if hintIndex === 6}
-        <span>You can search the web using the search bar at the top of the speed dial.</span>
+        <span>You can select a different theme by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Themes" tab.</span>
       {:else if hintIndex === 7}
-        <span>You can write notes by clicking on the <i class="fa-solid fa-note-sticky" /> icon in the top right corner.</span>
+        <span>You can search the web using the search bar at the top of the speed dial.</span>
       {:else if hintIndex === 8}
+        <span>You can write notes by clicking on the <i class="fa-solid fa-note-sticky" /> icon in the top right corner.</span>
+      {:else if hintIndex === 9}
         <span>You should create a backup of your data every once in a while. You can export your settings by clicking on the <i class="fas fa-sliders-h" /> icon in the top right corner and then navigating to the "Backup" tab.</span>
       {/if}
     </div>
