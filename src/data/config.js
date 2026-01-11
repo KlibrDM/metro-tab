@@ -203,6 +203,21 @@ export const pages = [
 
 export const entertainmentData = [
   {
+    name: "Wordle",
+    link: "https://www.nytimes.com/games/wordle/index.html",
+    img: "wordle-icon.avif",
+  },
+  {
+    name: "Skribbl",
+    link: "https://skribbl.io",
+    img: "skribbl-icon.avif",
+  },
+  {
+    name: "2048",
+    link: "https://www.2048.org",
+    img: "2048-icon.avif",
+  },
+  {
     name: "Hangman Game",
     link: "https://klibrdm.github.io/hangman-game-react",
     img: "hangman-game-icon.avif",
@@ -211,6 +226,11 @@ export const entertainmentData = [
     name: "Business Club",
     link: "https://klibrdm.github.io/business-club-game",
     img: "business-club-icon.avif",
+  },
+  {
+    name: "Agar.io",
+    link: "https://agar.io",
+    img: "agar-icon.avif",
   },
 ];
 

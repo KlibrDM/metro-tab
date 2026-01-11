@@ -78,7 +78,7 @@
     background-color: rgba(255, 255, 255, 0.85);
   }
   #entertainmentPanel {
-    padding: 20px 40px;
+    padding: 20px 40px 30px 40px;
     position: absolute;
     background-color: white;
     right: 0;
@@ -99,13 +99,14 @@
     gap: 10px;
   }
   #entertainmentBox {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    column-gap: 16px;
+    row-gap: 8px;
   }
   #entertainmentBox > a {
-    width: 85px;
+    width: 80px;
+    height: fit-content;
   }
   #entertainmentBox > a > img {
     width: 100%;
