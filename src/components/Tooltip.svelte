@@ -45,6 +45,11 @@
       else {
         tooltipBox.style.left = `${containerRect.left + (containerRect.width / 2) - (tooltipBox.clientWidth / 2)}px`;
       }
+
+      // Show on next event loop to ensure display block is already applied
+      setTimeout(() => {
+        tooltipBox.style.opacity = '1';
+      }, 0);
     }, showDelay);
   } else {
     setTimeout(() => {
@@ -53,7 +58,12 @@
       const tooltipBox = document.getElementById(`tooltipBox_${id}`);
       if(!tooltipBox) return;
 
-      tooltipBox.style.display = 'none';
+      tooltipBox.style.opacity = '0';
+
+      // Wait for the opacity transition to finish before hiding
+      setTimeout(() => {
+        tooltipBox.style.display = 'none';
+      }, 200);
     }, hideDelay);
   }
 </script>
@@ -102,6 +112,8 @@
     z-index: 1000;
     font-size: 14px;
     text-align: center;
+    transition: 0.2s;
+    opacity: 0;
   }
   .tooltipBox.darkModifier {
     background-color: rgb(3, 7, 15);
