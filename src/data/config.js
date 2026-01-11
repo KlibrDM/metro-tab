@@ -1188,7 +1188,7 @@ export const tileThemes = [
 
 //Known pages are the ones that have a thumbnail image
 export const knownPages = [
-  //V1.0
+  // V1.0.0
   "google",
   "facebook",
   "youtube",
@@ -1250,7 +1250,7 @@ export const knownPages = [
   "csdn",
   "bing",
 
-  //V2.0 (1)
+  // V2.0.0 (1)
   "meet.google",
   "classroom.google",
   "teams.microsoft",
@@ -1262,7 +1262,7 @@ export const knownPages = [
   "wish",
   "discord",
   "discordapp",
-  //V2.0 (2)
+  // V2.0.0 (2)
   "g2a",
   "instant-gaming",
   "kinguin",
@@ -1270,7 +1270,7 @@ export const knownPages = [
   "cdkeys",
   "gamivo",
   "hrkgame",
-  //V2.0 (3)
+  // V2.0.0 (3)
   "qq",
   "mail",
   "duckduckgo",
@@ -1308,19 +1308,19 @@ export const knownPages = [
   "newegg",
   "gamestop",
 
-  //V2.1
+  // V2.1.0
   "localhost",
   "calendar.google",
   "photos.google",
   "figma",
 
-  //V2.2
+  // V2.2.0
   "chatgpt",
   "chat.openai",
   "openai",
   "platform.openai",
 
-  //V2.6
+  // V2.6.0
   "1337x",
   "adobe",
   "agoda",
@@ -1560,4 +1560,32 @@ export const knownPages = [
   "qwant",
   "startpage",
   "swisscows",
+
+  // V2.7.0
+  "mail.google",
+  "seaart",
+  "siriusxm",
+  "suno",
+  "udio",
+  "claude",
+  "opus",
+  "clip.opus",
+  "synthesia",
+  "midjourney",
+  "aistudio.google",
+  "deepl",
+  "quillbot",
+  "remove",
+  "character",
+  "copilot.microsoft",
+  "capcut",
+  "deepseek",
+  "chat.deepseek",
+  "deepai",
+  "gamma",
+  "elevenlabs",
+  "jet2",
+  "outlook",
+  "outlook.live",
+  "outlook.office",
 ];
