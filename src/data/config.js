@@ -421,6 +421,31 @@ export const backgrounds = [
     source: "pixabay",
   },
   {
+    name: "bg31",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg32",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg33",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg34",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
+    name: "bg35",
+    format: "avif",
+    source: "pixabay",
+  },
+  {
     name: "sl1",
     format: "avif",
     source: "starline-freepik",
@@ -646,6 +671,31 @@ export const backgrounds = [
     source: "starline-freepik",
   },
   {
+    name: "sl46",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl47",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl48",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl49",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
+    name: "sl50",
+    format: "avif",
+    source: "starline-freepik",
+  },
+  {
     name: "fp1",
     format: "avif",
     source: "freepik-freepik",
@@ -692,6 +742,56 @@ export const backgrounds = [
   },
   {
     name: "fp10",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp11",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp12",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp13",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp14",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp15",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp16",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp17",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp18",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp19",
+    format: "avif",
+    source: "freepik-freepik",
+  },
+  {
+    name: "fp20",
     format: "avif",
     source: "freepik-freepik",
   },
