@@ -80,7 +80,7 @@
               height: {tileHeight}vh;
               border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
               border-radius: {tileBorderRadius}vh;
-              {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
+              {tileHeight <= tileMinWidth ? 'background-size: 180% auto;' : ''}
               {!tileZoom ? "animation: none !important" : ''}
             "
           >
@@ -91,7 +91,7 @@
                   background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
                   border-radius: ${tileBorderRadius}vh;
                   mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
-                  ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+                  ${tileHeight <= tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 65% auto;'}
                 `}
               ></div>
             {/if}
@@ -120,7 +120,7 @@
                   ? "1fr"
                   : page.pages.length === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
                     ? "1fr"
-                    : page.pages.length <= 3
+                    : page.pages.length <= 4
                       ? "1fr 1fr"
                       : page.pages.length <= 9
                         ? "1fr 1fr 1fr"
@@ -172,8 +172,8 @@
                     }vh;
                     border: {tileBorder}px solid rgb({tileBorderColor.r},{tileBorderColor.g},{tileBorderColor.b});
                     border-radius: {groupTileBorderRadius}vh;
-                    min-width: 40px;
-                    {tileHeight < tileMinWidth ? 'background-size: 180% auto;' : ''}
+                    min-width: 10px;
+                    {tileHeight <= tileMinWidth ? 'background-size: 180% auto;' : ''}
                     {!tileZoom ? "animation: none !important;" : ''}
                     {groupTileGrow ? `
                       flex-grow: 1;
@@ -188,7 +188,7 @@
                               : "21%"
                         : page.pages.length === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
                           ? "100%"
-                          : page.pages.length <= 3
+                          : page.pages.length <= 4
                             ? "40%"
                             : page.pages.length <= 9
                               ? "28%"
@@ -206,7 +206,7 @@
                         background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
                         border-radius: ${tileBorderRadius}vh;
                         mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(subpage.imageName)}.webp");
-                        ${tileHeight < tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+                        ${tileHeight <= tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 65% auto;'}
                       `}
                     ></div>
                   {/if}
