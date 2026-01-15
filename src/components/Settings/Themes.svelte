@@ -1,7 +1,8 @@
 <script>
-  import { themes, tileThemes } from "../../data/config";
+  import { frostedGlassThemes, themes, tileThemes } from "../../data/config";
   import { saveConfig } from "../../data/storage";
   import { userData } from "../../store";
+  import ThemeItem from "./ThemeItem.svelte";
 
   export let settingsData;
 
@@ -45,88 +46,33 @@
   <h2>Themes</h2>
   <div id="themeList">
     {#each themes as theme}
-      <div class="item" class:darkModifier={settingsData.darkMode}>
-        <div class="themeThumbnail">
-          <img src={`static/images/themes/${theme.thumbnail}.webp`} alt={`${theme.label} theme thumbnail`} />
-        </div>
-        <div class="themeDetails">
-          <div class="themeDetailsText">
-            <h3>{theme.label}</h3>
+      <ThemeItem
+        darkMode={settingsData.darkMode}
+        {theme}
+        {applyTheme}
+      />
+    {/each}
+  </div>
 
-            {#if theme.changesTiles === "full"}
-              <p>Changes all tile settings</p>
-            {:else if theme.changesTiles === "partial"}
-              <p>Changes some tile settings</p>
-            {/if}
-
-            {#if theme.changesBackground}
-              <p>Changes background</p>
-            {/if}
-
-            {#if theme.changesColors}
-              <p>Changes colors</p>
-            {/if}
-
-            {#if theme.changesPanelColors === "dark"}
-              <p>Changes panel colors to dark</p>
-            {:else if theme.changesPanelColors === "light"}
-              <p>Changes panel colors to light</p>
-            {:else}
-              <p>Doesn't change panel colors</p>
-            {/if}
-          </div>
-          <button
-            class="itemButton"
-            on:click={() => applyTheme(theme.settings)}
-          >
-            Apply
-          </button>
-        </div>
-      </div>
+  <h2 id="frostedThemeListTitle">Frosted Glass Themes</h2>
+  <div id="frostedThemeList">
+    {#each frostedGlassThemes as theme}
+      <ThemeItem
+        darkMode={settingsData.darkMode}
+        {theme}
+        {applyTheme}
+      />
     {/each}
   </div>
 
   <h2 id="tileThemeListTitle">Tile presets</h2>
   <div id="tileThemeList">
     {#each tileThemes as theme}
-      <div class="item" class:darkModifier={settingsData.darkMode}>
-        <div class="themeThumbnail">
-          <img src={`static/images/themes/${theme.thumbnail}.webp`} alt={`${theme.label} preset thumbnail`} />
-        </div>
-        <div class="themeDetails">
-          <div class="themeDetailsText">
-            <h3>{theme.label}</h3>
-
-            {#if theme.changesTiles === "full"}
-              <p>Changes all tile settings</p>
-            {:else if theme.changesTiles === "partial"}
-              <p>Changes some tile settings</p>
-            {/if}
-
-            {#if theme.changesBackground}
-              <p>Changes background</p>
-            {/if}
-
-            {#if theme.changesColors}
-              <p>Changes colors</p>
-            {/if}
-
-            {#if theme.changesPanelColors === "dark"}
-              <p>Changes panel colors to dark</p>
-            {:else if theme.changesPanelColors === "light"}
-              <p>Changes panel colors to light</p>
-            {:else}
-              <p>Doesn't change panel colors</p>
-            {/if}
-          </div>
-          <button
-            class="itemButton"
-            on:click={() => applyTheme(theme.settings)}
-          >
-            Apply
-          </button>
-        </div>
-      </div>
+      <ThemeItem
+        darkMode={settingsData.darkMode}
+        {theme}
+        {applyTheme}
+      />
     {/each}
   </div>
 </div>
@@ -136,59 +82,14 @@
     margin-block-start: 0.4em;
     margin-block-end: 0.4em;
   }
-  #tileThemeListTitle {
+  #tileThemeListTitle, #frostedThemeListTitle {
     margin-block-start: 0.8em;
   }
-  #themeList, #tileThemeList {
+  #themeList, #tileThemeList, #frostedThemeList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
     gap: 5px;
     overflow-y: auto;
     padding-right: 8px;
-  }
-  .item {
-    display: flex;
-    gap: 12px;
-    padding: 8px 8px;
-    border-radius: 10px;
-    border: 1px solid lightgray;
-  }
-  .item.darkModifier {
-    border-color: #3a99ff;
-  }
-  .themeThumbnail {
-    width: 300px;
-    min-height: 145px;
-  }
-  .themeThumbnail img {
-    width: 100%;
-    vertical-align: middle;
-  }
-  .themeDetails {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  .themeDetailsText h3 {
-    margin: 0;
-    margin-bottom: 4px;
-  }
-  .themeDetailsText p {
-    margin: 0;
-    font-size: 0.9em;
-  }
-  .itemButton {
-    padding: 8px 20px;
-    border: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    color: black;
-    background-color: rgb(238, 218, 34);
-    transition: 0.3s;
-  }
-  .itemButton:hover {
-    background-color: rgb(230, 200, 22);
   }
 </style>

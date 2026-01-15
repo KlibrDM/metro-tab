@@ -192,7 +192,7 @@
           />
         </div>
         <div class="settingsFormHintContainer">
-          <Tooltip text="Show or hide shadows for various elements like tiles, search bar and clock. This shadow is more visible when using frosted glass design.">
+          <Tooltip text="Show or hide shadows for various elements like tiles, search bar and clock. This shadow is very subtle and it is more visible when using frosted glass design.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
