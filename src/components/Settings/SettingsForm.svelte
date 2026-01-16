@@ -874,16 +874,48 @@
         <hr/>
         <div class="settingsInputGroup">
           <label for="set_frostedGlassColor">Frosted glass color</label>
-          <input
-            type="color"
-            class="settingsColorInput"
-            id="set_frostedGlassColor"
-            name="set_frostedGlassColor"
-            bind:value={frostedGlassColor}
-            on:input={() => {
-              unsavedSettings = true;
-            }}
-          />
+          <div class="settingsColorGroup">
+            <div class="settingsColorQuickSelectContainer">
+              <button
+                type="button"
+                class="settingsColorQuickSelectButton"
+                style="background-color: #ffffff;"
+                on:click={() => {
+                  frostedGlassColor = "#ffffff";
+                  unsavedSettings = true;
+                }}
+              />
+              <button
+                type="button"
+                class="settingsColorQuickSelectButton"
+                style="background-color: #7d7d7d;"
+                on:click={() => {
+                  frostedGlassColor = "#7d7d7d";
+                  unsavedSettings = true;
+                }}
+              />
+              <button
+                type="button"
+                class="settingsColorQuickSelectButton"
+                style="background-color: #000000;"
+                on:click={() => {
+                  frostedGlassColor = "#000000";
+                  unsavedSettings = true;
+                }}
+              />
+            </div>
+            <input
+              type="color"
+              class="settingsColorInput"
+              id="set_frostedGlassColor"
+              name="set_frostedGlassColor"
+              bind:value={frostedGlassColor}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
+          
         </div>
         <div class="settingsFormHintContainer">
           <Tooltip text="Set the background color of the tiles when using the frosted glass design.">
@@ -899,16 +931,38 @@
         <hr/>
         <div class="settingsInputGroup">
           <label for="set_frostedGlassAccentColor">Frosted glass accent color</label>
-          <input
-            type="color"
-            class="settingsColorInput"
-            id="set_frostedGlassAccentColor"
-            name="set_frostedGlassAccentColor"
-            bind:value={frostedGlassAccentColor}
-            on:input={() => {
-              unsavedSettings = true;
-            }}
-          />
+          <div class="settingsColorGroup">
+            <div class="settingsColorQuickSelectContainer">
+              <button
+                type="button"
+                class="settingsColorQuickSelectButton"
+                style="background-color: #ffffff;"
+                on:click={() => {
+                  frostedGlassAccentColor = "#ffffff";
+                  unsavedSettings = true;
+                }}
+              />
+              <button
+                type="button"
+                class="settingsColorQuickSelectButton"
+                style="background-color: #000000;"
+                on:click={() => {
+                  frostedGlassAccentColor = "#000000";
+                  unsavedSettings = true;
+                }}
+              />
+            </div>
+            <input
+              type="color"
+              class="settingsColorInput"
+              id="set_frostedGlassAccentColor"
+              name="set_frostedGlassAccentColor"
+              bind:value={frostedGlassAccentColor}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
         </div>
         <div class="settingsFormHintContainer">
           <Tooltip text="Set the accent color for icons and text when using the frosted glass design.">
@@ -1039,6 +1093,23 @@
     flex-grow: 1;
   }
   .settingsSlider::-webkit-slider-thumb {
+    cursor: pointer;
+  }
+  .settingsColorGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .settingsColorQuickSelectContainer {
+    display: flex;
+    gap: 5px;
+  }
+  .settingsColorQuickSelectButton {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 1px solid gray;
+    border-radius: 32px;
     cursor: pointer;
   }
   .settingsCheckbox {
