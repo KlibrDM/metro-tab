@@ -3,6 +3,37 @@
   import { deleteAllTileImages, getIsDefaultBackupDate, getLastBackupDate, getTileImage, getTileImageLinks, parseNotes, saveBackground, saveTileImage, setLastBackupDate, unsetIsDefaultBackupDate } from "../../data/storage";
   import { backgroundImage as DEFAULT_BACKGROUND_IMAGE } from "../../data/config";
 
+  const visualSettingsMap = new Map([
+    ['yourName', 'Your name'],
+    ['showCover', 'Show cover'],
+    ['clockBackground', 'Clock background'],
+    ['clock24Hour', '24 hour clock'],
+    ['darkMode', 'Dark panels'],
+    ['useFrostedGlass', 'Use frosted glass design'],
+    ['showElementsShadow', 'Show shadows'],
+    ['showSearchBar', 'Show search bar'],
+    ['showPageQuickAdd', 'Show page quick add'],
+    ['tileZoom', 'Tile zoom on hover'],
+    ['tileGrow', 'Tile fill space'],
+    ['tileMinWidth', 'Tile minimum width'],
+    ['tileHeight', 'Tile height'],
+    ['tileGap', 'Tile gap'],
+    ['tileBorder', 'Tile border size'],
+    ['tileBorderRadius', 'Tile border radius'],
+    ['groupTileGap', 'Group tile gap'],
+    ['groupTileBorderRadius', 'Group tile border radius'],
+    ['groupTileGrow', 'Group tile fill space'],
+    ['frostedGlassStrength', 'Frosted glass strength'],
+    ['frostedGlassOpacity', 'Frosted glass opacity'],
+    ['navbarOpacity', 'Navbar opacity'],
+    ['tileBorderColor', 'Tile border color' ],
+    ['frostedGlassColor', 'Frosted glass color' ],
+    ['frostedGlassAccentColor', 'Frosted glass accent color' ],
+    ['navbarColor', 'Navbar color' ],
+    ['coverColor', 'Cover color' ],
+    ['coverTextColor', 'Cover text color' ],
+  ]);
+
   export let settingsData;
   export let saveSettings;
 
@@ -22,6 +53,8 @@
     searchEngine: false,
     notes: false,
   };
+  // Keep track of visual import errors
+  let visualImportErrors = [];
   let importFinishedSuccessfully = false; // False doesn't necesarily mean there were errors, just that no import was started
 
   const clearImportErrors = () => {
@@ -355,213 +388,258 @@
         //Check visuals for errors then import
         if(importVisuals){
           let errorsFound = false;
+          visualImportErrors = [];
 
           if(settings.hasOwnProperty('yourName')){
             if(typeof settings.yourName !== 'string'){
               errorsFound = true;
+              visualImportErrors.push('yourName');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('yourName');
           }
 
           if(settings.hasOwnProperty('showCover')){
             if(typeof settings.showCover !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('showCover');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('showCover');
           }
 
           if(settings.hasOwnProperty('clockBackground')){
             if(typeof settings.clockBackground !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('clockBackground');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('clockBackground');
           }
 
           if(settings.hasOwnProperty('clock24Hour')){
             if(typeof settings.clock24Hour !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('clock24Hour');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('clock24Hour');
           }
 
           if(settings.hasOwnProperty('darkMode')){
             if(typeof settings.darkMode !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('darkMode');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('darkMode');
           }
 
           if(settings.hasOwnProperty('useFrostedGlass')){
             if(typeof settings.useFrostedGlass !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('useFrostedGlass');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('useFrostedGlass');
           }
 
           if(settings.hasOwnProperty('showElementsShadow')){
             if(typeof settings.showElementsShadow !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('showElementsShadow');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('showElementsShadow');
           }
 
           if(settings.hasOwnProperty('showSearchBar')){
             if(typeof settings.showSearchBar !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('showSearchBar');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('showSearchBar');
           }
 
           if(settings.hasOwnProperty('showPageQuickAdd')){
             if(typeof settings.showPageQuickAdd !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('showPageQuickAdd');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('showPageQuickAdd');
           }
 
           if(settings.hasOwnProperty('tileZoom')){
             if(typeof settings.tileZoom !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('tileZoom');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileZoom');
           }
 
           if(settings.hasOwnProperty('tileGrow')){
             if(typeof settings.tileGrow !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('tileGrow');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileGrow');
           }
 
           if(settings.hasOwnProperty('tileMinWidth')){
             settings.tileMinWidth = parseFloat(settings.tileMinWidth);
             if(typeof settings.tileMinWidth !== 'number' || settings.tileMinWidth < 10 || settings.tileMinWidth > 150){
               errorsFound = true;
+              visualImportErrors.push('tileMinWidth');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileMinWidth');
           }
 
           if(settings.hasOwnProperty('tileHeight')){
             settings.tileHeight = parseFloat(settings.tileHeight);
             if(typeof settings.tileHeight !== 'number' || settings.tileHeight < 5 || settings.tileHeight > 80){
               errorsFound = true;
+              visualImportErrors.push('tileHeight');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileHeight');
           }
 
           if(settings.hasOwnProperty('tileGap')){
             settings.tileGap = parseFloat(settings.tileGap);
             if(typeof settings.tileGap !== 'number' || settings.tileGap < 0 || settings.tileGap > 30){
               errorsFound = true;
+              visualImportErrors.push('tileGap');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileGap');
           }
 
           if(settings.hasOwnProperty('tileBorder')){
             settings.tileBorder = parseFloat(settings.tileBorder);
             if(typeof settings.tileBorder !== 'number' || settings.tileBorder < 0 || settings.tileBorder > 50){
               errorsFound = true;
+              visualImportErrors.push('tileBorder');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileBorder');
           }
 
           if(settings.hasOwnProperty('tileBorderRadius')){
             settings.tileBorderRadius = parseFloat(settings.tileBorderRadius);
             if(typeof settings.tileBorderRadius !== 'number' || settings.tileBorderRadius < 0 || settings.tileBorderRadius > 80){
               errorsFound = true;
+              visualImportErrors.push('tileBorderRadius');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileBorderRadius');
           }
 
           if(settings.hasOwnProperty('groupTileGap')){
             settings.groupTileGap = parseFloat(settings.groupTileGap);
             if(typeof settings.groupTileGap !== 'number' || settings.groupTileGap < 0 || settings.groupTileGap > 5){
               errorsFound = true;
+              visualImportErrors.push('groupTileGap');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('groupTileGap');
           }
 
           if(settings.hasOwnProperty('groupTileBorderRadius')){
             settings.groupTileBorderRadius = parseFloat(settings.groupTileBorderRadius);
             if(typeof settings.groupTileBorderRadius !== 'number' || settings.groupTileBorderRadius < 0 || settings.groupTileBorderRadius > 80){
               errorsFound = true;
+              visualImportErrors.push('groupTileBorderRadius');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('groupTileBorderRadius');
           }
 
           if(settings.hasOwnProperty('groupTileGrow')){
             if(typeof settings.groupTileGrow !== 'boolean'){
               errorsFound = true;
+              visualImportErrors.push('groupTileGrow');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('groupTileGrow');
           }
 
           if(settings.hasOwnProperty('frostedGlassStrength')){
             settings.frostedGlassStrength = parseFloat(settings.frostedGlassStrength);
             if(typeof settings.frostedGlassStrength !== 'number' || settings.frostedGlassStrength < 0 || settings.frostedGlassStrength > 30){
               errorsFound = true;
+              visualImportErrors.push('frostedGlassStrength');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('frostedGlassStrength');
           }
 
           if(settings.hasOwnProperty('frostedGlassOpacity')){
             settings.frostedGlassOpacity = parseFloat(settings.frostedGlassOpacity);
             if(typeof settings.frostedGlassOpacity !== 'number' || settings.frostedGlassOpacity < 0 || settings.frostedGlassOpacity > 1){
               errorsFound = true;
+              visualImportErrors.push('frostedGlassOpacity');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('frostedGlassOpacity');
           }
 
           if(settings.hasOwnProperty('navbarOpacity')){
             settings.navbarOpacity = parseFloat(settings.navbarOpacity);
             if(typeof settings.navbarOpacity !== 'number' || settings.navbarOpacity < 0 || settings.navbarOpacity > 1){
               errorsFound = true;
+              visualImportErrors.push('navbarOpacity');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('navbarOpacity');
           }
 
           if(settings.hasOwnProperty('tileBorderColor')){
@@ -569,22 +647,27 @@
               settings.tileBorderColor.r = parseFloat(settings.tileBorderColor.r);
               if(typeof settings.tileBorderColor.r !== 'number' || settings.tileBorderColor.r < 0 || settings.tileBorderColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('tileBorderColor');
               }
               settings.tileBorderColor.g = parseFloat(settings.tileBorderColor.g);
               if(typeof settings.tileBorderColor.g !== 'number' || settings.tileBorderColor.g < 0 || settings.tileBorderColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('tileBorderColor');
               }
               settings.tileBorderColor.b = parseFloat(settings.tileBorderColor.b);
               if(typeof settings.tileBorderColor.b !== 'number' || settings.tileBorderColor.b < 0 || settings.tileBorderColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('tileBorderColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('tileBorderColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('tileBorderColor');
           }
 
           if(settings.hasOwnProperty('frostedGlassColor')){
@@ -592,22 +675,27 @@
               settings.frostedGlassColor.r = parseFloat(settings.frostedGlassColor.r);
               if(typeof settings.frostedGlassColor.r !== 'number' || settings.frostedGlassColor.r < 0 || settings.frostedGlassColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassColor');
               }
               settings.frostedGlassColor.g = parseFloat(settings.frostedGlassColor.g);
               if(typeof settings.frostedGlassColor.g !== 'number' || settings.frostedGlassColor.g < 0 || settings.frostedGlassColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassColor');
               }
               settings.frostedGlassColor.b = parseFloat(settings.frostedGlassColor.b);
               if(typeof settings.frostedGlassColor.b !== 'number' || settings.frostedGlassColor.b < 0 || settings.frostedGlassColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('frostedGlassColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('frostedGlassColor');
           }
 
           if(settings.hasOwnProperty('frostedGlassAccentColor')){
@@ -615,22 +703,27 @@
               settings.frostedGlassAccentColor.r = parseFloat(settings.frostedGlassAccentColor.r);
               if(typeof settings.frostedGlassAccentColor.r !== 'number' || settings.frostedGlassAccentColor.r < 0 || settings.frostedGlassAccentColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassAccentColor');
               }
               settings.frostedGlassAccentColor.g = parseFloat(settings.frostedGlassAccentColor.g);
               if(typeof settings.frostedGlassAccentColor.g !== 'number' || settings.frostedGlassAccentColor.g < 0 || settings.frostedGlassAccentColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassAccentColor');
               }
               settings.frostedGlassAccentColor.b = parseFloat(settings.frostedGlassAccentColor.b);
               if(typeof settings.frostedGlassAccentColor.b !== 'number' || settings.frostedGlassAccentColor.b < 0 || settings.frostedGlassAccentColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('frostedGlassAccentColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('frostedGlassAccentColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('frostedGlassAccentColor');
           }
 
           if(settings.hasOwnProperty('navbarColor')){
@@ -638,22 +731,27 @@
               settings.navbarColor.r = parseFloat(settings.navbarColor.r);
               if(typeof settings.navbarColor.r !== 'number' || settings.navbarColor.r < 0 || settings.navbarColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('navbarColor');
               }
               settings.navbarColor.g = parseFloat(settings.navbarColor.g);
               if(typeof settings.navbarColor.g !== 'number' || settings.navbarColor.g < 0 || settings.navbarColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('navbarColor');
               }
               settings.navbarColor.b = parseFloat(settings.navbarColor.b);
               if(typeof settings.navbarColor.b !== 'number' || settings.navbarColor.b < 0 || settings.navbarColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('navbarColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('navbarColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('navbarColor');
           }
 
           if(settings.hasOwnProperty('coverColor')){
@@ -661,22 +759,27 @@
               settings.coverColor.r = parseFloat(settings.coverColor.r);
               if(typeof settings.coverColor.r !== 'number' || settings.coverColor.r < 0 || settings.coverColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverColor');
               }
               settings.coverColor.g = parseFloat(settings.coverColor.g);
               if(typeof settings.coverColor.g !== 'number' || settings.coverColor.g < 0 || settings.coverColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverColor');
               }
               settings.coverColor.b = parseFloat(settings.coverColor.b);
               if(typeof settings.coverColor.b !== 'number' || settings.coverColor.b < 0 || settings.coverColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('coverColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('coverColor');
           }
 
           if(settings.hasOwnProperty('coverTextColor')){
@@ -684,55 +787,36 @@
               settings.coverTextColor.r = parseFloat(settings.coverTextColor.r);
               if(typeof settings.coverTextColor.r !== 'number' || settings.coverTextColor.r < 0 || settings.coverTextColor.r > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverTextColor');
               }
               settings.coverTextColor.g = parseFloat(settings.coverTextColor.g);
               if(typeof settings.coverTextColor.g !== 'number' || settings.coverTextColor.g < 0 || settings.coverTextColor.g > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverTextColor');
               }
               settings.coverTextColor.b = parseFloat(settings.coverTextColor.b);
               if(typeof settings.coverTextColor.b !== 'number' || settings.coverTextColor.b < 0 || settings.coverTextColor.b > 255){
                 errorsFound = true;
+                visualImportErrors.push('coverTextColor');
               }
             }
             else{
               errorsFound = true;
+              visualImportErrors.push('coverTextColor');
             }
           }
           else{
             errorsFound = true;
+            visualImportErrors.push('coverTextColor');
           }
 
-          if(!errorsFound) {
-            settingsToSave.yourName = settings.yourName;
-            settingsToSave.showCover = settings.showCover;
-            settingsToSave.clockBackground = settings.clockBackground;
-            settingsToSave.clock24Hour = settings.clock24Hour;
-            settingsToSave.darkMode = settings.darkMode;
-            settingsToSave.useFrostedGlass = settings.useFrostedGlass;
-            settingsToSave.frostedGlassStrength = settings.frostedGlassStrength;
-            settingsToSave.frostedGlassOpacity = settings.frostedGlassOpacity;
-            settingsToSave.frostedGlassColor = settings.frostedGlassColor;
-            settingsToSave.frostedGlassAccentColor = settings.frostedGlassAccentColor;
-            settingsToSave.showElementsShadow = settings.showElementsShadow;
-            settingsToSave.showSearchBar = settings.showSearchBar;
-            settingsToSave.showPageQuickAdd = settings.showPageQuickAdd;
-            settingsToSave.tileZoom = settings.tileZoom;
-            settingsToSave.tileGrow = settings.tileGrow;
-            settingsToSave.tileMinWidth = settings.tileMinWidth;
-            settingsToSave.tileHeight = settings.tileHeight;
-            settingsToSave.tileGap = settings.tileGap;
-            settingsToSave.tileBorder = settings.tileBorder;
-            settingsToSave.tileBorderRadius = settings.tileBorderRadius;
-            settingsToSave.tileBorderColor = settings.tileBorderColor;
-            settingsToSave.groupTileGap = settings.groupTileGap;
-            settingsToSave.groupTileBorderRadius = settings.groupTileBorderRadius;
-            settingsToSave.groupTileGrow = settings.groupTileGrow;
-            settingsToSave.navbarOpacity = settings.navbarOpacity;
-            settingsToSave.navbarColor = settings.navbarColor;
-            settingsToSave.coverColor = settings.coverColor;
-            settingsToSave.coverTextColor = settings.coverTextColor;
-          }
-          else{
+          visualSettingsMap.forEach((_value, key) => {
+            if(!visualImportErrors.includes(key)){
+              settingsToSave[key] = settings[key];
+            }
+          });
+
+          if(errorsFound) {
             importErrors.visuals = true;
           }
         }
@@ -968,7 +1052,11 @@
     || importErrors.notes
   }
     <div class="IEAlerts">
-      <div class="IEAlert IEAlertError">
+      <div
+        class="IEAlert"
+        class:IEAlertError={importErrors.pages || importErrors.tileImages || importErrors.background || importErrors.searchEngine || importErrors.notes}
+        class:IEAlertWarning={importErrors.visuals && !(importErrors.pages || importErrors.tileImages || importErrors.background || importErrors.searchEngine || importErrors.notes)}
+      >
         {#if importErrors.pages}
           <span>There was an error importing pages & categories.</span>
         {/if}
@@ -980,6 +1068,12 @@
         {/if}
         {#if importErrors.visuals}
           <span>There was an error importing visuals.</span>
+          {#if visualImportErrors.length > 0}
+            <span>The following visual settings couldn't be imported and remain unchanged:</span>
+            {#each visualImportErrors as error}
+              <span>- {visualSettingsMap.get(error) || 'Unknown setting'}</span>
+            {/each}
+          {/if}
         {/if}
         {#if importErrors.searchEngine}
           <span>There was an error importing the search engine.</span>
@@ -1108,6 +1202,11 @@
     color: rgb(20, 90, 35);
     background-color: #d1eccf;
     border: 1px solid #b5dfb5;
+  }
+  .IEAlertWarning {
+    color: rgb(135, 100, 0);
+    background-color: #fff9d6;
+    border: 1px solid #e6cc78;
   }
   .IEAlert.spacer {
     visibility: hidden;
