@@ -38,12 +38,15 @@
 
       if(containerRect.left - tooltipBox.clientWidth/2 < 0) {
         tooltipBox.style.left = `8px`;
+        tooltipBox.style.right = 'unset';
       }
       else if(containerRect.right + tooltipBox.clientWidth/2 > window.innerWidth) {
         tooltipBox.style.right = `8px`;
+        tooltipBox.style.left = 'unset';
       }
       else {
         tooltipBox.style.left = `${containerRect.left + (containerRect.width / 2) - (tooltipBox.clientWidth / 2)}px`;
+        tooltipBox.style.right = 'unset';
       }
 
       // Show on next event loop to ensure display block is already applied

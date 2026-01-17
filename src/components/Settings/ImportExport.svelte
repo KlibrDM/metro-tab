@@ -855,6 +855,7 @@
     <strong>Last backup: {isDefaultBackupDate ? "—" : lastBackupDate ? moment(lastBackupDate).format("DD MMMM YYYY HH:mm") : "—"}</strong>
     <p>* Importing or exporting settings will reset the last backup date</p>
     <p>* Export your current settings before importing, otherwise you won't be able to revert the changes</p>
+    <p>* Make sure to store your backup files in a safe location</p>
     <p>* Settings from older versions of the extension may not be fully compatible</p>
   </div>
 

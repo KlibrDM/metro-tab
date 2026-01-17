@@ -11,7 +11,7 @@ export const frostedGlassColor = { r: 125, g: 125, b: 125 };
 export const frostedGlassAccentColor = { r: 255, g: 255, b: 255 };
 export const showElementsShadow = true;
 export const showSearchBar = true;
-export const showPageQuickAdd = false;
+export const showPageQuickAdd = true;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "bg32"; // For backwards compatibility the app should always have [bg1, sl1, bg32] images available
@@ -162,15 +162,6 @@ export const pages = [
     isActive: true,
     tileImageType: 'predefined',
     tileName: "Netflix",
-    backgroundColor: "#3a99ff",
-    textColor: "#ffffff"
-  },
-  {
-    link: "https://www.twitter.com",
-    imageName: "twitter",
-    isActive: true,
-    tileImageType: 'predefined',
-    tileName: "Twitter",
     backgroundColor: "#3a99ff",
     textColor: "#ffffff"
   },

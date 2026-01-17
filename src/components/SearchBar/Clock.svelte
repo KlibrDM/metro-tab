@@ -79,7 +79,7 @@
     right: 2vw;
     color: white;
     border-radius: 12px;
-    padding: 3px 5px;
+    padding: 2px 8px;
     line-height: 1.2em;
   }
   #time.hiddenSearchBar {
@@ -108,6 +108,7 @@
       font-size: 2.2em;
       line-height: 0.8em;
       bottom: 3vh;
+      padding: 2px 4px;
     }
   }
 </style>
