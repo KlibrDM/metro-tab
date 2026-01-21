@@ -14,7 +14,7 @@ Live preview: https://klibrdm.github.io/metro-tab/
 ### Description
 
 A modern and simple speed dial that lets you bring all the websites you love to the new tab page. It offers quick access to your notes and to Chrome's history, downloads, bookmarks and extensions. It comes with a variety of settings and options to customize the featured pages and the possibility to upload custom backgrounds.
-![screenshot](https://i.imgur.com/QBe8rCR.jpg)
+![screenshot](https://i.imgur.com/PLDOLtW.jpeg)
 
 ## Setup dev environment
 
@@ -38,18 +38,18 @@ A modern and simple speed dial that lets you bring all the websites you love to 
 
 ## Screenshots
 
-### Main view
+### Frosted Glass
 
-![screenshot](https://i.imgur.com/zk8MTnW.jpg)
+![screenshot](https://i.imgur.com/RiREKZN.png)
 
 ### Notes
 
-![screenshot](https://i.imgur.com/ffuYYLG.jpg)
+![screenshot](https://i.imgur.com/4g8IQzd.png)
 
 ### Settings
 
-![screenshot](https://i.imgur.com/jW3NEx0.jpg)
+![screenshot](https://i.imgur.com/69Fk4ZU.png)
 
 ### Round tiles
 
-![screenshot](https://i.imgur.com/r6oLZEh.jpg)
+![screenshot](https://i.imgur.com/ntBeYCT.png)
