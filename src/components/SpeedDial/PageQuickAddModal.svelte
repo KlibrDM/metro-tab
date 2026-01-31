@@ -157,7 +157,7 @@
         {/if}
 
         <div class="pageQuickAddHidePlusButtonContainer">
-          <Tooltip text="If you don't want to see the + tile on your Speed Dial, you can use this button to hide it. You can re-enable this from the visual settings." showDelay={200}>
+          <Tooltip text="Click this to hide the + button from the speed dial. It can be re-enabled from the visual settings." showDelay={200}>
             <button type="button" class="hidePlusButton" on:click={hidePlus}>
               Hide <i class="fa-solid fa-plus"/> button
             </button>
