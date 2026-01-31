@@ -23,9 +23,11 @@
       if (!mouseOverTooltip) return;
 
       const tooltipContainer = document.getElementById(`tooltipChildrenContainer_${id}`);
+      if (!tooltipContainer) return;
+
       const containerRect = tooltipContainer.getBoundingClientRect();
       const tooltipBox = document.getElementById(`tooltipBox_${id}`);
-      if(!containerRect || !tooltipBox) return;
+      if (!containerRect || !tooltipBox) return;
 
       tooltipBox.style.display = 'block';
 

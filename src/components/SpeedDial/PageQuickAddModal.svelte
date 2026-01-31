@@ -1,7 +1,8 @@
 <script>
-  import { savePages } from "../../data/storage";
+  import { savePages, saveShowPageQuickAdd } from "../../data/storage";
   import { checkWebsite, escapeHTML, getImageNameForLink } from "../../data/tools";
   import { userData } from "../../store";
+  import Tooltip from "../Tooltip.svelte";
 
   export let pages;
   export let categories;
@@ -56,6 +57,17 @@
     });
 
     savePages(pages);
+
+    modalActive = false;
+  };
+
+  const hidePlus = () => {
+    userData.update((state) => {
+      state.showPageQuickAdd = false;
+      return state;
+    });
+
+    saveShowPageQuickAdd(false);
 
     modalActive = false;
   };
@@ -137,11 +149,21 @@
         </div>
       {/if}
 
-      {#if selectedGroup && selectedGroup.pages.length >= 40}
-        <p class="pageQuickAddInputWarning">Maximum number of pages in a group reached.</p>
-      {:else}
-        <button type="submit" class="addPageButton" disabled={selectedGroup && selectedGroup.pages.length >= 40}>Add</button>
-      {/if}
+      <div class="pageQuickAddButtonSection">
+        {#if selectedGroup && selectedGroup.pages.length >= 40}
+          <p class="pageQuickAddInputWarning">Maximum number of pages in a group reached.</p>
+        {:else}
+          <button type="submit" class="addPageButton" disabled={selectedGroup && selectedGroup.pages.length >= 40}>Add</button>
+        {/if}
+
+        <div class="pageQuickAddHidePlusButtonContainer">
+          <Tooltip text="If you don't want to see the + tile on your Speed Dial, you can use this button to hide it. You can re-enable this from the visual settings." showDelay={200}>
+            <button type="button" class="hidePlusButton" on:click={hidePlus}>
+              Hide <i class="fa-solid fa-plus"/> button
+            </button>
+          </Tooltip>
+        </div>
+      </div>
     </form>
   </div>
 </div>
@@ -241,7 +263,31 @@
     margin-top: 2px;
     max-width: 140px;
   }
+  .pageQuickAddButtonSection {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
   .pageQuickAddInputWarning {
     margin: 5px 0;
+  }
+  .pageQuickAddHidePlusButtonContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .hidePlusButton {
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+    background-color: #fff;
+    transition: 0.3s;
+    margin-top: 4px;
+  }
+  .hidePlusButton:hover {
+    background-color: #f3f3f3;
   }
 </style>

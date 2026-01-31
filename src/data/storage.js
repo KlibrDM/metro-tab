@@ -105,6 +105,10 @@ export const getTileImageLinks = () => {
   return links;
 }
 
+export const saveShowPageQuickAdd = (status) => {
+  localStorage.setItem("showPageQuickAdd", status);
+}
+
 export const saveCurrentSelectedCategoryIndex = (index) => {
   localStorage.setItem("local_currentSelectedCategoryIndex", index);
 }
