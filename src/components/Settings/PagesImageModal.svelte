@@ -1,6 +1,6 @@
 <script>
   import { deleteTileImage, getTileImage, saveTileImage } from "../../data/storage";
-  import { clearOldExtension, getBackgroundFormat } from "../../data/tools";
+  import { clearOldExtension, compressImage, getBackgroundFormat } from "../../data/tools";
   import { userData } from "../../store";
   import Tooltip from "../Tooltip.svelte";
 
@@ -23,7 +23,21 @@
     backgroundSolidColor = data.backgroundSolidColor;
   });
 
-  let bg, fileinput;
+  let bg;
+  let fileInput;
+  let compressionQuality = 75;
+
+  // Set default values for zoom & position if undefined (will be undefined if users upgrade from older version)
+  if (page.imageZoom === undefined || page.imageZoom === null) {
+    page.imageZoom = 125;
+  }
+  if (page.imagePositionX === undefined || page.imagePositionX === null) {
+    page.imagePositionX = 50;
+  }
+  if (page.imagePositionY === undefined || page.imagePositionY === null) {
+    page.imagePositionY = 50;
+  }
+
   const onFileSelected = (e) => {
     let image = e.target.files[0];
     let reader = new FileReader();
@@ -32,9 +46,16 @@
       bg = e.target.result;
       //Try saving to local storage if it doesn't exceed max size
       try {
-        saveTileImage(page.link, bg);
-        page.tileImageType = "custom";
-        unsavedPages = true;
+        const quality = compressionQuality < 50 || compressionQuality > 90 ? 75 : compressionQuality;
+        compressImage(bg, 1600, 1600, quality).then((compressedBg) => {
+          saveTileImage(page.link, compressedBg);
+          fileInput.value = null;
+          page.tileImageType = "custom";
+          page.imageZoom = 125;
+          page.imagePositionX = 50;
+          page.imagePositionY = 50;
+          unsavedPages = true;
+        });
       } catch {
         alert(
           "Tile image is too large and it couldn't be saved\n\nPlease resize/compress the image and try again"
@@ -97,31 +118,7 @@
 
     {#if page.tileImageType === 'custom' }
       <div id="customImage">
-        <h4>Custom background image</h4>
-        <button
-          class="customImageButton"
-          on:click={() => {
-            fileinput.click();
-          }}
-        >
-          Upload image
-        </button>
-        <input
-          style="display:none"
-          type="file"
-          accept=".jpg, .jpeg, .png, .webp, .avif"
-          on:change={(e) => onFileSelected(e)}
-          bind:this={fileinput}
-        />
-
-        {#if page.tileImageType === 'custom' && getTileImage(page.link)}
-          <button
-            class="deleteCustomImageButton"
-            on:click={onDeleteImage}
-          >
-            Delete image
-          </button>
-        {/if}
+        <h4>Custom tile image</h4>
 
         <div id="localStorageSpace">
           <small>Local storage space</small>
@@ -133,6 +130,180 @@
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
+
+        <button
+          class="customImageButton"
+          on:click={() => {
+            fileInput.click();
+          }}
+        >
+          Upload image
+        </button>
+        <input
+          style="display:none"
+          type="file"
+          accept=".jpg, .jpeg, .png, .webp, .avif"
+          on:change={(e) => onFileSelected(e)}
+          bind:this={fileInput}
+        />
+
+        {#if page.tileImageType === 'custom' && getTileImage(page.link)}
+          <button
+            class="deleteCustomImageButton"
+            on:click={onDeleteImage}
+          >
+            Delete image
+          </button>
+        {/if}
+
+        <div class="tileImageQualityContainer">
+          <label for="set_tileImageQuality">
+            Custom tile image quality
+            <Tooltip
+              text="Adjust the compression level for custom tile images. A higher quality results in better image fidelity but more storage space used. Quality 75 is a good balance between quality and file size. This must be adjusted before uploading an image."
+              maxWidth={420}
+            >
+              <i class="fa-solid fa-circle-info hintIcon" />
+            </Tooltip>
+          </label>
+          <div class="settingsNumberSliderGroup">
+            <input
+              type="range"
+              min="50"
+              max="90"
+              step="1"
+              class="settingsSlider"
+              bind:value={compressionQuality}
+            />
+            <input
+              type="number"
+              min="50"
+              max="90"
+              step="1"
+              class="settingsNumberInput"
+              id="set_tileImageQuality"
+              name="set_tileImageQuality"
+              bind:value={compressionQuality}
+            />
+          </div>
+          {#if compressionQuality < 50 || compressionQuality > 90}
+            <small>Value must be between 50 and 90 (defaulting to 75)</small>
+          {/if}
+        </div>
+
+        {#if page.tileImageType === 'custom' && getTileImage(page.link)}
+          <div class="tileImageBackgroundColorContainer">
+            <p>
+              Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}
+              <Tooltip
+                text="Adjust the background color for custom tile images. This is visible only if the custom tile image has transparency or if the custom tile image does not fill the entire tile. If frosted glass design is enabled, frosted glass color has priority."
+                maxWidth={420}
+              >
+                <i class="fa-solid fa-circle-info hintIcon" />
+              </Tooltip>
+            </p>
+            <input
+              type="color"
+              id="set_pageBackgroundColor"
+              class="settingsTextInput"
+              bind:value={page.backgroundColor}
+              on:change={() => { unsavedPages = true; }}
+              required={true}
+            />
+          </div>
+
+          <div class="tileImagePositionContainer">
+            <div class="tileImagePositionControl">
+              <label for="set_tileImageZoom">Tile image zoom</label>
+              <div class="settingsNumberSliderGroup">
+                <input
+                  type="range"
+                  min="30"
+                  max="300"
+                  step="1"
+                  class="settingsSlider"
+                  bind:value={page.imageZoom}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+                <input
+                  type="number"
+                  min="30"
+                  max="300"
+                  step="1"
+                  class="settingsNumberInput"
+                  id="set_tileImageZoom"
+                  name="set_tileImageZoom"
+                  bind:value={page.imageZoom}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+              </div>
+            </div>
+
+            <div class="tileImagePositionControl">
+              <label for="set_tileImagePositionX">Tile image position X</label>
+              <div class="settingsNumberSliderGroup">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  class="settingsSlider"
+                  bind:value={page.imagePositionX}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="1"
+                  class="settingsNumberInput"
+                  id="set_tileImagePositionX"
+                  name="set_tileImagePositionX"
+                  bind:value={page.imagePositionX}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+              </div>
+            </div>
+
+            <div class="tileImagePositionControl">
+              <label for="set_tileImagePositionY">Tile image position Y</label>
+              <div class="settingsNumberSliderGroup">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  class="settingsSlider"
+                  bind:value={page.imagePositionY}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="1"
+                  class="settingsNumberInput"
+                  id="set_tileImagePositionY"
+                  name="set_tileImagePositionY"
+                  bind:value={page.imagePositionY}
+                  on:input={() => {
+                    unsavedPages = true;
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        {/if}
       </div>
     {/if}
 
@@ -185,7 +356,12 @@
         style="
           {
             page.tileImageType === 'custom' && getTileImage(page.link)
-            ? 'background-image: url(' + (getTileImage(page.link) || '') + ');'
+            ? `
+              background-image: url(${(getTileImage(page.link) || '')});
+              background-position: ${page.imagePositionX !== undefined ? page.imagePositionX : 50}% ${page.imagePositionY !== undefined ? page.imagePositionY : 50}%;
+              background-size: auto ${page.imageZoom || 125}% !important;
+              background-repeat: no-repeat;
+            `
             : page.tileImageType !== 'none'
               ? settingsData.useFrostedGlass
                 ? ''
@@ -373,11 +549,49 @@
   .deleteCustomImageButton:hover {
     background-color: rgb(175, 30, 30);
   }
+  .tileImageBackgroundColorContainer p {
+    margin-top: 6px;
+    margin-bottom: 4px;
+    display: flex;
+    gap: 8px;
+  }
+  .tileImageQualityContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .tileImageQualityContainer label {
+    display: flex;
+    gap: 8px;
+  }
+  .tileImagePositionContainer {
+    display: flex;
+    margin-top: 8px;
+    gap: 12px;
+  }
+  .tileImagePositionControl {
+    flex-grow: 1;
+  }
+  .settingsNumberSliderGroup {
+    display: flex;
+    gap: 4px;
+  }
+  .settingsNumberInput {
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    width: 40px;
+  }
+  .settingsSlider {
+    width: 100%;
+    max-width: 200px;
+  }
   #localStorageSpace {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 8px;
   }
   #localStorageSpace small {
     margin-bottom: 4px;
@@ -422,5 +636,11 @@
   #frostedGlassActiveInfo {
     margin-block-start: 0.2em;
     margin-block-end: 0;
+  }
+  @media screen and (max-width: 599px) {
+    .tileImagePositionContainer {
+      flex-direction: column;
+      gap: 0;
+    }
   }
 </style>

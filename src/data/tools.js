@@ -96,3 +96,21 @@ export const escapeHTML = (string) => {
     return entityMap[s];
   });
 };
+
+export const compressImage = (image, maxWidth, maxHeight, quality) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = image;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      let ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+      if (ratio > 1) ratio = 1; // Do not scale if smaller than max
+      canvas.width = img.width * ratio;
+      canvas.height = img.height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const compressedImage = canvas.toDataURL("image/webp", quality !== 100 ? quality / 100 : undefined);
+      resolve(compressedImage);
+    };
+  });
+};

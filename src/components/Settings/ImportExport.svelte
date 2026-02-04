@@ -199,6 +199,18 @@
                   if(!errorsFound && !subPage.hasOwnProperty('textColor')){
                     subPage.textColor = "#ffffff";
                   }
+
+                  if(!errorsFound && subPage.tileImageType === 'custom' && !subPage.hasOwnProperty('imageZoom')){
+                    subPage.imageZoom = 125;
+                  }
+
+                  if(!errorsFound && subPage.tileImageType === 'custom' && !subPage.hasOwnProperty('imagePositionX')){
+                    subPage.imagePositionX = 50;
+                  }
+
+                  if(!errorsFound && subPage.tileImageType === 'custom' && !subPage.hasOwnProperty('imagePositionY')){
+                    subPage.imagePositionY = 50;
+                  }
                 });
               }
               else {
@@ -224,6 +236,18 @@
 
                 if(!errorsFound && !page.hasOwnProperty('textColor')){
                   page.textColor = "#ffffff";
+                }
+
+                if(!errorsFound && page.tileImageType === 'custom' && !page.hasOwnProperty('imageZoom')){
+                  page.imageZoom = 125;
+                }
+
+                if(!errorsFound && page.tileImageType === 'custom' && !page.hasOwnProperty('imagePositionX')){
+                  page.imagePositionX = 50;
+                }
+
+                if(!errorsFound && page.tileImageType === 'custom' && !page.hasOwnProperty('imagePositionY')){
+                  page.imagePositionY = 50;
                 }
               }
             });

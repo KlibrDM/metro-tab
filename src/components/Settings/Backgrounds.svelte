@@ -139,7 +139,7 @@
   }
   #customBackgroundsContainer {
     display: flex;
-    gap: 5vw;
+    gap: 16px;
   }
   #customBackgroundColorGroup {
     display: flex;
@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 8px;
   }
   #localStorageSpace small {
     margin-bottom: 4px;
@@ -232,7 +232,7 @@
     transform: scale(1.1);
     z-index: 2;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 799px) {
     .settingsBackgrounds {
       grid-template-columns: repeat(auto-fill, minmax(120px, 220px));
     }
@@ -241,8 +241,6 @@
       min-height: 60px;
       max-width: 220px;
     }
-  }
-  @media screen and (max-width: 450px) {
     #customBackgroundsContainer {
       flex-direction: column;
       gap: 0;

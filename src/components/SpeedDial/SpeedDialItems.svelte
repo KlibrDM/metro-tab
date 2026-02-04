@@ -56,7 +56,12 @@
             style="
               {
                 page.tileImageType === 'custom' && getTileImage(page.link)
-                ? 'background-image: url(' + (getTileImage(page.link) || '') + ');'
+                ? `
+                  background-image: url(${(getTileImage(page.link) || '')});
+                  background-position: ${page.imagePositionX !== undefined ? page.imagePositionX : 50}% ${page.imagePositionY !== undefined ? page.imagePositionY : 50}%;
+                  background-size: auto ${page.imageZoom || 125}% !important;
+                  background-repeat: no-repeat;
+                `
                 : page.tileImageType !== 'none'
                   ? useFrostedGlass
                     ? ''
@@ -139,7 +144,12 @@
                   style="
                     {
                       subpage.tileImageType === 'custom' && getTileImage(subpage.link)
-                      ? 'background-image: url(' + (getTileImage(subpage.link) || '') + ');'
+                      ? `
+                        background-image: url(${(getTileImage(subpage.link) || '')});
+                        background-position: ${subpage.imagePositionX !== undefined ? subpage.imagePositionX : 50}% ${subpage.imagePositionY !== undefined ? subpage.imagePositionY : 50}%;
+                        background-size: auto ${subpage.imageZoom || 125}% !important;
+                        background-repeat: no-repeat;
+                      `
                       : subpage.tileImageType !== 'none'
                         ? useFrostedGlass
                           ? ''
