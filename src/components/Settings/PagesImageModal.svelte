@@ -1,13 +1,16 @@
 <script>
+  import { pageIconsList } from "../../data/config";
   import { deleteTileImage, getTileImage, saveTileImage } from "../../data/storage";
   import { clearOldExtension, compressImage, getBackgroundFormat } from "../../data/tools";
   import { userData } from "../../store";
   import Tooltip from "../Tooltip.svelte";
+  import PagesImageModalIcons from "./PagesImageModalIcons.svelte";
 
   export let page;
   export let settingsData;
   export let unsavedPages;
   export let modalActive = false;
+  export let isGroupPage = false;
 
   let localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
 
@@ -83,6 +86,10 @@
     // On custom image change, recalculate local storage size
     localStorageUsedSpace = (new Blob(Object.values(localStorage)).size / 1024 / 1024).toFixed(2);
   }
+
+  $: if (page.tileImageType === 'icon' && !page.iconName) {
+    page.iconName = pageIconsList[0];
+  }
 </script>
 
 <div id="settingsPageImageTypeModalContainer">
@@ -97,19 +104,25 @@
         class="imageTypeButton {page.tileImageType === 'predefined' ? 'buttonSelected' : ''}"
         on:click={() => { page.tileImageType = 'predefined'; unsavedPages = true; }}
       >
-        Predefined
+        Predefined (P)
       </button>
       <button
         class="imageTypeButton {page.tileImageType === 'custom' ? 'buttonSelected' : ''}"
         on:click={() => { page.tileImageType = 'custom'; unsavedPages = true; }}
       >
-        Custom
+        Custom (C)
+      </button>
+      <button
+        class="imageTypeButton {page.tileImageType === 'icon' ? 'buttonSelected' : ''}"
+        on:click={() => { page.tileImageType = 'icon'; unsavedPages = true; }}
+      >
+        Icon (I)
       </button>
       <button
         class="imageTypeButton {page.tileImageType === 'none' ? 'buttonSelected' : ''}"
         on:click={() => { page.tileImageType = 'none'; unsavedPages = true; }}
       >
-        Text
+        Text (T)
       </button>
       {#if settingsData.useFrostedGlass}
         <p id="frostedGlassActiveInfo">* Frosted glass design is enabled.</p>
@@ -307,8 +320,33 @@
       </div>
     {/if}
 
+    {#if page.tileImageType === 'icon' }
+      <div id="iconTileSettings">
+        <h4>Icon</h4>
+        <PagesImageModalIcons bind:page bind:unsavedPages darkMode={settingsData.darkMode} />
+        <p>Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}</p>
+        <input
+          type="color"
+          id="set_pageBackgroundColor"
+          class="settingsTextInput"
+          bind:value={page.backgroundColor}
+          on:change={() => { unsavedPages = true; }}
+          required={true}
+        />
+        <p>Accent color (icon) {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
+        <input
+          type="color"
+          id="set_pageTextColor"
+          class="settingsTextInput"
+          bind:value={page.textColor}
+          on:change={() => { unsavedPages = true; }}
+          required={true}
+        />
+      </div>
+    {/if}
+
     {#if page.tileImageType === 'none' }
-      <div id="solidBackgroundSettings">
+      <div id="textTileSettings">
         <h4>Settings</h4>
         <p>Tile name</p>
         <input
@@ -330,7 +368,7 @@
           on:change={() => { unsavedPages = true; }}
           required={true}
         />
-        <p>Text color {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
+        <p>Accent color (text) {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
         <input
           type="color"
           id="set_pageTextColor"
@@ -342,7 +380,13 @@
       </div>
     {/if}
 
-    <h4>Preview</h4>
+    <h4 class="previewTitle">Preview</h4>
+    {#if settingsData.tileGrow && !isGroupPage}
+      <p class="previewWarning">* Tile fill space is enabled. The tile will grow to fill available space. Preview may not be accurate.</p>
+    {/if}
+    {#if isGroupPage}
+      <p class="previewWarning">* This page is in a group. Tile size varies depending on the number of tiles in the group. Preview may not be accurate.</p>
+    {/if}
     <div
       id="tilePreviewContainer"
       style={isBackgroundSolid
@@ -362,11 +406,13 @@
               background-size: auto ${page.imageZoom || 125}% !important;
               background-repeat: no-repeat;
             `
-            : page.tileImageType !== 'none'
-              ? settingsData.useFrostedGlass
-                ? ''
-                : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
-              : ''
+            : page.tileImageType === 'icon' 
+              ? ''
+              : page.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
+                ? settingsData.useFrostedGlass
+                  ? ''
+                  : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
+                : ''
           }
           {
             settingsData.useFrostedGlass ? `
@@ -400,6 +446,12 @@
           ></div>
         {/if}
         {page.tileImageType === 'none' ? page.tileName : ''}
+        {#if page.tileImageType === 'icon' }
+          <i
+            class={`fa-solid fa-${page.iconName}`}
+            style={`font-size: ${settingsData.tileHeight <= settingsData.tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+          ></i>
+        {/if}
       </div>
     </div>
 
@@ -420,6 +472,11 @@
   h4 {
     margin-block-start: 0.4em;
     margin-block-end: 0.4em;
+  }
+  .previewWarning {
+    margin-top: -0.2em;
+    margin-block-end: 0.4em;
+    font-size: 0.85em;
   }
   .settingsTextInput {
     padding: 3px 5px;
@@ -472,6 +529,9 @@
     border: 1px solid #3a99ff;
     transition: 0.3s;
   }
+  .imageTypeButton:hover {
+    background-color: #f3f3f3;
+  }
   .buttonSelected {
     background-color: #3a99ff !important;
     color: white !important;
@@ -479,6 +539,9 @@
   #settingsPageImageTypeModal.darkModifier .imageTypeButton {
     color: white;
     background-color: transparent;
+  }
+  #settingsPageImageTypeModal.darkModifier .imageTypeButton:hover {
+    background-color: #0c1b3a;
   }
   #tilePreviewContainer {
     display: flex;
@@ -507,8 +570,9 @@
   }
   #returnButtonContainer {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
     margin-top: 16px;
   }
   #returnButton {
@@ -629,7 +693,8 @@
     color: #3a99ff;
     margin-bottom: 4px;
   }
-  #solidBackgroundSettings p {
+  #iconTileSettings p,
+  #textTileSettings p {
     margin-block-start: 0.4em;
     margin-block-end: 0.2em;
   }

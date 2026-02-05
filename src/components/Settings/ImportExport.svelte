@@ -211,6 +211,10 @@
                   if(!errorsFound && subPage.tileImageType === 'custom' && !subPage.hasOwnProperty('imagePositionY')){
                     subPage.imagePositionY = 50;
                   }
+
+                  if(!errorsFound && subPage.tileImageType === 'icon' && !subPage.hasOwnProperty('iconName')){
+                    subPage.iconName = 'hashtag';
+                  }
                 });
               }
               else {
@@ -248,6 +252,10 @@
 
                 if(!errorsFound && page.tileImageType === 'custom' && !page.hasOwnProperty('imagePositionY')){
                   page.imagePositionY = 50;
+                }
+
+                if(!errorsFound && page.tileImageType === 'icon' && !page.hasOwnProperty('iconName')){
+                  page.iconName = 'hashtag';
                 }
               }
             });

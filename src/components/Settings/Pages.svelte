@@ -194,9 +194,20 @@
                 <button
                   on:click={() => { imageModalActive = true; selectedIndex = index; }}
                   class="changeTileImageButton"
-                  class:changeTileImageButtonCustomImage={page.tileImageType === "custom"}
                 >
                   Change image
+                  {#if page.tileImageType === "predefined"}
+                    (P)
+                  {/if}
+                  {#if page.tileImageType === "custom"}
+                    (C)
+                  {/if}
+                  {#if page.tileImageType === "icon"}
+                    (I)
+                  {/if}
+                  {#if page.tileImageType === "none"}
+                    (T)
+                  {/if}
                 </button>
               {/if}
               <button
@@ -524,7 +535,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-width: 130px;
+    min-width: 150px;
   }
   .viewGroupButton {
     padding: 4px 20px;
@@ -549,12 +560,6 @@
   }
   .changeTileImageButton:hover {
     background-color: #0c2;
-  }
-  .changeTileImageButtonCustomImage {
-    background-color: #3a99ff;
-  }
-  .changeTileImageButtonCustomImage:hover {
-    background-color: #2f84e0;
   }
   .togglePageVisibilityButton {
     padding: 4px 20px;

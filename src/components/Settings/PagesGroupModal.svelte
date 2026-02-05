@@ -156,9 +156,20 @@
                 <button
                   on:click={() => { imageModalActive = true; selectedImageIndex = index; }}
                   class="changeTileImageButton"
-                  class:changeTileImageButtonCustomImage={page.tileImageType === "custom"}
                 >
                   Change image
+                  {#if page.tileImageType === "predefined"}
+                    (P)
+                  {/if}
+                  {#if page.tileImageType === "custom"}
+                    (C)
+                  {/if}
+                  {#if page.tileImageType === "icon"}
+                    (I)
+                  {/if}
+                  {#if page.tileImageType === "none"}
+                    (T)
+                  {/if}
                 </button>
                 <button
                   on:click={() => { page.isActive = !page.isActive; unsavedPages = true; }}
@@ -225,6 +236,7 @@
     <PagesImageModal
       settingsData={settingsData}
       page={group.pages[selectedImageIndex]}
+      isGroupPage={true}
       bind:unsavedPages={unsavedPages}
       bind:modalActive={imageModalActive}
     />
@@ -267,7 +279,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    height: calc(100% - 180px);
+    height: calc(100% - 165px);
     padding-right: 8px;
   }
   .settingsPagesListPageContainer:not(:first-child) {
@@ -350,7 +362,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-width: 130px;
+    min-width: 150px;
   }
   .changeTileImageButton {
     padding: 4px 20px;
@@ -363,12 +375,6 @@
   }
   .changeTileImageButton:hover {
     background-color: #0c2;
-  }
-  .changeTileImageButtonCustomImage {
-    background-color: #3a99ff;
-  }
-  .changeTileImageButtonCustomImage:hover {
-    background-color: #2f84e0;
   }
   .togglePageVisibilityButton {
     padding: 4px 20px;
@@ -467,8 +473,9 @@
   }
   #returnButtonContainer {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
     margin-top: 16px;
   }
   #returnButton {

@@ -62,11 +62,13 @@
                   background-size: auto ${page.imageZoom || 125}% !important;
                   background-repeat: no-repeat;
                 `
-                : page.tileImageType !== 'none'
-                  ? useFrostedGlass
-                    ? ''
-                    : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
-                  : ''
+                : page.tileImageType === 'icon'
+                  ? ''
+                  : page.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
+                    ? useFrostedGlass
+                      ? ''
+                      : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
+                    : ''
               }
               {
                 useFrostedGlass ? `
@@ -101,6 +103,12 @@
               ></div>
             {/if}
             {page.tileImageType === 'none' ? page.tileName : ''}
+            {#if page.tileImageType === 'icon' }
+              <i
+                class={`fa-solid fa-${page.iconName}`}
+                style={`font-size: ${tileHeight <= tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+              ></i>
+            {/if}
           </a>
 
         {:else if page.isGroup && page.pages.length > 0}
@@ -150,11 +158,13 @@
                         background-size: auto ${subpage.imageZoom || 125}% !important;
                         background-repeat: no-repeat;
                       `
-                      : subpage.tileImageType !== 'none'
-                        ? useFrostedGlass
-                          ? ''
-                          : 'background-image: url("static/images/thumbnails/' + clearOldExtension(subpage.imageName) + '.avif");'
-                        : ''
+                      : subpage.tileImageType === 'icon'
+                        ? ''
+                        : subpage.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
+                          ? useFrostedGlass
+                            ? ''
+                            : 'background-image: url("static/images/thumbnails/' + clearOldExtension(subpage.imageName) + '.avif");'
+                          : ''
                     }
                     {
                       useFrostedGlass ? `
@@ -221,6 +231,12 @@
                     ></div>
                   {/if}
                   {subpage.tileImageType === 'none' ? subpage.tileName : ''}
+                  {#if subpage.tileImageType === 'icon' }
+                    <i
+                      class={`fa-solid fa-${subpage.iconName}`}
+                      style={`font-size: ${tileHeight <= tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+                    ></i>
+                  {/if}
                 </a>
               {/if}
             {/each}
