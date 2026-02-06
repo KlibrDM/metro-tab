@@ -2153,4 +2153,18 @@ export const knownPages = [
   "outlook",
   "outlook.live",
   "outlook.office",
+
+  // V2.8.0
+  "dropbox",
+  "we",
+  "wetransfer",
+  "mega",
+  "miro",
+  "trello",
+  "slack",
+  "proton",
+  "account.proton",
+  "protonvpn",
+  "account.protonvpn",
+  "loaded",
 ];
