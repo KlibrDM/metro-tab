@@ -10,6 +10,9 @@
   // Keep dark mode separate and apply only when saving
   let darkMode = settingsData.darkMode;
 
+  // Show reset to default confirm after reset button was clicked
+  let showResetToDefaultConfirm = false;
+
   let tileBorderColor = toHex(settingsData.tileBorderColor);
   let frostedGlassColor = toHex(settingsData.frostedGlassColor);
   let frostedGlassAccentColor = toHex(settingsData.frostedGlassAccentColor);
@@ -982,18 +985,37 @@
       {/if}
     </div>
 
-    <div class="settingsResetButton">
+    <div class="resetToDefaultContainer">
       <button
-        type="button"
-        class="resetSettingsButton"
-        on:click={() => {
-          resetVisuals();
-          resetLocalVisuals();
-          unsavedSettings = false;
-        }}
+        class={showResetToDefaultConfirm ? 'resetToDefaultQuestion' : 'resetToDefaultButton'}
+        on:click={() => {showResetToDefaultConfirm = true}}
       >
-        Reset to default settings
+        {#if showResetToDefaultConfirm}
+          Are you sure?
+        {:else}
+          Reset to default settings
+        {/if}
       </button>
+
+      {#if showResetToDefaultConfirm}
+        <button
+          class="resetToDefaultConfirmButton"
+          on:click={() => {
+            resetVisuals();
+            resetLocalVisuals();
+            unsavedSettings = false;
+            showResetToDefaultConfirm = false;
+          }}
+        >
+          Yes
+        </button>
+        <button
+          class="resetToDefaultCancelButton"
+          on:click={() => {showResetToDefaultConfirm = false}}
+        >
+          No
+        </button>
+      {/if}
     </div>
   </div>
 </form>
@@ -1149,8 +1171,10 @@
   .saveSettingsButton:hover {
     background-color: #0c2;
   }
-  .resetSettingsButton {
+  .resetToDefaultContainer {
     margin-top: 8px;
+  }
+  .resetToDefaultButton {
     padding: 8px 20px;
     border: 0;
     border-radius: 10px;
@@ -1159,8 +1183,34 @@
     background-color: #fff;
     transition: 0.3s;
   }
-  .resetSettingsButton:hover {
+  .resetToDefaultButton:hover {
     background-color: #f3f3f3;
+  }
+  .resetToDefaultQuestion,
+  .resetToDefaultCancelButton {
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #000;
+    background-color: rgb(220, 220, 220);
+    transition: 0.3s;
+  }
+  .resetToDefaultQuestion:hover,
+  .resetToDefaultCancelButton:hover {
+    background-color: rgb(200, 200, 200);
+  }
+  .resetToDefaultConfirmButton {
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(210, 40, 40);
+    transition: 0.3s;
+  }
+  .resetToDefaultConfirmButton:hover {
+    background-color: rgb(180, 30, 30);
   }
   .unsavedWarning {
     display: block;

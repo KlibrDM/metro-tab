@@ -83,6 +83,10 @@
       </div>
     </div>
 
+    {#if allTileImageDetails.length === 0}
+      <p id="settingsPageAllTileImagesNoImagesText">You don't have any custom tile images.</p>
+    {/if}
+
     <div id="settingsPageAllTileImages">
       {#each allTileImageDetails as tileImage}
         <div class="tileImage">
@@ -130,33 +134,35 @@
 
     <div id="returnButtonContainer">
       <div id="returnButtonGroup">
-        <div>
-          <button
-            class={showDeleteTileImageConfirm ? 'cancelDeleteTileImageButton' : 'deleteAllTileImageButton'}
-            on:click={() => {showDeleteTileImageConfirm = true}}
-          >
-            {#if showDeleteTileImageConfirm}
-              Are you sure?
-            {:else}
-              Delete all tile images
-            {/if}
-          </button>
+        {#if allTileImageDetails.length > 0}
+          <div>
+            <button
+              class={showDeleteTileImageConfirm ? 'cancelDeleteTileImageButton' : 'deleteAllTileImageButton'}
+              on:click={() => {showDeleteTileImageConfirm = true}}
+            >
+              {#if showDeleteTileImageConfirm}
+                Are you sure?
+              {:else}
+                Delete all tile images
+              {/if}
+            </button>
 
-          {#if showDeleteTileImageConfirm}
-            <button
-              class="deleteAllTileImageButton"
-              on:click={onDeleteAllTileImagesClick}
-            >
-              Yes
-            </button>
-            <button
-              class="cancelDeleteTileImageButton"
-              on:click={() => {showDeleteTileImageConfirm = false}}
-            >
-              No
-            </button>
-          {/if}
-        </div>
+            {#if showDeleteTileImageConfirm}
+              <button
+                class="deleteAllTileImageButton"
+                on:click={onDeleteAllTileImagesClick}
+              >
+                Yes
+              </button>
+              <button
+                class="cancelDeleteTileImageButton"
+                on:click={() => {showDeleteTileImageConfirm = false}}
+              >
+                No
+              </button>
+            {/if}
+          </div>
+        {/if}
 
         <button
           id="returnButton"
@@ -179,6 +185,9 @@
   h4 {
     margin-block-start: 0.4em;
     margin-block-end: 0.4em;
+  }
+  #settingsPageAllTileImagesNoImagesText {
+    margin: 0;
   }
   #settingsPageAllTileImagesModalContainer {
     position: absolute;
@@ -323,6 +332,7 @@
   }
   #returnButton {
     padding: 8px 20px;
+    margin-left: auto;
     border: 0;
     border-radius: 10px;
     cursor: pointer;
