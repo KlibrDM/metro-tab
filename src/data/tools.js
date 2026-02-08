@@ -23,6 +23,12 @@ export const toRGB = (hex) => {
   } : null;
 };
 
+export const toHexAlpha = (opacity) => {
+  let alpha = Math.round(opacity * 255);
+  let hexAlpha = alpha.toString(16).padStart(2, '0');
+  return hexAlpha;
+}
+
 export const clearOldExtension = (fileName) => {
   if(fileName.lastIndexOf(".jpg") !== -1){
     return fileName.slice(0, fileName.lastIndexOf(".jpg"));

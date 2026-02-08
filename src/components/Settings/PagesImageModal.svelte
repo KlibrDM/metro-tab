@@ -1,7 +1,7 @@
 <script>
   import { pageIconsList } from "../../data/config";
   import { deleteTileImage, getTileImage, saveTileImage } from "../../data/storage";
-  import { clearOldExtension, compressImage, getBackgroundFormat } from "../../data/tools";
+  import { clearOldExtension, compressImage, getBackgroundFormat, toHexAlpha } from "../../data/tools";
   import { userData } from "../../store";
   import Tooltip from "../Tooltip.svelte";
   import PagesImageModalIcons from "./PagesImageModalIcons.svelte";
@@ -129,6 +129,50 @@
       {/if}
     </div>
 
+    {#if page.tileImageType === 'predefined' }
+      <div id="predefinedTileSettings">
+        <div class="tileCustomColorsCheckboxContainer">
+          <input
+            type="checkbox"
+            id="set_useCustomColors"
+            name="set_useCustomColors"
+            class="settingsCheckbox"
+            bind:checked={page.useCustomColors}
+            on:input={() => {
+              unsavedPages = true;
+            }}
+          />
+          <label for="set_useCustomColors">
+            Use custom colors {settingsData.useFrostedGlass ? '- overrides frosted glass colors' : ''}
+            <Tooltip text="When using custom colors for predefined images, the logo will use the alternative style and might differ in appearance from the original.">
+              <i class="fa-solid fa-circle-info hintIcon" />
+            </Tooltip>
+          </label>
+        </div>
+
+        {#if page.useCustomColors}
+          <p>Background color</p>
+          <input
+            type="color"
+            id="set_pageBackgroundColor"
+            class="settingsTextInput"
+            bind:value={page.backgroundColor}
+            on:change={() => { unsavedPages = true; }}
+            required={true}
+          />
+          <p>Accent color (logo)</p>
+          <input
+            type="color"
+            id="set_pageTextColor"
+            class="settingsTextInput"
+            bind:value={page.textColor}
+            on:change={() => { unsavedPages = true; }}
+            required={true}
+          />
+        {/if}
+      </div>
+    {/if}
+
     {#if page.tileImageType === 'custom' }
       <div id="customImage">
         <h4>Custom tile image</h4>
@@ -205,9 +249,25 @@
         </div>
 
         {#if page.tileImageType === 'custom' && getTileImage(page.link)}
+          {#if settingsData.useFrostedGlass}
+            <div class="tileCustomColorsCheckboxContainer">
+              <input
+                type="checkbox"
+                id="set_useCustomColors"
+                name="set_useCustomColors"
+                class="settingsCheckbox"
+                bind:checked={page.useCustomColors}
+                on:input={() => {
+                  unsavedPages = true;
+                }}
+              />
+              <label for="set_useCustomColors">Use custom colors - overrides frosted glass colors</label>
+            </div>
+          {/if}
+
           <div class="tileImageBackgroundColorContainer">
             <p>
-              Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}
+              Background color {settingsData.useFrostedGlass && !page.useCustomColors ? '- frosted glass color has priority' : ''}
               <Tooltip
                 text="Adjust the background color for custom tile images. This is visible only if the custom tile image has transparency or if the custom tile image does not fill the entire tile. If frosted glass design is enabled, frosted glass color has priority."
                 maxWidth={420}
@@ -324,7 +384,22 @@
       <div id="iconTileSettings">
         <h4>Icon</h4>
         <PagesImageModalIcons bind:page bind:unsavedPages darkMode={settingsData.darkMode} />
-        <p>Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}</p>
+        {#if settingsData.useFrostedGlass}
+          <div class="tileCustomColorsCheckboxContainer">
+            <input
+              type="checkbox"
+              id="set_useCustomColors"
+              name="set_useCustomColors"
+              class="settingsCheckbox"
+              bind:checked={page.useCustomColors}
+              on:input={() => {
+                unsavedPages = true;
+              }}
+            />
+            <label for="set_useCustomColors">Use custom colors - overrides frosted glass colors</label>
+          </div>
+        {/if}
+        <p>Background color {settingsData.useFrostedGlass && !page.useCustomColors ? '- frosted glass color has priority' : ''}</p>
         <input
           type="color"
           id="set_pageBackgroundColor"
@@ -333,7 +408,7 @@
           on:change={() => { unsavedPages = true; }}
           required={true}
         />
-        <p>Accent color (icon) {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
+        <p>Accent color (icon) {settingsData.useFrostedGlass && !page.useCustomColors ? '- frosted glass accent color has priority' : ''}</p>
         <input
           type="color"
           id="set_pageTextColor"
@@ -359,7 +434,22 @@
           maxlength="20"
           required={true}
         />
-        <p>Background color {settingsData.useFrostedGlass ? '(Frosted glass color has priority)' : ''}</p>
+        {#if settingsData.useFrostedGlass}
+          <div class="tileCustomColorsCheckboxContainer">
+            <input
+              type="checkbox"
+              id="set_useCustomColors"
+              name="set_useCustomColors"
+              class="settingsCheckbox"
+              bind:checked={page.useCustomColors}
+              on:input={() => {
+                unsavedPages = true;
+              }}
+            />
+            <label for="set_useCustomColors">Use custom colors - overrides frosted glass colors</label>
+          </div>
+        {/if}
+        <p>Background color {settingsData.useFrostedGlass && !page.useCustomColors ? '- frosted glass color has priority' : ''}</p>
         <input
           type="color"
           id="set_pageBackgroundColor"
@@ -368,7 +458,7 @@
           on:change={() => { unsavedPages = true; }}
           required={true}
         />
-        <p>Accent color (text) {settingsData.useFrostedGlass ? '(Frosted glass accent color has priority)' : ''}</p>
+        <p>Accent color (text) {settingsData.useFrostedGlass && !page.useCustomColors ? '- frosted glass accent color has priority' : ''}</p>
         <input
           type="color"
           id="set_pageTextColor"
@@ -409,7 +499,7 @@
             : page.tileImageType === 'icon' 
               ? ''
               : page.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
-                ? settingsData.useFrostedGlass
+                ? settingsData.useFrostedGlass || page.useCustomColors
                   ? ''
                   : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
                 : ''
@@ -422,26 +512,40 @@
             `
             : ''
           }
+          {
+            page.useCustomColors ? `
+              background-color: ${page.backgroundColor}${settingsData.useFrostedGlass ? toHexAlpha(settingsData.frostedGlassOpacity) : ''} !important;
+            `
+            : ''
+          }
           {settingsData.showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
           background-color: {page.backgroundColor};
-          color: {settingsData.useFrostedGlass ? `rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b})` : page.textColor};
-          font-size: {settingsData.tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
+          color: {settingsData.useFrostedGlass && !page.useCustomColors ? `rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b})` : page.textColor};
+          font-size: {settingsData.tileMinWidth / (
+            (page.tileImageType === 'icon' ? 1 : page.tileName.length) * 0.8 <= 1.8
+            ? 1.8
+            : (page.tileImageType === 'icon' ? 1 : page.tileName.length) * 0.8
+          )}vh;
           width: {settingsData.tileMinWidth}vh;
           height: {settingsData.tileHeight}vh;
           border: {settingsData.tileBorder}px solid rgb({settingsData.tileBorderColor.r},{settingsData.tileBorderColor.g},{settingsData.tileBorderColor.b});
           border-radius: {settingsData.tileBorderRadius}vh;
-          {settingsData.tileHeight < settingsData.tileMinWidth ? 'background-size: 180% auto;' : ''}
+          {settingsData.tileHeight <= settingsData.tileMinWidth ? 'background-size: 180% auto;' : ''}
           {!settingsData.tileZoom ? "animation: none !important" : ''}
         "
       >
-        {#if settingsData.useFrostedGlass && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
+        {#if (settingsData.useFrostedGlass || page.useCustomColors) && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
           <div
             class="frostedGlassIcon"
             style={`
-              background-color: rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b});
+              ${page.useCustomColors ? `
+                background-color: ${page.textColor};
+              ` : `
+                background-color: rgb(${settingsData.frostedGlassAccentColor.r}, ${settingsData.frostedGlassAccentColor.g}, ${settingsData.frostedGlassAccentColor.b});
+              `}
               border-radius: ${settingsData.tileBorderRadius}vh;
               mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
-              ${settingsData.tileHeight < settingsData.tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
+              ${settingsData.tileHeight <= settingsData.tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 70% auto;'}
             `}
           ></div>
         {/if}
@@ -449,7 +553,7 @@
         {#if page.tileImageType === 'icon' }
           <i
             class={`fa-solid fa-${page.iconName}`}
-            style={`font-size: ${settingsData.tileHeight <= settingsData.tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+            style={`font-size: ${settingsData.tileHeight <= settingsData.tileMinWidth ? 60 : 90}%; line-height: 2px;`}
           ></i>
         {/if}
       </div>
@@ -587,6 +691,16 @@
   #returnButton:hover {
     background-color: #2f84e0;
   }
+  .tileCustomColorsCheckboxContainer {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .tileCustomColorsCheckboxContainer label {
+    display: flex;
+    gap: 8px;
+  }
   .customImageButton {
     margin-top: 8px;
     padding: 8px 20px;
@@ -693,6 +807,7 @@
     color: #3a99ff;
     margin-bottom: 4px;
   }
+  #predefinedTileSettings p,
   #iconTileSettings p,
   #textTileSettings p {
     margin-block-start: 0.4em;

@@ -1,6 +1,6 @@
 <script>
   import { getTileImage } from "../../data/storage";
-  import { clearOldExtension } from "../../data/tools";
+  import { clearOldExtension, toHexAlpha } from "../../data/tools";
 
   export let pages = [];
   export let categories = [];
@@ -65,7 +65,7 @@
                 : page.tileImageType === 'icon'
                   ? ''
                   : page.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
-                    ? useFrostedGlass
+                    ? useFrostedGlass || page.useCustomColors
                       ? ''
                       : 'background-image: url("static/images/thumbnails/' + clearOldExtension(page.imageName) + '.avif");'
                     : ''
@@ -78,10 +78,22 @@
                 `
                 : ''
               }
+              {
+                page.useCustomColors ? `
+                  background-color: ${page.backgroundColor}${useFrostedGlass ? toHexAlpha(frostedGlassOpacity) : ''} !important;
+                `
+                : ''
+              }
               {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
               background-color: {page.backgroundColor};
-              color: {useFrostedGlass ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : page.textColor};
-              font-size: {tileMinWidth / (page.tileName.length * 0.8 <= 1.8 ? 1.8 : page.tileName.length * 0.8)}vh;
+              color: {useFrostedGlass && !page.useCustomColors ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : page.textColor};
+              font-size: {
+                tileMinWidth / (
+                  (page.tileImageType === 'icon' ? 1 : page.tileName.length) * 0.8 <= 1.8
+                  ? 1.8
+                  : (page.tileImageType === 'icon' ? 1 : page.tileName.length) * 0.8
+                )
+              }vh;
               flex-grow: {tileGrow ? 1 : 0};
               min-width: {tileMinWidth}vh;
               height: {tileHeight}vh;
@@ -91,11 +103,15 @@
               {!tileZoom ? "animation: none !important" : ''}
             "
           >
-            {#if useFrostedGlass && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
+            {#if (useFrostedGlass || page.useCustomColors) && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
               <div
                 class="frostedGlassIcon"
                 style={`
-                  background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                  ${page.useCustomColors ? `
+                    background-color: ${page.textColor};
+                  ` : `
+                    background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                  `}
                   border-radius: ${tileBorderRadius}vh;
                   mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(page.imageName)}.webp");
                   ${tileHeight <= tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 65% auto;'}
@@ -106,7 +122,7 @@
             {#if page.tileImageType === 'icon' }
               <i
                 class={`fa-solid fa-${page.iconName}`}
-                style={`font-size: ${tileHeight <= tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+                style={`font-size: ${tileHeight <= tileMinWidth ? 60 : 90}%; line-height: 2px;`}
               ></i>
             {/if}
           </a>
@@ -161,7 +177,7 @@
                       : subpage.tileImageType === 'icon'
                         ? ''
                         : subpage.tileImageType !== 'none' // Keep !== none logic in order to have a fallback to the predefined image
-                          ? useFrostedGlass
+                          ? useFrostedGlass || subpage.useCustomColors
                             ? ''
                             : 'background-image: url("static/images/thumbnails/' + clearOldExtension(subpage.imageName) + '.avif");'
                           : ''
@@ -174,13 +190,21 @@
                       `
                       : ''
                     }
+                    {
+                      subpage.useCustomColors ? `
+                        background-color: ${subpage.backgroundColor}${useFrostedGlass ? toHexAlpha(frostedGlassOpacity) : ''} !important;
+                      `
+                      : ''
+                    }
                     {showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
                     background-color: {subpage.backgroundColor};
-                    color: {useFrostedGlass ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : subpage.textColor};
+                    color: {useFrostedGlass && !subpage.useCustomColors ? `rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b})` : subpage.textColor};
                     font-size: {
-                      tileMinWidth
-                      / (subpage.tileName.length * 0.8 <= 1.8 ? 1.8 : subpage.tileName.length * 0.8)
-                      / (
+                      tileMinWidth / (
+                        (subpage.tileImageType === 'icon' ? 1 : subpage.tileName.length) * 0.8 <= 1.8
+                        ? 1.8
+                        : (subpage.tileImageType === 'icon' ? 1 : subpage.tileName.length) * 0.8
+                      ) / (
                         page.pages.length <= 2
                         ? 1.5
                         : page.pages.length <= 9
@@ -219,11 +243,15 @@
                     ` : ''}
                   "
                 >
-                  {#if useFrostedGlass && (subpage.tileImageType === 'predefined' || (subpage.tileImageType === 'custom' && !getTileImage(subpage.link)))}
+                  {#if (useFrostedGlass || subpage.useCustomColors) && (subpage.tileImageType === 'predefined' || (subpage.tileImageType === 'custom' && !getTileImage(subpage.link)))}
                     <div
                       class="frostedGlassIcon"
                       style={`
-                        background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                        ${subpage.useCustomColors ? `
+                          background-color: ${subpage.textColor};
+                        ` : `
+                          background-color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                        `}
                         border-radius: ${tileBorderRadius}vh;
                         mask-image: url("static/images/thumbnails_frosted/${clearOldExtension(subpage.imageName)}.webp");
                         ${tileHeight <= tileMinWidth ? 'mask-size: 40% auto;' : 'mask-size: 65% auto;'}
@@ -234,7 +262,7 @@
                   {#if subpage.tileImageType === 'icon' }
                     <i
                       class={`fa-solid fa-${subpage.iconName}`}
-                      style={`font-size: ${tileHeight <= tileMinWidth ? 150 : 180}%; line-height: 2px;`}
+                      style={`font-size: ${tileHeight <= tileMinWidth ? 70 : 110}%; line-height: 2px;`}
                     ></i>
                   {/if}
                 </a>
