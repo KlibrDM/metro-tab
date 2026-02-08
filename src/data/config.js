@@ -1703,6 +1703,7 @@ export const pageIconsList = [
   'bacon',
   'burger',
   'pizza-slice',
+  'pepper-hot',
   'cake-candles',
   'candy-cane',
   'cookie-bite',
@@ -1710,6 +1711,7 @@ export const pageIconsList = [
   'mug-hot',
   'beer-mug-empty',
   'champagne-glasses',
+  'wine-bottle',
   'blender',
 
   // Animals & Nature
