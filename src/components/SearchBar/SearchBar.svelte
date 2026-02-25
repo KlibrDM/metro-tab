@@ -1,6 +1,5 @@
 <script>
   import Clock from "./Clock.svelte";
-  import RandomGithub from "./RandomGithub.svelte";
   import Note from "../Notes/Note.svelte";
   import { userData } from "../../store";
   import { searchEngineList } from "../../data/config";
@@ -123,8 +122,6 @@
         <button style={`color: ${pinnedNote.textColor};`} on:click={unpinNote}>Unpin</button>
       </div>
     </div>
-  {:else}
-    <RandomGithub />
   {/if}
   <form
     id="searchbar"
