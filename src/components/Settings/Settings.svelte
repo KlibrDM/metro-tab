@@ -311,94 +311,128 @@
 
 {#if isPanelShown}
   <div id="settingsPanel" transition:slide class:peekOpacity={isPeekPressed} class:darkModifier={settingsData.darkMode}>
-    <div id="settingsHeader">
+    <div id="settingsNav">
+      <div class="settingsNavIcon">
+        <i class="fa-solid fa-gears" />
+        <p>Settings</p>
+      </div>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 0}
         on:click={() => {changeTab(0);}}
       >
         Pages
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 1}
         on:click={() => {changeTab(1);}}
       >
         Categories
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 2}
         on:click={() => {changeTab(2);}}
       >
         Background
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 3}
         on:click={() => {changeTab(3);}}
       >
         Visuals
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 4}
         on:click={() => {changeTab(4);}}
       >
         Themes
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 5}
         on:click={() => {changeTab(5);}}
       >
         Search Engine
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 6}
         on:click={() => {changeTab(6);}}
       >
         Backup
       </button>
       <button
-        class="settingsHeaderButton"
+        class="settingsNavButton"
         class:headerSelected={tabIndex === 7}
         on:click={() => {changeTab(7);}}
       >
         About
       </button>
     </div>
-    <hr/>
-    <div id="settingsContent">
+    <div class="settingsContentContainer">
       {#if tabIndex === 0}
-        <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} bind:unsavedPages={unsavedSettings} />
+        <div class="settingsContentHeader">
+          <h2>Pages</h2>
+        </div>
+        <div class="settingsContent">
+          <Pages {settingsData} {deletePage} {addPage} {saveSettings} {movePage} {createGroup} bind:unsavedPages={unsavedSettings} />
+        </div>
       {:else if tabIndex === 1}
-        <Categories {settingsData} {addCategory} {deleteCategory} {moveCategory} {saveSettings} bind:unsavedSettings={unsavedSettings} />
+        <div class="settingsContentHeader">
+          <h2>Page categories</h2>
+        </div>
+        <div class="settingsContent">
+          <Categories {settingsData} {addCategory} {deleteCategory} {moveCategory} {saveSettings} bind:unsavedSettings={unsavedSettings} />
+        </div>
       {:else if tabIndex === 2}
-        <Backgrounds {changeBackground} {changeBackgroundColor} />
+        <div class="settingsContentHeader">
+          <h2>Background</h2>
+        </div>
+        <div class="settingsContent">
+          <Backgrounds {changeBackground} {changeBackgroundColor} />
+        </div>
       {:else if tabIndex === 3}
-        <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
+        <div class="settingsContentHeader">
+          <h2>Visuals</h2>
+        </div>
+        <div class="settingsContent">
+          <SettingsForm {settingsData} {saveSettings} {resetVisuals} bind:unsavedSettings={unsavedSettings} />
+        </div>
       {:else if tabIndex === 4}
-        <Themes {settingsData} />
+        <div class="settingsContentHeader">
+          <h2>Themes</h2>
+        </div>
+        <div class="settingsContent">
+          <Themes {settingsData} />
+        </div>
       {:else if tabIndex === 5}
-        <SearchEngine {settingsData} {changeSearchEngine} />
+        <div class="settingsContentHeader">
+          <h2>Search Engine</h2>
+        </div>
+        <div class="settingsContent">
+          <SearchEngine {settingsData} {changeSearchEngine} />
+        </div>
       {:else if tabIndex === 6}
-        <ImportExport {settingsData} {saveSettings} />
+        <div class="settingsContentHeader">
+          <h2>Backup</h2>
+        </div>
+        <div class="settingsContent">
+          <ImportExport {settingsData} {saveSettings} />
+        </div>
       {:else if tabIndex === 7}
-        <About />
+        <div class="settingsContent">
+          <About />
+        </div>
       {/if}
     </div>
   </div>
 {/if}
 
 <style>
-  hr {
-    margin-block-start: 0.9em;
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
-  }
   .peekOpacity {
     opacity: 0;
   }
@@ -473,9 +507,8 @@
     background-color: rgba(255, 255, 255, 0.85);
   }
   #settingsPanel {
-    padding: 20px 40px;
     position: absolute;
-    background-color: white;
+    background-color: var(--settings-background-color);
     right: 0;
     top: 0;
     z-index: 50;
@@ -485,24 +518,40 @@
     overflow-y: auto;
     box-sizing: border-box;
     display: flex;
-    flex-direction: column;
     transition: 0.4s;
   }
   #settingsPanel.darkModifier {
-    background-color: rgb(3, 7, 15);
+    background-color: var(--settings-background-color-dark);
     color: white;
   }
   .highZIndex {
     z-index: 60 !important;
   }
-  #settingsHeader {
+  #settingsNav {
     display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    margin-right: 64px;
+    flex-direction: column;
+    background-color: var(--settings-background-secondary-color);
+    overflow-y: auto;
     flex-shrink: 0;
+    box-shadow: var(--shadow-small-subtle);
+    z-index: 3;
   }
-  .settingsHeaderButton {
+  #settingsPanel.darkModifier #settingsNav {
+    background-color: var(--settings-background-secondary-color-dark);
+  }
+  .settingsNavIcon {
+    height: 72px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    font-size: 1.2em;
+  }
+  .settingsNavIcon i {
+    font-size: 1.4em;
+  }
+  .settingsNavButton {
     background-color: transparent;
     border: 0;
     color: rgb(95, 95, 95);
@@ -510,39 +559,62 @@
     transition: 0.3s;
     font-size: 1em;
     flex-shrink: 0;
+    text-align: left;
+    padding: 10px 30px;
   }
-  .settingsHeaderButton:hover {
+  .settingsNavButton:hover {
     color: black;
   }
   .headerSelected {
-    color: rgb(58, 153, 255) !important;
+    color: var(--primary-color-text);
+    background-color: var(--primary-color);
   }
   .headerSelected:hover {
-    color: rgb(58, 153, 255) !important;
+    color: var(--primary-color-text);
+    background-color: var(--primary-color-hover);
   }
-  #settingsPanel.darkModifier .settingsHeaderButton {
+  #settingsPanel.darkModifier .settingsNavButton {
     color: white;
   }
-  #settingsPanel.darkModifier .settingsHeaderButton:hover {
+  #settingsPanel.darkModifier .settingsNavButton:hover {
     color: rgb(200, 200, 200);
   }
-  #settingsContent {
+  .settingsContentContainer {
     overflow-y: auto;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
   }
-  @media screen and (max-width: 450px) {
-    #settingsPanel {
-      padding: 20px;
-    }
-    #settingsHeader {
-      margin-right: 84px;
-    }
+  .settingsContentHeader {
+    padding: 20px;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-subtle);
+    height: 72px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    z-index: 2;
   }
-  @media screen and (max-width: 960px) {
-    #settingsHeader {
-      padding-bottom: 4px;
+  #settingsPanel.darkModifier .settingsContentHeader {
+    background-color: var(--settings-background-secondary-color-dark);
+  }
+  .settingsContentHeader h2 {
+    margin: 0;
+  }
+  .settingsContent {
+    height: 100%;
+    overflow-y: auto;
+  }
+  @media screen and (max-width: 599px) {
+    #settingsPanel {
+      flex-direction: column;
+    }
+    #settingsNav {
+      flex-direction: row;
+      margin-right: 120px;
+    }
+    .settingsNavButton {
+      padding: 20px 12px;
     }
   }
 </style>

@@ -1,4 +1,6 @@
 <script>
+  import { STYLE_VARIABLES } from "../../data/styleVariables";
+
   export let settingsData;
   export let saveSettings;
   export let unsavedSettings;
@@ -49,7 +51,6 @@
   }
 </script>
 
-<h2>Page categories</h2>
 <div id="settingsCategories" class:darkModifier={settingsData.darkMode}>
   <div id="settingsCategoriesList">
     {#if settingsData.categories.length === 0}
@@ -69,14 +70,14 @@
         <div
           class="settingsCategoriesListCategory"
           style="
-            border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
+            border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'transparent'};
             background: {
-              index === draggedItemIndex ? 'linear-gradient(to right, red, transparent 50px)' :
+              index === draggedItemIndex ? `linear-gradient(to right, red, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 50px)` :
               index === draggedOverIndex ?
                 draggedItemIndex !== undefined && draggedItemIndex > index ?
-                'linear-gradient(135deg, #3a99ff, transparent 40px)' :
-                'linear-gradient(45deg, #3a99ff, transparent 40px)' :
-              'unset'
+                `linear-gradient(135deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+                `linear-gradient(45deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+              `${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]}`
             };
           "
         >
@@ -179,12 +180,8 @@
 </div>
 
 <style>
-  h2 {
-    margin-block-start: 0.4em;
-    margin-block-end: 0.4em;
-  }
   h4 {
-    margin-block-start: 0.4em;
+    margin-block-start: 0.2em;
     margin-block-end: 0.4em;
   }
   .settingsTextInput {
@@ -233,47 +230,46 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin-bottom: 6px;
   }
   #settingsCategories {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%;
   }
   #settingsCategoriesList {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    height: 100%;
     overflow-y: auto;
-    padding-right: 8px;
+    padding: 20px;
   }
   .settingsCategoriesListEmpty {
-    color: #333;
-    margin-top: 8px;
-    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+    background-color: var(--settings-background-secondary-color);
   }
   #settingsCategories.darkModifier .settingsCategoriesListEmpty {
-    color: #ccc;
-  }
-  .settingsCategoriesListCategoryContainer:not(:first-child) {
-    padding-top: 3px;
-  }
-  .settingsCategoriesListCategoryContainer:not(:last-child) {
-    padding-bottom: 2px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .settingsCategoriesListCategory {
     display: flex;
     justify-content: space-between;
     padding: 4px 6px;
     border-radius: 10px;
-    background-color: white;
-    border: 1px solid lightgray;
+    background-color: var(--settings-background-secondary-color);
+    border: 1px solid transparent;
     transition: 0.3s;
+    box-shadow: var(--shadow-small-strong);
   }
   .settingsCategoriesListCategory:hover {
-    background-color: #f0f0f0 !important;
+    background-color: #f8faff !important;
   }
   #settingsCategories.darkModifier .settingsCategoriesListCategory {
     border-color: #3a99ff !important;
+    background-color: var(--settings-background-secondary-color-dark);
   }
   #settingsCategories.darkModifier .settingsCategoriesListCategory:hover {
     background-color: #0c1b3a !important;
@@ -340,6 +336,15 @@
   .categoryDeleteButton:hover {
     background-color: rgb(175, 30, 30);
   }
+  #settingsCategoryOptions {
+    background-color: var(--settings-background-secondary-color);
+    padding: 10px 20px 20px 20px;
+    box-shadow: var(--shadow-small-subtle-up);
+    z-index: 1;
+  }
+  #settingsCategories.darkModifier #settingsCategoryOptions {
+    background-color: var(--settings-background-secondary-color-dark);
+  }
   .settingsNewCategoryInput {
     display: flex;
     align-items: center;
@@ -361,10 +366,5 @@
     margin-top: 8px;
     animation: shake-bottom 4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both infinite;
     animation-delay: 2s;
-  }
-  @media screen and (max-width: 450px) {
-    .settingsNewCategoryInput {
-      flex-direction: column;
-    }
   }
 </style>

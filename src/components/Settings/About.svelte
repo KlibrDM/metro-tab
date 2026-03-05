@@ -65,10 +65,14 @@
     display: flex;
     flex-direction: column;
     color: black;
-    padding-right: 8px;
+    padding: 20px 40px 40px 40px;
+    min-height: 100%;
+    background-color: var(--settings-background-secondary-color);
+    box-sizing: border-box;
   }
   .about.darkModifier {
     color: white;
+    background-color: var(--settings-background-color-dark);
   }
   .about-image {
     user-select: none;

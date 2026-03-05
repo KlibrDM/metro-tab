@@ -1,6 +1,7 @@
 <script>
   import "./data/storage";
   import { userData } from "./store";
+  import { STYLE_VARIABLES } from "./data/styleVariables";
 
   import Cover from "./components/Cover.svelte";
   import QuickNav from "./components/QuickNav.svelte";
@@ -31,11 +32,14 @@
 
 <!--Use the url made above if user selects image provided by the extension (bgXXX)-->
 <main
-  style={isBackgroundSolid
-    ? "background-color: " + backgroundSolidColor + ";"
-    : backgroundImage.length > 5
-    ? "background-image: url(" + backgroundImage + ");"
-    : "background-image: url(" + backgroundImageUrl + ");"}
+  style={`
+    ${Object.entries(STYLE_VARIABLES).map(([key, value]) => `${key}: ${value};`).join(" ")}
+    ${isBackgroundSolid
+      ? "background-color: " + backgroundSolidColor + ";"
+      : backgroundImage.length > 5
+      ? "background-image: url(" + backgroundImage + ");"
+      : "background-image: url(" + backgroundImageUrl + ");"}
+  `}
 >
   <Cover />
   <!-- Show QuickNav only if not Firefox -->

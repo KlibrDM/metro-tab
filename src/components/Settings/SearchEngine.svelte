@@ -8,7 +8,6 @@
   let inputModified = false;
 </script>
 
-<h2>Search Engine</h2>
 <div id="settingsSearchEngine" class:darkModifier={settingsData.darkMode}>
   <div id="itemList">
     {#each searchEngineList as searchEngine}
@@ -33,7 +32,7 @@
 
   <div id="customSearchEngine">
     <h2>Custom Search Engine</h2>
-    <div class="item">
+    <div class="itemInput">
       <input
         type="text"
         id="set_engineLinkBox"
@@ -93,13 +92,13 @@
 
 <style>
   h2 {
-    margin-block-start: 0.4em;
+    margin-block-start: 0em;
     margin-block-end: 0.4em;
   }
   #itemList {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
   }
   .item {
     display: flex;
@@ -107,17 +106,22 @@
     align-items: center;
     padding: 4px 4px;
     border-radius: 10px;
-    border: 1px solid lightgray;
     transition: 0.3s;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
   }
   .item:hover {
-    background-color: #f0f0f0 !important;
+    background-color: #f8faff !important;
   }
   #settingsSearchEngine {
-    padding-right: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
   #settingsSearchEngine.darkModifier .item {
-    border-color: #3a99ff;
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   #settingsSearchEngine.darkModifier .item:hover {
     background-color: #0c1b3a !important;
@@ -155,22 +159,37 @@
     color: rgb(60, 60, 60);
     background-color: rgba(238, 218, 34, 0.4);
   }
+  #customSearchEngine {
+    padding: 12px;
+    border-radius: 10px;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsSearchEngine.darkModifier #customSearchEngine {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
+  }
   #customSearchEngine p {
     margin-top: 6px;
     margin-bottom: 0;
   }
+  .itemInput {
+    display: flex;
+    gap: 8px;
+  }
   .customSearchEngineInput {
     width: 100%;
-    border: 0;
     overflow-wrap: anywhere;
     background-color: transparent;
-    margin-left: 8px;
-    margin-right: 8px;
     outline: none;
     font-size: 1.1em;
+    padding: 3px 5px;
+    border-radius: 10px;
+    border: 1px solid gray;
   }
   #settingsSearchEngine.darkModifier .customSearchEngineInput {
     color: white;
+    border: 1px solid var(--primary-color);
   }
   .settingsActionButtons {
     display: flex;

@@ -92,7 +92,7 @@
   }
 </script>
 
-<div id="settingsPageImageTypeModalContainer">
+<div id="settingsPageImageTypeModalContainer" class:groupParent={isGroupPage}>
   <div id="settingsPageImageTypeModal" class:darkModifier={settingsData.darkMode} on:click={(e) => { e.stopImmediatePropagation() }}>
     <button id="settingsPageImageTypeCloseButton">
       <i class="fa-solid fa-xmark" on:click={(e) => { e.stopImmediatePropagation(); modalActive = false }}></i>
@@ -593,19 +593,26 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 11;
+  }
+  #settingsPageImageTypeModalContainer.groupParent {
+    background-color: transparent !important;
   }
   #settingsPageImageTypeModal {
     width: 600px;
     max-height: 70vh;
+    height: 100%;
     overflow: auto;
     background-color: #fff;
     padding: 40px;
     border-radius: 10px;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   #settingsPageImageTypeModal.darkModifier {
     background-color: rgb(3, 7, 15);
@@ -677,7 +684,8 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 8px;
-    margin-top: 16px;
+    margin-top: auto;
+    padding-top: 16px;
   }
   #returnButton {
     padding: 8px 20px;

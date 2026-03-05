@@ -1130,25 +1130,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
-    margin-top: 32px;
-    padding-left: 8px;
-    padding-right: 8px;
+    gap: 24px;
+    padding: 32px 20px;
   }
   .IEHeaderSection {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    border: 1px solid lightgray;
     border-radius: 10px;
     padding: 10px 30px 25px 30px;
     flex-grow: 1;
     width: clamp(400px, 55%, 1200px);
     box-sizing: border-box;
+    box-shadow: var(--shadow-small-strong);
+    background-color: var(--settings-background-secondary-color);
   }
   .IEPage.darkModifier .IEHeaderSection {
-    border-color: #3a99ff;
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .IEHeaderSection p {
     margin: 0;
@@ -1160,22 +1160,24 @@
   .IESections {
     display: flex;
     justify-content: center;
-    gap: 32px;
+    gap: 24px;
     width: clamp(400px, 55%, 1200px);
   }
   .IEPage.darkModifier .IESection {
-    border-color: #3a99ff;
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .IESection {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    border: 1px solid lightgray;
     border-radius: 10px;
     padding: 10px 30px 25px 30px;
     flex-grow: 1;
     flex-basis: 50%;
+    box-shadow: var(--shadow-small-strong);
+    background-color: var(--settings-background-secondary-color);
   }
   h2 {
     margin-block-start: 0.4em;
@@ -1212,7 +1214,7 @@
   .IEAlerts {
     display: flex;
     justify-content: center;
-    gap: 32px;
+    gap: 24px;
     width: clamp(400px, 55%, 1200px);
   }
   .IEAlert {
@@ -1244,15 +1246,18 @@
   .IEAlert.spacer {
     visibility: hidden;
   }
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1400px) {
+    .IEPage {
+      padding: 20px;
+    }
     .IEPage, .IESections, .IEAlerts {
-      gap: 8px;
+      gap: 12px;
     }
     .IEHeaderSection, .IESections, .IEAlerts {
       width: 100%;
     }
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 599px) {
     .IEPage, .IESections, .IEAlerts {
       flex-direction: column;
     }

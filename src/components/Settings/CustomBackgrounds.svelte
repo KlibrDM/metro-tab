@@ -3,6 +3,14 @@
   import Tooltip from "../Tooltip.svelte";
 
   export let changeBackground;
+  export let changeBackgroundColor;
+  export let savedBackgroundSolidColor;
+  export let isBackgroundSolid;
+  export let darkMode;
+
+  let newBackgroundSolidColor = savedBackgroundSolidColor;
+  let backgroundSolidColorChanged = false;
+
   let bg;
   let fileInput;
   let compressionQuality = 75;
@@ -22,64 +30,109 @@
   };
 </script>
 
-<div id="customBackgrounds">
-  <h4>Custom background image</h4>
-  <button
-    on:click={() => {
-      fileInput.click();
-    }}
-  >
-    Upload image
-  </button>
-  <input
-    style="display:none"
-    type="file"
-    accept=".jpg, .jpeg, .png, .webp, .avif"
-    on:change={(e) => onFileSelected(e)}
-    bind:this={fileInput}
-  />
-  <div class="backgroundQualityContainer">
-    <label for="set_backgroundQuality">
-      Custom background quality
-      <Tooltip
-        text="Adjust the compression level for custom background images. A higher quality results in better image fidelity but more storage space used. Quality 75 is a good balance between quality and file size. This must be adjusted before uploading an image."
-        maxWidth={420}
-      >
-        <i class="fa-solid fa-circle-info hintIcon" />
-      </Tooltip>
-    </label>
-    <div class="settingsNumberSliderGroup">
-      <input
-        type="range"
-        min="50"
-        max="90"
-        step="1"
-        class="settingsSlider"
-        bind:value={compressionQuality}
-      />
-      <input
-        type="number"
-        min="50"
-        max="90"
-        step="1"
-        class="settingsNumberInput"
-        id="set_backgroundQuality"
-        name="set_backgroundQuality"
-        bind:value={compressionQuality}
-      />
+<div id="customBackgrounds" class:darkModifier={darkMode}>
+  <div id="customBackgroundImage">
+    <h4>Custom background image</h4>
+    <button
+      class="settingsCustomBackgroundButton"
+      on:click={() => {
+        fileInput.click();
+      }}
+    >
+      Upload image
+    </button>
+    <input
+      style="display:none"
+      type="file"
+      accept=".jpg, .jpeg, .png, .webp, .avif"
+      on:change={(e) => onFileSelected(e)}
+      bind:this={fileInput}
+    />
+    <div class="backgroundQualityContainer">
+      <label for="set_backgroundQuality">
+        Custom background quality
+        <Tooltip
+          text="Adjust the compression level for custom background images. A higher quality results in better image fidelity but more storage space used. Quality 75 is a good balance between quality and file size. This must be adjusted before uploading an image."
+          maxWidth={420}
+        >
+          <i class="fa-solid fa-circle-info hintIcon" />
+        </Tooltip>
+      </label>
+      <div class="settingsNumberSliderGroup">
+        <input
+          type="range"
+          min="50"
+          max="90"
+          step="1"
+          class="settingsSlider"
+          bind:value={compressionQuality}
+        />
+        <input
+          type="number"
+          min="50"
+          max="90"
+          step="1"
+          class="settingsNumberInput"
+          id="set_backgroundQuality"
+          name="set_backgroundQuality"
+          bind:value={compressionQuality}
+        />
+      </div>
+      {#if compressionQuality < 50 || compressionQuality > 90}
+        <small>Value must be between 50 and 90 (defaulting to 75)</small>
+      {/if}
     </div>
-    {#if compressionQuality < 50 || compressionQuality > 90}
-      <small>Value must be between 50 and 90 (defaulting to 75)</small>
-    {/if}
+  </div>
+
+  <div id="customBackgroundColor">
+    <h4>Custom background color</h4>
+    <div id="customBackgroundColorGroup">
+      <input
+        type="color"
+        class="settingsBackgroundColorInput"
+        id="set_backgroundColor"
+        name="set_backgroundColor"
+        bind:value={newBackgroundSolidColor}
+        on:input={() => {
+          backgroundSolidColorChanged = true;
+        }}
+      />
+      {#if backgroundSolidColorChanged || !isBackgroundSolid}
+        <button
+          class="settingsBackgroundColorButton"
+          on:click={() => {
+            backgroundSolidColorChanged = false;
+            changeBackgroundColor(newBackgroundSolidColor);
+          }}>
+          Apply
+        </button>
+      {/if}
+    </div>
   </div>
 </div>
 
 <style>
   h4 {
-    margin-block-start: 0.8em;
-    margin-block-end: 0.2em;
+    margin-block-start: 0.2em;
+    margin-block-end: 0.4em;
   }
-  button {
+  #customBackgrounds {
+    display: flex;
+    gap: 12px;
+  }
+  #customBackgroundImage,
+  #customBackgroundColor {
+    background-color: var(--settings-background-secondary-color);
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+  }
+  #customBackgrounds.darkModifier #customBackgroundImage,
+  #customBackgrounds.darkModifier #customBackgroundColor {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
+  }
+  .settingsCustomBackgroundButton {
     margin-top: 8px;
     padding: 8px 20px;
     border: 0;
@@ -89,7 +142,7 @@
     background-color: rgb(238, 218, 34);
     transition: 0.3s;
   }
-  button:hover {
+  .settingsCustomBackgroundButton:hover {
     background-color: rgb(230, 200, 22);
   }
   label {
@@ -115,5 +168,36 @@
   }
   .hintIcon {
     color: #3a99ff;
+  }
+  #customBackgroundColorGroup {
+    display: flex;
+    gap: 5px;
+  }
+  .settingsBackgroundColorInput {
+    margin-top: 8px;
+    width: 120px;
+    height: 32px;
+    padding: 4px 10px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(238, 218, 34);
+    transition: 0.3s;
+  }
+  .settingsBackgroundColorButton {
+    margin-top: 8px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: #0b1;
+    transition: 0.3s;
+  }
+  @media screen and (max-width: 799px) {
+    #customBackgrounds {
+      flex-direction: column;
+    }
   }
 </style>

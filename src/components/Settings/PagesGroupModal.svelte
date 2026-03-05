@@ -1,6 +1,7 @@
 <script>
   import { checkWebsite, clearOldExtension, escapeHTML, getImageNameForLink } from "../../data/tools";
   import PagesImageModal from "./PagesImageModal.svelte";
+  import { STYLE_VARIABLES } from "../../data/styleVariables";
 
   export let group;
   export let settingsData;
@@ -66,11 +67,12 @@
 
     <h3>{group.name}</h3>
 
-    {#if group.pages.length === 0}
-      <small>No pages in this group</small>
-    {/if}
-
     <div id="settingsPagesList">
+      {#if group.pages.length === 0}
+        <div class="settingsPagesListEmpty">
+          No pages in this group
+        </div>
+      {/if}
       {#each group.pages as page, index}
         <div
           class="settingsPagesListPageContainer"
@@ -84,14 +86,14 @@
             class="settingsPagesListPage"
             class:hiddenPage={!page.isActive}
             style="
-              border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
+              border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'transparent'};
               background: {
-                index === draggedItemIndex ? 'linear-gradient(to right, red, transparent 50px)' :
+                index === draggedItemIndex ? `linear-gradient(to right, red, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 50px)` :
                 index === draggedOverIndex ?
                   draggedItemIndex !== undefined && draggedItemIndex > index ?
-                  'linear-gradient(135deg, #3a99ff, transparent 40px)' :
-                  'linear-gradient(45deg, #3a99ff, transparent 40px)' :
-                'unset'
+                  `linear-gradient(135deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+                  `linear-gradient(45deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+                `${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]}`
               };
             "
           >
@@ -279,8 +281,23 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    height: calc(100% - 165px);
-    padding-right: 8px;
+    height: calc(100% - 200px);
+    background-color: var(--settings-background-color);
+    padding: 16px;
+    border-radius: 12px;
+  }
+  #settingsPageGroupModal.darkModifier #settingsPagesList {
+    background-color: var(--settings-background-color-dark);
+  }
+  .settingsPagesListEmpty {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+    background-color: var(--settings-background-secondary-color);
+  }
+  #settingsPageGroupModal.darkModifier .settingsPagesListEmpty {
+    border: 1px solid var(--primary-color) !important;
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .settingsPagesListPageContainer:not(:first-child) {
     padding-top: 3px;
@@ -293,14 +310,17 @@
     justify-content: space-between;
     padding: 4px 6px;
     border-radius: 10px;
-    background-color: white;
-    border: 1px solid lightgray;
+    background-color: var(--settings-background-secondary-color);
+    transition: 0.3s;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-small-strong);
   }
   .settingsPagesListPage:hover {
-    background-color: #f0f0f0 !important;
+    background-color: #f8faff !important;
   }
   #settingsPageGroupModal.darkModifier .settingsPagesListPage {
     border-color: #3a99ff !important;
+    background-color: var(--settings-background-secondary-color-dark);
   }
   #settingsPageGroupModal.darkModifier .settingsPagesListPage:hover {
     background-color: #0c1b3a !important;
@@ -440,10 +460,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10;
   }
   #settingsPageGroupModal {
     width: 600px;
@@ -490,9 +511,20 @@
   #returnButton:hover {
     background-color: #2f84e0;
   }
-  @media screen and (max-width: 450px) {
-    .settingsPageInput {
+  @media screen and (max-width: 599px) {
+    .settingsPagesListPage {
       flex-direction: column;
+    }
+    .settingsPageListButtons {
+      margin-left: auto;
+    }
+    .settingsPageListButtonsGroup {
+      flex-direction: row;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .tilePreview {
+      display: none;
     }
   }
 </style>

@@ -42,8 +42,10 @@
   }
 </script>
 
-<div id="settingsThemes">
-  <h2>Themes</h2>
+<div id="settingsThemes" class:darkModifier={settingsData.darkMode}>
+  <div class="settingsThemeSectionTitle">
+    <h2>Modern Themes</h2>
+  </div>
   <div id="themeList">
     {#each themes as theme}
       <ThemeItem
@@ -54,7 +56,9 @@
     {/each}
   </div>
 
-  <h2 id="frostedThemeListTitle">Frosted Glass Themes</h2>
+  <div class="settingsThemeSectionTitle">
+    <h2>Frosted Glass Themes</h2>
+  </div>
   <div id="frostedThemeList">
     {#each frostedGlassThemes as theme}
       <ThemeItem
@@ -65,7 +69,9 @@
     {/each}
   </div>
 
-  <h2 id="tileThemeListTitle">Tile presets</h2>
+  <div class="settingsThemeSectionTitle">
+    <h2>Tile Presets</h2>
+  </div>
   <div id="tileThemeList">
     {#each tileThemes as theme}
       <ThemeItem
@@ -79,17 +85,33 @@
 
 <style>
   h2 {
-    margin-block-start: 0.4em;
-    margin-block-end: 0.4em;
+    margin: 0;
   }
-  #tileThemeListTitle, #frostedThemeListTitle {
-    margin-block-start: 0.8em;
+  #settingsThemes {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   #themeList, #tileThemeList, #frostedThemeList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
-    gap: 5px;
-    overflow-y: auto;
-    padding-right: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 12px;
+  }
+  .settingsThemeSectionTitle {
+    align-self: flex-start;
+    background-color: var(--settings-background-secondary-color);
+    padding: 6px 16px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsThemes.darkModifier .settingsThemeSectionTitle {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
+  }
+  @media screen and (max-width: 799px) {
+    #themeList, #tileThemeList, #frostedThemeList {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
   }
 </style>

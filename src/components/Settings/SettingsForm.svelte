@@ -33,6 +33,7 @@
 
 <form
   id="settingsForm"
+  class:darkModifier={settingsData.darkMode}
   on:submit={(e) => {
     //Convert colors from HEX to RGB
     settingsData.tileBorderColor = toRGB(tileBorderColor);
@@ -49,8 +50,7 @@
   }}
 >
   <div class="settingsFormContainer">
-    <h2>Visuals</h2>
-    <div class="settingsFormGroup" class:darkModifier={settingsData.darkMode}>
+    <div class="settingsFormGroup">
       <div class="settingsInput">
         <div class="imagePlaceholder">
           <img src="static/images/settings/s_your_name.webp" alt="Set your name" />
@@ -762,7 +762,7 @@
         <i class="fa-solid fa-circle-info hintIcon" />
       </Tooltip>
     </div>
-    <div class="settingsFormGroup" class:darkModifier={settingsData.darkMode}>
+    <div class="settingsFormGroup">
       <div class="settingsInput">
         <div class="imagePlaceholder">
           <img src="static/images/settings/s_use_frosted_glass.webp" alt="Set frosted glass effect" />
@@ -1022,42 +1022,56 @@
 
 <style>
   h2 {
-    margin-block-start: 0.4em;
-    margin-block-end: 0.4em;
+    margin: 0;
+  }
+  .settingsSectionTitleWithHint {
+    align-self: flex-start;
+    background-color: var(--settings-background-secondary-color);
+    padding: 6px 12px 6px 16px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsForm.darkModifier .settingsSectionTitleWithHint {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
   }
   hr {
     width: 90%;
     border: 0;
     border-top: 1px solid lightgray;
   }
-  .settingsFormGroup.darkModifier hr {
+  #settingsForm.darkModifier hr {
     border-color: #3a99ff;
   }
   #settingsForm {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%;
   }
   .settingsFormContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     overflow-y: auto;
-    padding-right: 8px;
+    padding: 20px;
   }
   .settingsFormGroup {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 15px;
-    margin-bottom: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 12px;
   }
   .settingsInput {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid lightgray;
-    border-radius: 15px;
+    border-radius: 10px;
     position: relative;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
   }
-  .settingsFormGroup.darkModifier .settingsInput {
-    border-color: #3a99ff;
+  #settingsForm.darkModifier .settingsInput {
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .settingsFormHintContainer {
     position: absolute;
@@ -1151,7 +1165,13 @@
   .settingBottomSection{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6px;
+    padding: 10px 20px 20px 20px;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-subtle-up);
+    z-index: 1;
+  }
+  #settingsForm.darkModifier .settingBottomSection {
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .settingsButtonWithError {
     display: flex;

@@ -49,10 +49,12 @@
     gap: 12px;
     padding: 8px 8px;
     border-radius: 10px;
-    border: 1px solid lightgray;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
   }
   .item.darkModifier {
-    border-color: #3a99ff;
+    border: 1px solid var(--primary-color);
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .themeThumbnail {
     width: 300px;

@@ -3,6 +3,7 @@
   import PagesImageModal from "./PagesImageModal.svelte";
   import PagesAllImagesModal from "./PagesAllImagesModal.svelte";
   import { checkWebsite, clearOldExtension, escapeHTML, getImageNameForLink } from "../../data/tools";
+  import { STYLE_VARIABLES } from "../../data/styleVariables";
 
   export let settingsData;
   export let deletePage;
@@ -57,9 +58,13 @@
   }
 </script>
 
-<h2>Pages</h2>
 <div id="settingsPages" class:darkModifier={settingsData.darkMode}>
   <div id="settingsPagesList">
+    {#if settingsData.pages.length === 0}
+      <div class="settingsPagesListEmpty">
+        Pages list is empty
+      </div>
+    {/if}
     {#each settingsData.pages as page, index}
       <div
         class="settingsPagesListPageContainer"
@@ -74,14 +79,14 @@
           class:highlighted={(page.categoryId && highlightedCategoryId === page.categoryId) || (!page.categoryId && highlightedCategoryId === "0000")}
           class:hiddenPage={!page.isActive}
           style="
-            border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'lightgray'};
+            border-color: {index === draggedItemIndex ? 'red' : index === draggedOverIndex ? '#3a99ff' : 'transparent'};
             background: {
-              index === draggedItemIndex ? 'linear-gradient(to right, red, transparent 50px)' :
+              index === draggedItemIndex ? `linear-gradient(to right, red, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 50px)` :
               index === draggedOverIndex ?
                 draggedItemIndex !== undefined && draggedItemIndex > index ?
-                'linear-gradient(135deg, #3a99ff, transparent 40px)' :
-                'linear-gradient(45deg, #3a99ff, transparent 40px)' :
-              'unset'
+                `linear-gradient(135deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+                `linear-gradient(45deg, #3a99ff, ${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]} 40px)` :
+              `${settingsData.darkMode ? STYLE_VARIABLES["--settings-background-secondary-color-dark"] : STYLE_VARIABLES["--settings-background-secondary-color"]}`
             };
           "
         >
@@ -141,7 +146,7 @@
                   page.name = escapeHTML(page.name);
                 }}
               />
-              <span style="flex-shrink: 0; font-size: 0.9em;">({page.pages.length} {page.pages.length === 1 ? "page" : "pages"})</span>
+              <span class="settingsPageGroupCount">({page.pages.length} {page.pages.length === 1 ? "page" : "pages"})</span>
             {:else}
               <input
                 type="text"
@@ -230,24 +235,26 @@
   </div>
 
   {#if settingsData.categories && settingsData.categories.length > 0}
-    <div id="highlightCategoriesSection">
-      <p>Highlight category</p>
-      <div class="highlightCategoriesContainer">
-        {#each settingsData.categories as category}
+    <div id="highlightCategoriesContainer">
+      <div id="highlightCategoriesSection">
+        <p>Highlight category</p>
+        <div class="highlightCategoriesContainer">
+          {#each settingsData.categories as category}
+            <div
+              class="highlightCategory"
+              class:selected={highlightedCategoryId === category.id}
+              on:click={() => { highlightedCategoryId = highlightedCategoryId === category.id ? undefined : category.id }}
+            >
+              {category.name}
+            </div>
+          {/each}
           <div
             class="highlightCategory"
-            class:selected={highlightedCategoryId === category.id}
-            on:click={() => { highlightedCategoryId = highlightedCategoryId === category.id ? undefined : category.id }}
+            class:selected={highlightedCategoryId === "0000"}
+            on:click={() => { highlightedCategoryId = highlightedCategoryId === "0000" ? undefined : "0000" }}
           >
-            {category.name}
+            Uncategorized
           </div>
-        {/each}
-        <div
-          class="highlightCategory"
-          class:selected={highlightedCategoryId === "0000"}
-          on:click={() => { highlightedCategoryId = highlightedCategoryId === "0000" ? undefined : "0000" }}
-        >
-          Uncategorized
         </div>
       </div>
     </div>
@@ -347,10 +354,6 @@
 </div>
 
 <style>
-  h2 {
-    margin-block-start: 0.4em;
-    margin-block-end: 0.4em;
-  }
   h4 {
     margin-block-start: 0.2em;
     margin-block-end: 0.4em;
@@ -426,39 +429,46 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin-bottom: 6px;
   }
   #settingsPages {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%;
   }
   #settingsPagesList {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    height: 100%;
     overflow-y: auto;
-    padding-right: 8px;
+    padding: 20px;
   }
-  .settingsPagesListPageContainer:not(:first-child) {
-    padding-top: 3px;
+  .settingsPagesListEmpty {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+    background-color: var(--settings-background-secondary-color);
   }
-  .settingsPagesListPageContainer:not(:last-child) {
-    padding-bottom: 2px;
+  #settingsPages.darkModifier .settingsPagesListEmpty {
+    border: 1px solid var(--primary-color) !important;
+    background-color: var(--settings-background-secondary-color-dark);
   }
   .settingsPagesListPage {
     display: flex;
     justify-content: space-between;
     padding: 4px 6px;
     border-radius: 10px;
-    background-color: white;
-    border: 1px solid lightgray;
+    background-color: var(--settings-background-secondary-color);
     transition: 0.3s;
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-small-strong);
   }
   .settingsPagesListPage:hover {
-    background-color: #f0f0f0 !important;
+    background-color: #f8faff !important;
   }
   #settingsPages.darkModifier .settingsPagesListPage {
     border-color: #3a99ff !important;
+    background-color: var(--settings-background-secondary-color-dark);
   }
   #settingsPages.darkModifier .settingsPagesListPage:hover {
     background-color: #0c1b3a !important;
@@ -480,7 +490,8 @@
     opacity: 0.6;
   }
   .settingsDragHandle {
-    margin-left: 4px;
+    margin-left: 2px;
+    padding: 6px 2px;
   }
   .settingsPagesGroupLeft {
     display: flex;
@@ -522,6 +533,10 @@
   .settingsPagesMoveButtons button:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+  }
+  .settingsPageGroupCount {
+    flex-shrink: 0;
+    font-size: 0.9em;
   }
   .settingsPageCategorySelect select {
     max-width: 140px;
@@ -612,6 +627,15 @@
     font-size: 30px;
     flex-shrink: 0;
   }
+  #settingsPageOptions {
+    background-color: var(--settings-background-secondary-color);
+    padding: 10px 20px 20px 20px;
+    box-shadow: var(--shadow-small-subtle-up);
+    z-index: 1;
+  }
+  #settingsPages.darkModifier #settingsPageOptions {
+    background-color: var(--settings-background-secondary-color-dark);
+  }
   .settingsPageInput {
     display: flex;
     align-items: center;
@@ -634,11 +658,23 @@
     animation: shake-bottom 4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both infinite;
     animation-delay: 2s;
   }
+  #highlightCategoriesContainer {
+    flex-shrink: 0;
+    display: flex;
+    margin: 6px 28px 6px 20px;
+  }
   #highlightCategoriesSection {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
-    margin-top: 8px;
+    overflow-y: auto;
+    border-radius: 20px;
+    background-color: var(--settings-background-secondary-color);
+    padding: 4px 4px 4px 12px;
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsPages.darkModifier #highlightCategoriesSection {
+    background-color: var(--settings-background-secondary-color-dark);
   }
   #highlightCategoriesSection p {
     margin: 0;
@@ -646,10 +682,7 @@
   }
   .highlightCategoriesContainer {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-bottom: 4px;
-    overflow: auto;
+    gap: 6px;
   }
   .highlightCategory {
     padding: 4px 10px;
@@ -680,9 +713,23 @@
     background-color: #324b70;
     color: white;
   }
-  @media screen and (max-width: 450px) {
-    .settingsPageInput {
+  @media screen and (max-width: 799px) {
+    .settingsPagesListPage {
       flex-direction: column;
+    }
+    .settingsPageListButtons {
+      margin-left: auto;
+    }
+    .settingsPageListButtonsGroup {
+      flex-direction: row;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .settingsPageGroupCount {
+      display: none;
+    }
+    .tilePreview, .tileFolderIcon {
+      display: none;
     }
   }
 </style>
