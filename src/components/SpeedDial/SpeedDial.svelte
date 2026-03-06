@@ -174,7 +174,23 @@
 
 {#if categories.length}
   <div class="categoriesContainer">
-    <div class="categories">
+    <div
+      class="categories"
+      style={`
+        ${
+          useFrostedGlass
+            ? `
+              color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+              border: none;
+              backdrop-filter: blur(${frostedGlassStrength}px);
+              -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+              background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+            `
+            : ''
+        }
+        ${showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
+      `}
+    >
       {#if showCategoryNavigation}
         <div class="categoryNavigation">
           <i class="fa-solid fa-chevron-left" on:click={() => onCategoryNavigationClick(-1)} />
@@ -248,11 +264,11 @@
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.4);
     background-color: rgba(0, 0, 0, 0.35);
+    color: white;
     transition: 0.3s;
     z-index: 5;
   }
   .categoryNavigation i {
-    color: white;
     padding: 4px 8px;
     cursor: pointer;
     transition: 0.3s;
@@ -260,7 +276,7 @@
     user-select: none;
   }
   .categoryNavigation i:hover {
-    color: rgb(230, 230, 230);
+    opacity: 0.8;
   }
   .categoriesList {
     display: flex;
@@ -272,7 +288,6 @@
     scroll-behavior: smooth;
   }
   .category {
-    color: white;
     line-height: 1.8rem;
     cursor: pointer;
     transition: 0.3s;
@@ -280,7 +295,7 @@
     font-size: 1.1em;
   }
   .category:hover {
-    color: rgb(230, 230, 230);
+    opacity: 0.8;
   }
   .category.selected {
     color: #3a99ff;
@@ -288,6 +303,7 @@
   }
   .category.selected:hover {
     color: #2880de;
+    opacity: 1;
   }
   .speedDial {
     position: relative;

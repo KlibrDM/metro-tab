@@ -40,7 +40,23 @@
 >
   <div class="buttons" style="gap: {tileGap}vh">
     {#if !showPageQuickAdd && !pages.filter(page => page.isActive).length}
-      <div class="noPagesAvailableWarning">
+      <div
+        class="noPagesAvailableWarning"
+        style={`
+          ${
+            useFrostedGlass
+              ? `
+                color: rgb(${frostedGlassAccentColor.r}, ${frostedGlassAccentColor.g}, ${frostedGlassAccentColor.b});
+                border: none;
+                backdrop-filter: blur(${frostedGlassStrength}px);
+                -webkit-backdrop-filter: blur(${frostedGlassStrength}px);
+                background-color: rgba(${frostedGlassColor.r}, ${frostedGlassColor.g}, ${frostedGlassColor.b}, ${frostedGlassOpacity}) !important;
+              `
+              : ''
+          }
+          ${showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
+        `}
+      >
         No pages available in this category
       </div>
     {/if}

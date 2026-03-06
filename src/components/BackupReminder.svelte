@@ -62,7 +62,7 @@
     bottom: 48px;
     right: 2vw;
     z-index: 7;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0.5);
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.4);
     border-radius: 12px;
