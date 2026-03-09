@@ -141,12 +141,13 @@
 
     //Update last backup date
     updateLastBackupDate();
+    const fileNameDate = moment().format("YYYY-MM-DD_HH-mm-ss");
 
     //Set the anchor tag to download the file
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportDataObject));
     let dlAnchorElem = document.getElementById('downloadAnchorElem');
     dlAnchorElem.setAttribute("href", dataStr);
-    dlAnchorElem.setAttribute("download", "metro-tab-config.json");
+    dlAnchorElem.setAttribute("download", `metro-tab-config_${fileNameDate}.json`);
     dlAnchorElem.click();
   }
 
