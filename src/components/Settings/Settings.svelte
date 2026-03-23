@@ -13,6 +13,7 @@
   import About from "./About.svelte";
   import Themes from "./Themes.svelte";
   import Categories from "./Categories.svelte";
+  import Bookmarks from "./Bookmarks.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -69,6 +70,7 @@
       state.coverColor = settingsData.coverColor;
       state.coverTextColor = settingsData.coverTextColor;
       state.pages = settingsData.pages;
+      state.categories = settingsData.categories;
       return state;
     });
 
@@ -363,12 +365,19 @@
         class:headerSelected={tabIndex === 6}
         on:click={() => {changeTab(6);}}
       >
-        Backup
+        Bookmarks
       </button>
       <button
         class="settingsNavButton"
         class:headerSelected={tabIndex === 7}
         on:click={() => {changeTab(7);}}
+      >
+        Backup
+      </button>
+      <button
+        class="settingsNavButton"
+        class:headerSelected={tabIndex === 8}
+        on:click={() => {changeTab(8);}}
       >
         About
       </button>
@@ -418,12 +427,19 @@
         </div>
       {:else if tabIndex === 6}
         <div class="settingsContentHeader">
+          <h2>Bookmarks</h2>
+        </div>
+        <div class="settingsContent">
+          <Bookmarks {settingsData} {saveSettings} />
+        </div>
+      {:else if tabIndex === 7}
+        <div class="settingsContentHeader">
           <h2>Backup</h2>
         </div>
         <div class="settingsContent">
           <ImportExport {settingsData} {saveSettings} />
         </div>
-      {:else if tabIndex === 7}
+      {:else if tabIndex === 8}
         <div class="settingsContent">
           <About />
         </div>
