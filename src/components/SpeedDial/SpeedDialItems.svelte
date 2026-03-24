@@ -45,7 +45,7 @@
     class="buttons"
     style={`
       gap: ${tileGap}vh;
-      width: calc(100% - ${tileSafeZone}%);
+      width: calc(100% - ${tileSafeZone}% + 2em);
     `}
   >
     {#if !showPageQuickAdd && !pages.filter(page => page.isActive).length}
