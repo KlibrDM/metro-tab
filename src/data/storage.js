@@ -15,12 +15,15 @@ export const saveConfig = (data) => {
   localStorage.setItem("frostedGlassAccentColor", JSON.stringify(data.frostedGlassAccentColor));
   localStorage.setItem("showElementsShadow", data.showElementsShadow);
   localStorage.setItem("showSearchBar", data.showSearchBar);
+  localStorage.setItem("searchBarWidth", data.searchBarWidth);
+  localStorage.setItem("searchBarHeight", data.searchBarHeight);
   localStorage.setItem("showPageQuickAdd", data.showPageQuickAdd);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
   localStorage.setItem("tileZoom", data.tileZoom);
   localStorage.setItem("tileGrow", data.tileGrow);
+  localStorage.setItem("tileSafeZone", data.tileSafeZone);
   localStorage.setItem("tileMinWidth", data.tileMinWidth);
   localStorage.setItem("tileHeight", data.tileHeight);
   localStorage.setItem("tileGap", data.tileGap);
@@ -30,10 +33,13 @@ export const saveConfig = (data) => {
   localStorage.setItem("groupTileGap", data.groupTileGap);
   localStorage.setItem("groupTileBorderRadius", data.groupTileBorderRadius);
   localStorage.setItem("groupTileGrow", data.groupTileGrow);
+  localStorage.setItem("navbarCompact", data.navbarCompact);
   localStorage.setItem("navbarOpacity", data.navbarOpacity);
   localStorage.setItem("navbarColor", JSON.stringify(data.navbarColor));
   localStorage.setItem("coverColor", JSON.stringify(data.coverColor));
   localStorage.setItem("coverTextColor", JSON.stringify(data.coverTextColor));
+  localStorage.setItem("tabName", data.tabName);
+  localStorage.setItem("tabIcon", data.tabIcon);
   localStorage.setItem("notes", JSON.stringify(data.notes));
   localStorage.setItem("categories", JSON.stringify(data.categories));
   localStorage.setItem("pages", JSON.stringify(data.pages));
@@ -217,6 +223,14 @@ const data = {
     ? CONFIG.showSearchBar
     : localStorage.getItem("showSearchBar") === "true",
 
+  searchBarWidth:
+    localStorage.getItem("searchBarWidth") ||
+    CONFIG.searchBarWidth,
+
+  searchBarHeight:
+    localStorage.getItem("searchBarHeight") ||
+    CONFIG.searchBarHeight,
+
   showPageQuickAdd:
     localStorage.getItem("showPageQuickAdd") === null
     ? CONFIG.showPageQuickAdd
@@ -244,6 +258,10 @@ const data = {
     localStorage.getItem("tileGrow") === null
     ? CONFIG.tileGrow
     : localStorage.getItem("tileGrow") === "true",
+
+  tileSafeZone:
+    localStorage.getItem("tileSafeZone") ||
+    CONFIG.tileSafeZone,
 
   tileMinWidth:
     localStorage.getItem("tileMinWidth") ||
@@ -282,6 +300,11 @@ const data = {
     ? CONFIG.groupTileGrow
     : localStorage.getItem("groupTileGrow") === "true",
 
+  navbarCompact:
+    localStorage.getItem("navbarCompact") === null
+    ? CONFIG.navbarCompact
+    : localStorage.getItem("navbarCompact") === "true",
+
   navbarOpacity:
     localStorage.getItem("navbarOpacity") ||
     CONFIG.navbarOpacity,
@@ -297,6 +320,14 @@ const data = {
   coverTextColor:
     JSON.parse(localStorage.getItem("coverTextColor")) ||
     CONFIG.coverTextColor,
+  
+  tabName:
+    localStorage.getItem("tabName") ||
+    CONFIG.tabName,
+
+  tabIcon:
+    localStorage.getItem("tabIcon") ||
+    CONFIG.tabIcon,
 
   notes:
     JSON.parse(localStorage.getItem("notes")) ||

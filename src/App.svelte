@@ -18,17 +18,38 @@
   let isBackgroundSolid = false;
   let backgroundSolidColor;
 
+  let tabName;
+  let tabIcon;
+
   let remoteOpenNotes;
 
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
     isBackgroundSolid = data.isBackgroundSolid;
     backgroundSolidColor = data.backgroundSolidColor;
+    tabName = data.tabName;
+    tabIcon = data.tabIcon;
   });
 
-  //Update background image url when background image changes
+  // Update background image url when background image changes
   $: backgroundImageUrl = "static/images/bg/" + backgroundImage + "." + getBackgroundFormat(backgroundImage);
+
+  // Set tab icon url based on selected icon (ONLY FOR FIREFOX - pop-in issue on Chrome)
+  $: tabIconUrl = navigator.userAgent.indexOf("Firefox") !== -1 && tabIcon
+    ? tabIcon.length > 5
+      ? tabIcon
+      : "static/images/icons/" + tabIcon + ".png"
+    : undefined
 </script>
+
+<svelte:head>
+	<title>{tabName}</title>
+  {#if tabIconUrl}
+    <link rel="icon" type="image/png" href={tabIconUrl} />
+  {:else}
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+  {/if}
+</svelte:head>
 
 <!--Use the url made above if user selects image provided by the extension (bgXXX)-->
 <main

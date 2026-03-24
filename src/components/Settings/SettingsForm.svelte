@@ -1,5 +1,5 @@
 <script>
-  import { toHex, toRGB } from "../../data/tools";
+  import { compressImage, toHex, toRGB } from "../../data/tools";
   import Tooltip from "../Tooltip.svelte";
 
   export let settingsData;
@@ -19,6 +19,21 @@
   let navbarColor = toHex(settingsData.navbarColor);
   let coverColor = toHex(settingsData.coverColor);
   let coverTextColor = toHex(settingsData.coverTextColor);
+
+  let tabIconInput;
+
+  const onTabIconSelected = (e) => {
+    let image = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = (e) => {
+      compressImage(e.target.result, 48, 48, 75, "image/png").then((compressedBg) => {
+        settingsData.tabIcon = compressedBg;
+        tabIconInput.value = null;
+        unsavedSettings = true;
+      });
+    };
+  };
 
   const resetLocalVisuals = () => {
     darkMode = settingsData.darkMode;
@@ -228,6 +243,88 @@
 
       <div class="settingsInput">
         <div class="imagePlaceholder">
+          <img src="static/images/settings/s_search_bar_width.webp" alt="Set search bar width" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_searchBarWidth">Search bar width</label>
+          <div class="settingsNumberSliderGroup">
+            <input
+              type="range"
+              min="20"
+              max="60"
+              step="1"
+              class="settingsSlider"
+              bind:value={settingsData.searchBarWidth}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+            <input
+              type="number"
+              min="20"
+              max="60"
+              step="1"
+              class="settingsNumberInput"
+              id="set_searchBarWidth"
+              name="set_searchBarWidth"
+              bind:value={settingsData.searchBarWidth}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the width of the search bar. Increasing this value will make the search bar wider.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_search_bar_height.webp" alt="Set search bar height" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_searchBarHeight">Search bar height</label>
+          <div class="settingsNumberSliderGroup">
+            <input
+              type="range"
+              min="5"
+              max="10"
+              step="0.1"
+              class="settingsSlider"
+              bind:value={settingsData.searchBarHeight}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+            <input
+              type="number"
+              min="5"
+              max="10"
+              step="0.1"
+              class="settingsNumberInput"
+              id="set_searchBarHeight"
+              name="set_searchBarHeight"
+              bind:value={settingsData.searchBarHeight}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the height of the search bar. Increasing this value will make the search bar taller.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
           <img src="static/images/settings/s_show_page_quick_add.webp" alt="Set show page quick add" />
         </div>
         <hr/>
@@ -296,6 +393,47 @@
         </div>
         <div class="settingsFormHintContainer">
           <Tooltip text="Allow tiles to expand and fill available space in their rows. This will make tiles larger than the specified minimum width when there is extra space.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_tile_safe_zone.webp" alt="Set tile safe zone" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_tileSafeZone">Tile safe zone</label>
+          <div class="settingsNumberSliderGroup">
+            <input
+              type="range"
+              min="0"
+              max="50"
+              step="1"
+              class="settingsSlider"
+              bind:value={settingsData.tileSafeZone}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+            <input
+              type="number"
+              min="0"
+              max="50"
+              step="1"
+              class="settingsNumberInput"
+              id="set_tileSafeZone"
+              name="set_tileSafeZone"
+              bind:value={settingsData.tileSafeZone}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the horizontal safe zone for the tiles. This will create some space on the left and right edges of the page where no tiles will be placed.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
@@ -640,6 +778,31 @@
 
       <div class="settingsInput">
         <div class="imagePlaceholder">
+          <img src="static/images/settings/s_navbar_compact.webp" alt="Set compact navbar" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_navbarCompact">Compact navbar</label>
+          <input
+            type="checkbox"
+            id="set_navbarCompact"
+            name="set_navbarCompact"
+            class="settingsCheckbox"
+            bind:checked={settingsData.navbarCompact}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Show a compact navbar that takes up slightly less vertical space.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
           <img src="static/images/settings/s_navbar_opacity.webp" alt="Set navbar opacity" />
         </div>
         <hr/>
@@ -753,8 +916,168 @@
           </Tooltip>
         </div>
       </div>
-    </div>
 
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_tab_name.webp" alt="Set tab name" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_tabName">Tab name</label>
+          <input
+            type="text"
+            id="set_tabName"
+            name="set_tabName"
+            class="settingsTextInput"
+            bind:value={settingsData.tabName}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the name of the tab. This text will be displayed in the tab bar.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <!-- Icon changeable only on Firefox - pop-in issue on Chrome -->
+      {#if navigator.userAgent.indexOf("Firefox") !== -1}
+        <div class="settingsInput">
+          <div class="imagePlaceholder settingsTabIconImageContainer">
+            <img src="static/images/settings/s_tab_icon.webp" alt="Set tab icon" />
+
+            <div class="settingsTabIconQuickSelectContainer">
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico1"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico1.png" alt="Icon 1" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico2"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico2.png" alt="Icon 2" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico3"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico3.png" alt="Icon 3" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico4"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico4.png" alt="Icon 4" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico5"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico5.png" alt="Icon 5" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico6"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico6.png" alt="Icon 6" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico7"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico7.png" alt="Icon 7" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton tabIconSmall"
+                on:click={() => {
+                  settingsData.tabIcon = "ico8"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico8.png" alt="Icon 8" />
+              </button>
+              <button
+                type="button"
+                class="settingsTabIconQuickSelectButton"
+                on:click={() => {
+                  settingsData.tabIcon = "ico9"
+                  unsavedSettings = true;
+                }}
+              >
+                <img src="static/images/icons/ico9.png" alt="Icon 9" />
+              </button>
+            </div>
+          </div>
+          <hr/>
+          <div class="settingsInputGroup">
+            <label for="set_tabIcon">Tab icon</label>
+            <div class="settingsTabIconUploadGroup">
+              <img
+                src={
+                  settingsData.tabIcon.length > 5
+                    ? settingsData.tabIcon
+                    : "static/images/icons/" + settingsData.tabIcon + ".png"
+                }
+                alt="Icon Preview"
+              />
+              <button
+                class="settingsTabIconUploadButton"
+                on:click={() => {
+                  tabIconInput.click();
+                }}
+              >
+                Upload icon
+              </button>
+              <input
+                style="display:none"
+                type="file"
+                accept=".jpg, .jpeg, .png, .webp, .avif"
+                on:change={(e) => onTabIconSelected(e)}
+                bind:this={tabIconInput}
+              />
+            </div>
+          </div>
+          <div class="settingsFormHintContainer">
+            <Tooltip text="Set the icon of the tab. This icon will be displayed in the tab bar. Choose from the list of default icons or upload your own custom icon.">
+              <i class="fa-solid fa-circle-info hintIcon" />
+            </Tooltip>
+          </div>
+        </div>
+      {/if}
+    </div>
     
     <div class="settingsSectionTitleWithHint">
       <h2>Frosted Glass Design</h2>
@@ -1148,12 +1471,70 @@
     border-radius: 32px;
     cursor: pointer;
   }
+  .settingsTabIconImageContainer {
+    position: relative;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+  }
+  .settingsTabIconQuickSelectContainer {
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    bottom: 0;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+  .settingsTabIconQuickSelectButton {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .settingsTabIconQuickSelectButton img {
+    width: 100%;
+    transition: 0.3s;
+  }
+  .settingsTabIconQuickSelectButton.tabIconSmall img {
+    width: 80%;
+  }
+  .settingsTabIconQuickSelectButton:hover img {
+    transform: scale(1.15);
+  }
+  .settingsTabIconUploadGroup {
+    display: flex;
+    gap: 5px;
+  }
+  .settingsTabIconUploadGroup img {
+    width: 24px;
+    height: 24px;
+  }
+  .settingsTabIconUploadButton {
+    padding: 4px 12px;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--primary-color-text);
+    background-color: var(--primary-color);
+    transition: 0.3s;
+  }
+  .settingsTabIconUploadButton:hover {
+    background-color: var(--primary-color-hover);
+  }
   .settingsCheckbox {
     width: 18px;
     height: 18px;
   }
   .settingsColorInput {
-    padding: 1px 3px;
+    height: 24px;
     border-radius: 5px;
     border: 1px solid gray;
     cursor: pointer;
@@ -1169,6 +1550,7 @@
     background-color: var(--settings-background-secondary-color);
     box-shadow: var(--shadow-small-subtle-up);
     z-index: 1;
+    margin-top: auto;
   }
   #settingsForm.darkModifier .settingBottomSection {
     background-color: var(--settings-background-secondary-color-dark);

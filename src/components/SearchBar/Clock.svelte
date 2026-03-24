@@ -2,6 +2,7 @@
   import { userData } from "../../store";
 
   let showSearchBar;
+  let navbarCompact;
   let showElementsShadow;
   let useFrostedGlass;
   let frostedGlassStrength;
@@ -13,6 +14,7 @@
 
   userData.subscribe((data) => {
     showSearchBar = data.showSearchBar;
+    navbarCompact = data.navbarCompact;
     showElementsShadow = data.showElementsShadow;
     useFrostedGlass = data.useFrostedGlass;
     frostedGlassStrength = data.frostedGlassStrength;
@@ -51,6 +53,7 @@
 <div
   id="time"
   class:hiddenSearchBar={!showSearchBar}
+  class:compactNavbar={navbarCompact}
   class:clockbg={clockBackground}
   style={`
     ${
@@ -82,7 +85,8 @@
     padding: 2px 8px;
     line-height: 1.2em;
   }
-  #time.hiddenSearchBar {
+  #time.hiddenSearchBar,
+  #time.compactNavbar {
     bottom: 12px;
   }
   #minutes {
@@ -96,15 +100,13 @@
   .clockbg {
     background-color: rgba(0, 0, 0, 0.25);
   }
-
-  @media screen and (max-width: 799px) {
+  @media screen and (max-width: 920px) {
     #time:not(.hiddenSearchBar) {
       display: none;
     }
   }
-
   @media screen and (max-height: 600px) {
-    #time {
+    #time:not(.compactNavbar):not(.hiddenSearchBar) {
       font-size: 2.2em;
       line-height: 0.8em;
       bottom: 3vh;

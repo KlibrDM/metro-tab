@@ -103,7 +103,7 @@ export const escapeHTML = (string) => {
   });
 };
 
-export const compressImage = (image, maxWidth, maxHeight, quality) => {
+export const compressImage = (image, maxWidth, maxHeight, quality, format = "image/webp") => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = image;
@@ -115,7 +115,7 @@ export const compressImage = (image, maxWidth, maxHeight, quality) => {
       canvas.height = img.height * ratio;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      const compressedImage = canvas.toDataURL("image/webp", quality !== 100 ? quality / 100 : undefined);
+      const compressedImage = canvas.toDataURL(format, quality !== 100 ? quality / 100 : undefined);
       resolve(compressedImage);
     };
   });

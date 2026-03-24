@@ -5,6 +5,8 @@
 
   const visualSettingsMap = new Map([
     ['yourName', 'Your name'],
+    ['tabName', 'Tab name'],
+    ['tabIcon', 'Tab icon'],
     ['showCover', 'Show cover'],
     ['clockBackground', 'Clock background'],
     ['clock24Hour', '24 hour clock'],
@@ -12,9 +14,12 @@
     ['useFrostedGlass', 'Use frosted glass design'],
     ['showElementsShadow', 'Show shadows'],
     ['showSearchBar', 'Show search bar'],
+    ['searchBarWidth', 'Search bar width'],
+    ['searchBarHeight', 'Search bar height'],
     ['showPageQuickAdd', 'Show page quick add'],
     ['tileZoom', 'Tile zoom on hover'],
     ['tileGrow', 'Tile fill space'],
+    ['tileSafeZone', 'Tile safe zone'],
     ['tileMinWidth', 'Tile minimum width'],
     ['tileHeight', 'Tile height'],
     ['tileGap', 'Tile gap'],
@@ -25,6 +30,7 @@
     ['groupTileGrow', 'Group tile fill space'],
     ['frostedGlassStrength', 'Frosted glass strength'],
     ['frostedGlassOpacity', 'Frosted glass opacity'],
+    ['navbarCompact', 'Compact navbar'],
     ['navbarOpacity', 'Navbar opacity'],
     ['tileBorderColor', 'Tile border color' ],
     ['frostedGlassColor', 'Frosted glass color' ],
@@ -115,9 +121,12 @@
       exportDataObject.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
       exportDataObject.showElementsShadow = settingsData.showElementsShadow;
       exportDataObject.showSearchBar = settingsData.showSearchBar;
+      exportDataObject.searchBarWidth = settingsData.searchBarWidth;
+      exportDataObject.searchBarHeight = settingsData.searchBarHeight;
       exportDataObject.showPageQuickAdd = settingsData.showPageQuickAdd;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
+      exportDataObject.tileSafeZone = settingsData.tileSafeZone;
       exportDataObject.tileMinWidth = settingsData.tileMinWidth;
       exportDataObject.tileHeight = settingsData.tileHeight;
       exportDataObject.tileGap = settingsData.tileGap;
@@ -127,10 +136,13 @@
       exportDataObject.groupTileGap = settingsData.groupTileGap;
       exportDataObject.groupTileBorderRadius = settingsData.groupTileBorderRadius;
       exportDataObject.groupTileGrow = settingsData.groupTileGrow;
+      exportDataObject.navbarCompact = settingsData.navbarCompact;
       exportDataObject.navbarOpacity = settingsData.navbarOpacity;
       exportDataObject.navbarColor = settingsData.navbarColor;
       exportDataObject.coverColor = settingsData.coverColor;
       exportDataObject.coverTextColor = settingsData.coverTextColor;
+      exportDataObject.tabName = settingsData.tabName;
+      exportDataObject.tabIcon = settingsData.tabIcon;
     }
     if(exportTileImages){
       const links = getTileImageLinks();
@@ -434,6 +446,28 @@
             visualImportErrors.push('yourName');
           }
 
+          if(settings.hasOwnProperty('tabName')){
+            if(typeof settings.tabName !== 'string'){
+              errorsFound = true;
+              visualImportErrors.push('tabName');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('tabName');
+          }
+
+          if(settings.hasOwnProperty('tabIcon')){
+            if(typeof settings.tabIcon !== 'string'){
+              errorsFound = true;
+              visualImportErrors.push('tabIcon');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('tabIcon');
+          }
+
           if(settings.hasOwnProperty('showCover')){
             if(typeof settings.showCover !== 'boolean'){
               errorsFound = true;
@@ -511,6 +545,30 @@
             visualImportErrors.push('showSearchBar');
           }
 
+          if(settings.hasOwnProperty('searchBarWidth')){
+            settings.searchBarWidth = parseFloat(settings.searchBarWidth);
+            if(typeof settings.searchBarWidth !== 'number' || settings.searchBarWidth < 20 || settings.searchBarWidth > 60){
+              errorsFound = true;
+              visualImportErrors.push('searchBarWidth');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('searchBarWidth');
+          }
+
+          if(settings.hasOwnProperty('searchBarHeight')){
+            settings.searchBarHeight = parseFloat(settings.searchBarHeight);
+            if(typeof settings.searchBarHeight !== 'number' || settings.searchBarHeight < 5 || settings.searchBarHeight > 10){
+              errorsFound = true;
+              visualImportErrors.push('searchBarHeight');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('searchBarHeight');
+          }
+
           if(settings.hasOwnProperty('showPageQuickAdd')){
             if(typeof settings.showPageQuickAdd !== 'boolean'){
               errorsFound = true;
@@ -542,6 +600,18 @@
           else{
             errorsFound = true;
             visualImportErrors.push('tileGrow');
+          }
+
+          if(settings.hasOwnProperty('tileSafeZone')){
+            settings.tileSafeZone = parseFloat(settings.tileSafeZone);
+            if(typeof settings.tileSafeZone !== 'number' || settings.tileSafeZone < 0 || settings.tileSafeZone > 50){
+              errorsFound = true;
+              visualImportErrors.push('tileSafeZone');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('tileSafeZone');
           }
 
           if(settings.hasOwnProperty('tileMinWidth')){
@@ -661,6 +731,17 @@
           else{
             errorsFound = true;
             visualImportErrors.push('frostedGlassOpacity');
+          }
+
+          if(settings.hasOwnProperty('navbarCompact')){
+            if(typeof settings.navbarCompact !== 'boolean'){
+              errorsFound = true;
+              visualImportErrors.push('navbarCompact');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('navbarCompact');
           }
 
           if(settings.hasOwnProperty('navbarOpacity')){

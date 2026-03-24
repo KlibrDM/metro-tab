@@ -8,6 +8,7 @@
   export let isShown = false;
   export let tileZoom;
   export let tileGrow;
+  export let tileSafeZone;
   export let tileMinWidth;
   export let tileHeight;
   export let tileGap;
@@ -17,6 +18,7 @@
   export let groupTileGap;
   export let groupTileBorderRadius;
   export let groupTileGrow;
+  export let navbarCompact;
   export let showSearchBar;
   export let showPageQuickAdd;
   export let showElementsShadow;
@@ -31,6 +33,7 @@
   class="speedDialBox"
   class:isShown={isShown}
   class:hiddenSearchBar={!showSearchBar}
+  class:compactNavbar={navbarCompact}
   class:largePadding={categories.length}
   style={
     useFrostedGlass
@@ -38,7 +41,13 @@
       : ""
   }
 >
-  <div class="buttons" style="gap: {tileGap}vh">
+  <div
+    class="buttons"
+    style={`
+      gap: ${tileGap}vh;
+      width: calc(100% - ${tileSafeZone}%);
+    `}
+  >
     {#if !showPageQuickAdd && !pages.filter(page => page.isActive).length}
       <div
         class="noPagesAvailableWarning"
@@ -337,6 +346,8 @@
     overflow-x: hidden;
     padding-top: 2em;
     padding-bottom: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
     box-sizing: border-box;
     width: 100%;
     flex-shrink: 0;
@@ -358,7 +369,8 @@
   .speedDialBox.largePadding {
     padding-bottom: 48px;
   }
-  .speedDialBox.hiddenSearchBar {
+  .speedDialBox.hiddenSearchBar,
+  .speedDialBox.compactNavbar {
     min-height: calc(100vh - 140px);
   }
   .noPagesAvailableWarning {
@@ -371,7 +383,6 @@
     color: white;
   }
   .buttons {
-    width: 75vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

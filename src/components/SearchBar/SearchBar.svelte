@@ -9,6 +9,9 @@
 
   let searchQuery = ""; //Binded to input
   let showSearchBar;
+  let searchBarWidth;
+  let searchBarHeight;
+  let navbarCompact;
   let navbarOpacity;
   let navbarColor;
   let showElementsShadow;
@@ -25,8 +28,11 @@
 
   userData.subscribe((data) => {
     showSearchBar = data.showSearchBar;
+    searchBarWidth = data.searchBarWidth;
+    searchBarHeight = data.searchBarHeight;
     searchEngine = data.searchEngine;
     customSearchEngineUrl = data.customSearchEngineUrl;
+    navbarCompact = data.navbarCompact;
     navbarOpacity = data.navbarOpacity;
     navbarColor = data.navbarColor;
     showElementsShadow = data.showElementsShadow;
@@ -112,11 +118,12 @@
 <div
   id="searchbarBox"
   class:hiddenSearchBar={!showSearchBar}
+  class:compactNavbar={navbarCompact}
   style="background-color: rgba({navbarColor.r},{navbarColor.g},{navbarColor.b},{navbarOpacity})"
 >
   {#if pinnedNote}
     <div id="note" style={`background-color: ${pinnedNote.backgroundColor}; color: ${pinnedNote.textColor};`}>
-      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840 && showSearchBar ? 104 : 52} />
+      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840 && (showSearchBar && !navbarCompact) ? 104 : 52} />
       <div class="noteActions">
         <button style={`color: ${pinnedNote.textColor};`} on:click={remoteOpenNotes}>Open notes</button>
         <button style={`color: ${pinnedNote.textColor};`} on:click={unpinNote}>Unpin</button>
@@ -138,6 +145,8 @@
           : ''
       }
       ${showElementsShadow ? 'box-shadow: 0px 0px 6px rgba(20, 20, 20, 0.4);' : ''}
+      width: ${searchBarWidth}vw;
+      height: ${searchBarHeight * 9 /* Magic number most closely matches old sizing */}px;
     `}
     on:submit={handleSearch}
   >
@@ -164,11 +173,12 @@
     align-items: center;
     position: relative;
   }
-  #searchbarBox.hiddenSearchBar {
+  #searchbarBox.hiddenSearchBar,
+  #searchbarBox.compactNavbar {
     flex-basis: 140px;
   }
   #searchbar {
-    width: 50vw;
+    min-width: 160px;
     border-radius: 100px;
     border: 2px solid;
     border-color: rgba(0, 0, 0, 0.4);
@@ -180,6 +190,10 @@
   #searchbarBox.hiddenSearchBar #searchbar {
     display: none;
   }
+  #searchbarBox.compactNavbar #searchbar {
+    position: absolute;
+    bottom: 12px;
+  }
   #searchbar:hover {
     background-color: rgba(0, 0, 0, 0.35);
   }
@@ -189,10 +203,9 @@
     text-indent: calc(8px + 0.8vw);
     border: 0;
     min-height: 40px;
-    height: 7vh;
     min-width: 50px;
     flex-grow: 1;
-    font-size: calc(8px + 1.4vh);
+    font-size: 20px;
   }
   #searchInput::placeholder {
     color: inherit;
@@ -218,7 +231,7 @@
     border: 0;
     cursor: pointer;
     color: inherit;
-    font-size: calc(8px + 1vh);
+    font-size: 18px;
   }
   #searchButton:focus {
     border-radius: 100px;
@@ -236,6 +249,9 @@
   #searchbarBox.hiddenSearchBar #note {
     bottom: 8px;
     width: clamp(200px, 24vw, 400px);
+  }
+  #searchbarBox.compactNavbar #note {
+    bottom: 8px;
   }
   .noteActions {
     display: flex;
@@ -259,11 +275,6 @@
       display: none;
     }
   }
-  @media screen and (max-width: 799px) {
-    #searchbar {
-      width: 75vw;
-    }
-  }
   @media screen and (max-width: 599px) {
     #note {
       display: none;
@@ -271,17 +282,7 @@
   }
   @media screen and (max-height: 600px) {
     #note {
-      top: 40px;
-    }
-    #searchbarBox.hiddenSearchBar #note {
-      top: 8px;
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #searchbarBox.hiddenSearchBar {
-      flex-basis: 110px;
+      bottom: 8px;
     }
   }
   @media screen and (max-height: 450px) {

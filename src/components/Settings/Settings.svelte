@@ -53,9 +53,12 @@
       state.frostedGlassAccentColor = settingsData.frostedGlassAccentColor;
       state.showElementsShadow = settingsData.showElementsShadow;
       state.showSearchBar = settingsData.showSearchBar;
+      state.searchBarWidth = settingsData.searchBarWidth;
+      state.searchBarHeight = settingsData.searchBarHeight;
       state.showPageQuickAdd = settingsData.showPageQuickAdd;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
+      state.tileSafeZone = settingsData.tileSafeZone;
       state.tileMinWidth = settingsData.tileMinWidth;
       state.tileHeight = settingsData.tileHeight;
       state.tileGap = settingsData.tileGap;
@@ -65,10 +68,13 @@
       state.groupTileGap = settingsData.groupTileGap;
       state.groupTileBorderRadius = settingsData.groupTileBorderRadius;
       state.groupTileGrow = settingsData.groupTileGrow;
+      state.navbarCompact = settingsData.navbarCompact;
       state.navbarOpacity = settingsData.navbarOpacity;
       state.navbarColor = settingsData.navbarColor;
       state.coverColor = settingsData.coverColor;
       state.coverTextColor = settingsData.coverTextColor;
+      state.tabName = escapeHTML(settingsData.tabName);
+      state.tabIcon = settingsData.tabIcon;
       state.pages = settingsData.pages;
       state.categories = settingsData.categories;
       return state;
@@ -93,9 +99,12 @@
       state.frostedGlassAccentColor = CONFIG.frostedGlassAccentColor;
       state.showElementsShadow = CONFIG.showElementsShadow;
       state.showSearchBar = CONFIG.showSearchBar;
+      state.searchBarWidth = CONFIG.searchBarWidth;
+      state.searchBarHeight = CONFIG.searchBarHeight;
       state.showPageQuickAdd = CONFIG.showPageQuickAdd;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
+      state.tileSafeZone = CONFIG.tileSafeZone;
       state.tileMinWidth = CONFIG.tileMinWidth;
       state.tileHeight = CONFIG.tileHeight;
       state.tileGap = CONFIG.tileGap;
@@ -105,10 +114,13 @@
       state.groupTileGap = CONFIG.groupTileGap;
       state.groupTileBorderRadius = CONFIG.groupTileBorderRadius;
       state.groupTileGrow = CONFIG.groupTileGrow;
+      state.navbarCompact = CONFIG.navbarCompact;
       state.navbarOpacity = CONFIG.navbarOpacity;
       state.navbarColor = CONFIG.navbarColor;
       state.coverColor = CONFIG.coverColor;
       state.coverTextColor = CONFIG.coverTextColor;
+      state.tabName = escapeHTML(CONFIG.tabName);
+      state.tabIcon = CONFIG.tabIcon;
       return state;
     });
 

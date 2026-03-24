@@ -11,6 +11,7 @@
   let categories = [];
   let tileZoom;
   let tileGrow;
+  let tileSafeZone;
   let tileMinWidth;
   let tileHeight;
   let tileGap;
@@ -20,6 +21,7 @@
   let groupTileGap;
   let groupTileBorderRadius;
   let groupTileGrow;
+  let navbarCompact;
   let showSearchBar;
   let showPageQuickAdd;
   let showElementsShadow;
@@ -42,6 +44,7 @@
     categories = data.categories;
     tileZoom = data.tileZoom;
     tileGrow = data.tileGrow;
+    tileSafeZone = data.tileSafeZone;
     tileMinWidth = data.tileMinWidth;
     tileHeight = data.tileHeight;
     tileGap = data.tileGap;
@@ -51,6 +54,7 @@
     groupTileGap = data.groupTileGap;
     groupTileBorderRadius = data.groupTileBorderRadius;
     groupTileGrow = data.groupTileGrow;
+    navbarCompact = data.navbarCompact;
     showSearchBar = data.showSearchBar;
     showPageQuickAdd = data.showPageQuickAdd;
     showElementsShadow = data.showElementsShadow;
@@ -125,6 +129,7 @@
       isShown={selectedCategoryIndex === index}
       tileZoom={tileZoom}
       tileGrow={tileGrow}
+      tileSafeZone={tileSafeZone}
       tileMinWidth={tileMinWidth}
       tileHeight={tileHeight}
       tileGap={tileGap}
@@ -134,6 +139,7 @@
       groupTileGap={groupTileGap}
       groupTileBorderRadius={groupTileBorderRadius}
       groupTileGrow={groupTileGrow}
+      navbarCompact={navbarCompact}
       showSearchBar={showSearchBar}
       showPageQuickAdd={showPageQuickAdd}
       showElementsShadow={showElementsShadow}
@@ -152,6 +158,7 @@
     isShown={selectedCategoryIndex === categories.length}
     tileZoom={tileZoom}
     tileGrow={tileGrow}
+    tileSafeZone={tileSafeZone}
     tileMinWidth={tileMinWidth}
     tileHeight={tileHeight}
     tileGap={tileGap}
@@ -161,6 +168,7 @@
     groupTileGap={groupTileGap}
     groupTileBorderRadius={groupTileBorderRadius}
     groupTileGrow={groupTileGrow}
+    navbarCompact={navbarCompact}
     showSearchBar={showSearchBar}
     showPageQuickAdd={showPageQuickAdd}
     showElementsShadow={showElementsShadow}
