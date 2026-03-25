@@ -27,6 +27,10 @@
   export let frostedGlassOpacity;
   export let frostedGlassColor;
   export let frostedGlassAccentColor;
+
+  const getActivePagesCountInGroup = (group) => {
+    return group.pages.filter(page => page.isActive).length;
+  }
 </script>
 
 <div
@@ -152,10 +156,10 @@
             {/if}
           </a>
 
-        {:else if page.isGroup && page.pages.length > 0}
+        {:else if page.isGroup && getActivePagesCountInGroup(page) > 0}
 
           <div class="pageGroup" style="
-            gap: {page.pages.length <= 12 ? groupTileGap : groupTileGap / 2}vh;
+            gap: {getActivePagesCountInGroup(page) <= 12 ? groupTileGap : groupTileGap / 2}vh;
             flex-grow: {tileGrow ? 1 : 0};
             min-width: {tileMinWidth}vh;
             height: {tileHeight}vh;
@@ -163,22 +167,22 @@
             {!groupTileGrow ? `
               grid-template-columns: ${
               tileMinWidth < tileHeight
-                ? page.pages.length <= 2
+                ? getActivePagesCountInGroup(page) <= 2
                   ? "1fr"
-                  : page.pages.length <= 6
+                  : getActivePagesCountInGroup(page) <= 6
                     ? "1fr 1fr"
-                    : page.pages.length <= 12
+                    : getActivePagesCountInGroup(page) <= 12
                       ? "1fr 1fr 1fr"
                       : "1fr 1fr 1fr 1fr"
-                : page.pages.length === 1
+                : getActivePagesCountInGroup(page) === 1
                   ? "1fr"
-                  : page.pages.length === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
+                  : getActivePagesCountInGroup(page) === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
                     ? "1fr"
-                    : page.pages.length <= 4
+                    : getActivePagesCountInGroup(page) <= 4
                       ? "1fr 1fr"
-                      : page.pages.length <= 9
+                      : getActivePagesCountInGroup(page) <= 9
                         ? "1fr 1fr 1fr"
-                        : page.pages.length <= 12
+                        : getActivePagesCountInGroup(page) <= 12
                           ? "1fr 1fr 1fr 1fr"
                           : "1fr 1fr 1fr 1fr 1fr"
               };
@@ -230,11 +234,11 @@
                         ? 1.8
                         : (subpage.tileImageType === 'icon' ? 1 : subpage.tileName.length) * 0.8
                       ) / (
-                        page.pages.length <= 2
+                        getActivePagesCountInGroup(page) <= 2
                         ? 1.5
-                        : page.pages.length <= 9
+                        : getActivePagesCountInGroup(page) <= 9
                           ? 2.5
-                          : page.pages.length <= 12
+                          : getActivePagesCountInGroup(page) <= 12
                             ? 3.2
                             : 4.2
                       )
@@ -248,20 +252,20 @@
                       flex-grow: 1;
                       flex-basis: ${
                         tileMinWidth < tileHeight
-                        ? page.pages.length <= 2
+                        ? getActivePagesCountInGroup(page) <= 2
                           ? "100%"
-                          : page.pages.length <= 6
+                          : getActivePagesCountInGroup(page) <= 6
                             ? "40%"
-                            : page.pages.length <= 12
+                            : getActivePagesCountInGroup(page) <= 12
                               ? "28%"
                               : "21%"
-                        : page.pages.length === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
+                        : getActivePagesCountInGroup(page) === 2 && tileMinWidth - tileHeight < tileMinWidth / 4
                           ? "100%"
-                          : page.pages.length <= 4
+                          : getActivePagesCountInGroup(page) <= 4
                             ? "40%"
-                            : page.pages.length <= 9
+                            : getActivePagesCountInGroup(page) <= 9
                               ? "28%"
-                              : page.pages.length <= 12
+                              : getActivePagesCountInGroup(page) <= 12
                                 ? "21%"
                                 : "15%"
                       };
