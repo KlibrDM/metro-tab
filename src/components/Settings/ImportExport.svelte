@@ -604,7 +604,7 @@
 
           if(settings.hasOwnProperty('tileSafeZone')){
             settings.tileSafeZone = parseFloat(settings.tileSafeZone);
-            if(typeof settings.tileSafeZone !== 'number' || settings.tileSafeZone < 0 || settings.tileSafeZone > 50){
+            if(typeof settings.tileSafeZone !== 'number' || settings.tileSafeZone < 5 || settings.tileSafeZone > 50){
               errorsFound = true;
               visualImportErrors.push('tileSafeZone');
             }

@@ -49,7 +49,7 @@
     class="buttons"
     style={`
       gap: ${tileGap}vh;
-      width: calc(100% - ${tileSafeZone}% + 2em);
+      width: calc(100% - ${tileSafeZone}%);
     `}
   >
     {#if !showPageQuickAdd && !pages.filter(page => page.isActive).length}
@@ -350,8 +350,6 @@
     overflow-x: hidden;
     padding-top: 2em;
     padding-bottom: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
     box-sizing: border-box;
     width: 100%;
     flex-shrink: 0;

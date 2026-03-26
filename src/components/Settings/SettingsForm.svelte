@@ -408,7 +408,7 @@
           <div class="settingsNumberSliderGroup">
             <input
               type="range"
-              min="0"
+              min="5"
               max="50"
               step="1"
               class="settingsSlider"
@@ -419,7 +419,7 @@
             />
             <input
               type="number"
-              min="0"
+              min="5"
               max="50"
               step="1"
               class="settingsNumberInput"
