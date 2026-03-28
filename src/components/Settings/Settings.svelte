@@ -298,7 +298,7 @@
   function slide() {
     return {
       duration: 500,
-      css: (t, u) => `clip-path: circle(${t * 130}% at 97.5% 3.5vh)`,
+      css: (t, u) => `clip-path: circle(${t * 130}% at calc(100% - 45px) 1.5vh)`,
     };
   }
 </script>
@@ -472,17 +472,16 @@
   }
   #settingsButton {
     position: absolute;
-    top: 20px;
-    right: 25px;
-    width: 30px;
-    height: 30px;
-    color: white;
+    top: 0px;
+    right: 20px;
+    width: 36px;
+    height: 26px;
+    color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.25);
     transition: 0.3s;
-    border-radius: 100%;
     border: 0;
     cursor: pointer;
     z-index: 24;
@@ -516,17 +515,16 @@
   }
   #peekButton {
     position: absolute;
-    top: 20px;
-    right: 65px;
-    width: 30px;
-    height: 30px;
-    color: white;
+    top: 0px;
+    right: 64px;
+    width: 36px;
+    height: 26px;
+    color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.25);
     transition: 0.3s;
-    border-radius: 100%;
     border: 0;
     cursor: pointer;
   }
