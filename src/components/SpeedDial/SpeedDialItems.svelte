@@ -399,7 +399,7 @@
     z-index: 0;
     flex-basis: 0;
     line-height: 0;
-    box-sizing: content-box;
+    box-sizing: border-box;
   }
   .pageButton:hover {
     animation: pop-out 0.25s;
