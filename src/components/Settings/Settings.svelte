@@ -45,6 +45,9 @@
       state.showCover = settingsData.showCover;
       state.clockBackground = settingsData.clockBackground;
       state.clock24Hour = settingsData.clock24Hour;
+      state.clockDateFormat = settingsData.clockDateFormat;
+      state.clockPosition = settingsData.clockPosition;
+      state.clockSize = settingsData.clockSize;
       state.darkMode = settingsData.darkMode;
       state.useFrostedGlass = settingsData.useFrostedGlass;
       state.frostedGlassStrength = settingsData.frostedGlassStrength;
@@ -91,6 +94,9 @@
       state.showCover = CONFIG.showCover;
       state.clockBackground = CONFIG.clockBackground;
       state.clock24Hour = CONFIG.clock24Hour;
+      state.clockDateFormat = CONFIG.clockDateFormat;
+      state.clockPosition = CONFIG.clockPosition;
+      state.clockSize = CONFIG.clockSize;
       state.darkMode = CONFIG.darkMode;
       state.useFrostedGlass = CONFIG.useFrostedGlass;
       state.frostedGlassStrength = CONFIG.frostedGlassStrength;

@@ -4,6 +4,7 @@
   import { userData } from "../../store";
   import { searchEngineList } from "../../data/config";
   import { saveNotes } from "../../data/storage";
+  import { ClockPositionOptions } from "../../data/options";
 
   export let remoteOpenNotes;
 
@@ -23,6 +24,7 @@
   let searchEngine;
   let customSearchEngineUrl;
   let pinnedNote;
+  let clockPosition;
 
   let innerHeight = 0;
 
@@ -42,6 +44,7 @@
     frostedGlassColor = data.frostedGlassColor;
     frostedGlassAccentColor = data.frostedGlassAccentColor;
     pinnedNote = data.notes.find((note) => note.isPinned);
+    clockPosition = data.clockPosition;
   });
 
   const saveNoteChanges = () => {
@@ -119,11 +122,16 @@
   id="searchbarBox"
   class:hiddenSearchBar={!showSearchBar}
   class:compactNavbar={navbarCompact}
+  class:clockCenter={clockPosition === ClockPositionOptions.Center}
   style="background-color: rgba({navbarColor.r},{navbarColor.g},{navbarColor.b},{navbarOpacity})"
 >
   {#if pinnedNote}
-    <div id="note" style={`background-color: ${pinnedNote.backgroundColor}; color: ${pinnedNote.textColor};`}>
-      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840 && (showSearchBar && !navbarCompact) ? 104 : 52} />
+    <div
+      id="note"
+      class:rightAligned={clockPosition === ClockPositionOptions.Left}
+      style={`background-color: ${pinnedNote.backgroundColor}; color: ${pinnedNote.textColor};`}
+    >
+      <Note note={pinnedNote} saveAllNotes={saveNoteChanges} overrideMaxHeight={innerHeight > 840 && !navbarCompact ? 104 : 52} />
       <div class="noteActions">
         <button style={`color: ${pinnedNote.textColor};`} on:click={remoteOpenNotes}>Open notes</button>
         <button style={`color: ${pinnedNote.textColor};`} on:click={unpinNote}>Unpin</button>
@@ -161,7 +169,9 @@
       <i class="fas fa-search" />
     </button>
   </form>
-  <Clock />
+  {#if clockPosition !== ClockPositionOptions.Hidden}
+    <Clock />
+  {/if}
 </div>
 
 <style>
@@ -173,7 +183,6 @@
     align-items: center;
     position: relative;
   }
-  #searchbarBox.hiddenSearchBar,
   #searchbarBox.compactNavbar {
     flex-basis: 140px;
   }
@@ -193,6 +202,10 @@
   #searchbarBox.compactNavbar #searchbar {
     position: absolute;
     bottom: 12px;
+  }
+  #searchbarBox.clockCenter {
+    flex-direction: column-reverse;
+    gap: 12px;
   }
   #searchbar:hover {
     background-color: rgba(0, 0, 0, 0.35);
@@ -246,9 +259,9 @@
     width: clamp(200px, 17vw, 400px);
     border-radius: 5px;
   }
-  #searchbarBox.hiddenSearchBar #note {
-    bottom: 8px;
-    width: clamp(200px, 24vw, 400px);
+  #note.rightAligned {
+    left: unset;
+    right: 2vw;
   }
   #searchbarBox.compactNavbar #note {
     bottom: 8px;

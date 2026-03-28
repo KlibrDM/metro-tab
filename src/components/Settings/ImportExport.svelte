@@ -2,6 +2,7 @@
   import moment from "moment";
   import { deleteAllTileImages, getIsDefaultBackupDate, getLastBackupDate, getTileImage, getTileImageLinks, parseNotes, saveBackground, saveTileImage, setLastBackupDate, unsetIsDefaultBackupDate } from "../../data/storage";
   import { backgroundImage as DEFAULT_BACKGROUND_IMAGE } from "../../data/config";
+  import { ClockDateFormatOptions, ClockPositionOptions } from "../../data/options";
 
   const visualSettingsMap = new Map([
     ['yourName', 'Your name'],
@@ -10,6 +11,9 @@
     ['showCover', 'Show cover'],
     ['clockBackground', 'Clock background'],
     ['clock24Hour', '24 hour clock'],
+    ['clockDateFormat', 'Clock date format'],
+    ['clockPosition', 'Clock position'],
+    ['clockSize', 'Clock size'],
     ['darkMode', 'Dark panels'],
     ['useFrostedGlass', 'Use frosted glass design'],
     ['showElementsShadow', 'Show shadows'],
@@ -113,6 +117,9 @@
       exportDataObject.showCover = settingsData.showCover;
       exportDataObject.clockBackground = settingsData.clockBackground;
       exportDataObject.clock24Hour = settingsData.clock24Hour;
+      exportDataObject.clockDateFormat = settingsData.clockDateFormat;
+      exportDataObject.clockPosition = settingsData.clockPosition;
+      exportDataObject.clockSize = settingsData.clockSize;
       exportDataObject.darkMode = settingsData.darkMode;
       exportDataObject.useFrostedGlass = settingsData.useFrostedGlass;
       exportDataObject.frostedGlassStrength = settingsData.frostedGlassStrength;
@@ -499,6 +506,40 @@
           else{
             errorsFound = true;
             visualImportErrors.push('clock24Hour');
+          }
+
+          if(settings.hasOwnProperty('clockDateFormat')){
+            if(typeof settings.clockDateFormat !== 'string' || !Object.values(ClockDateFormatOptions).includes(settings.clockDateFormat)){
+              errorsFound = true;
+              visualImportErrors.push('clockDateFormat');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('clockDateFormat');
+          }
+
+          if(settings.hasOwnProperty('clockPosition')){
+            if(typeof settings.clockPosition !== 'string' || !Object.values(ClockPositionOptions).includes(settings.clockPosition)){
+              errorsFound = true;
+              visualImportErrors.push('clockPosition');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('clockPosition');
+          }
+
+          if(settings.hasOwnProperty('clockSize')){
+            settings.clockSize = parseFloat(settings.clockSize);
+            if(typeof settings.clockSize !== 'number' || settings.clockSize < 3 || settings.clockSize > 10){
+              errorsFound = true;
+              visualImportErrors.push('clockSize');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('clockSize');
           }
 
           if(settings.hasOwnProperty('darkMode')){

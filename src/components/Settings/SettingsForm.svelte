@@ -1,4 +1,6 @@
 <script>
+  import moment from "moment";
+  import { ClockDateFormatOptions, ClockPositionOptions } from "../../data/options";
   import { compressImage, toHex, toRGB } from "../../data/tools";
   import Tooltip from "../Tooltip.svelte";
 
@@ -68,15 +70,15 @@
     <div class="settingsFormGroup">
       <div class="settingsInput">
         <div class="imagePlaceholder">
-          <img src="static/images/settings/s_your_name.webp" alt="Set your name" />
+          <img src="static/images/settings/s_cover_text.webp" alt="Set cover text" />
         </div>
         <hr/>
         <div class="settingsInputGroup">
-          <label for="set_yourName">Your name</label>
+          <label for="set_coverText">Cover text</label>
           <input
             type="text"
-            id="set_yourName"
-            name="set_yourName"
+            id="set_coverText"
+            name="set_coverText"
             class="settingsTextInput"
             bind:value={settingsData.yourName}
             on:input={() => {
@@ -85,7 +87,7 @@
           />
         </div>
         <div class="settingsFormHintContainer">
-          <Tooltip text="Set your name or any text you want to be displayed on the cover screen when opening a new tab.">
+          <Tooltip text="Set the text you want to be displayed on the cover screen when opening a new tab.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
@@ -161,6 +163,103 @@
         </div>
         <div class="settingsFormHintContainer">
           <Tooltip text="Toggle between 12 hour and 24 hour format for the clock.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_clock_date_format.webp" alt="Set clock date format" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_clockDateFormat">Clock date format</label>
+          <select
+            name="set_clockDateFormat"
+            id="set_clockDateFormat"
+            bind:value={settingsData.clockDateFormat}
+            on:change={() => {
+              unsavedSettings = true;
+            }}
+          >
+            {#each Object.values(ClockDateFormatOptions) as format}
+              <option value={format}>
+                {format === ClockDateFormatOptions.None ? format : moment().format(format)}
+              </option>
+            {/each}
+          </select>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Select the date format for the clock. This will display the date on the clock in addition to the time. The &quot;None&quot; option will hide the date and show only the time.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_clock_size.webp" alt="Set clock size" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_clockSize">Clock size</label>
+          <div class="settingsNumberSliderGroup">
+            <input
+              type="range"
+              min="3"
+              max="10"
+              step="1"
+              class="settingsSlider"
+              bind:value={settingsData.clockSize}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+            <input
+              type="number"
+              min="3"
+              max="10"
+              step="1"
+              class="settingsNumberInput"
+              id="set_clockSize"
+              name="set_clockSize"
+              bind:value={settingsData.clockSize}
+              on:input={() => {
+                unsavedSettings = true;
+              }}
+            />
+          </div>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Set the size of the clock. The clock size will be limited when using &quot;Compact navbar&quot;.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
+          <img src="static/images/settings/s_clock_position.webp" alt="Set clock position" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_clockPosition">Clock position</label>
+          <select
+            name="set_clockPosition"
+            id="set_clockPosition"
+            bind:value={settingsData.clockPosition}
+            on:change={() => {
+              unsavedSettings = true;
+            }}
+          >
+            {#each Object.values(ClockPositionOptions) as position}
+              <option value={position}>{position}</option>
+            {/each}
+          </select>
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Select where the clock is displayed on the page. Choose &quot;Hidden&quot; to hide the clock. The &quot;Center&quot; option will not work if both &quot;Compact navbar&quot; and &quot;Show search bar&quot; are enabled and will fall back to &quot;Right&quot; position.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>

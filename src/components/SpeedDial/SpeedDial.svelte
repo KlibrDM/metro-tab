@@ -22,7 +22,6 @@
   let groupTileBorderRadius;
   let groupTileGrow;
   let navbarCompact;
-  let showSearchBar;
   let showPageQuickAdd;
   let showElementsShadow;
   let useFrostedGlass;
@@ -55,7 +54,6 @@
     groupTileBorderRadius = data.groupTileBorderRadius;
     groupTileGrow = data.groupTileGrow;
     navbarCompact = data.navbarCompact;
-    showSearchBar = data.showSearchBar;
     showPageQuickAdd = data.showPageQuickAdd;
     showElementsShadow = data.showElementsShadow;
     useFrostedGlass = data.useFrostedGlass;
@@ -140,7 +138,6 @@
       groupTileBorderRadius={groupTileBorderRadius}
       groupTileGrow={groupTileGrow}
       navbarCompact={navbarCompact}
-      showSearchBar={showSearchBar}
       showPageQuickAdd={showPageQuickAdd}
       showElementsShadow={showElementsShadow}
       useFrostedGlass={useFrostedGlass}
@@ -169,7 +166,6 @@
     groupTileBorderRadius={groupTileBorderRadius}
     groupTileGrow={groupTileGrow}
     navbarCompact={navbarCompact}
-    showSearchBar={showSearchBar}
     showPageQuickAdd={showPageQuickAdd}
     showElementsShadow={showElementsShadow}
     useFrostedGlass={useFrostedGlass}

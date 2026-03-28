@@ -1,8 +1,13 @@
+import { ClockDateFormatOptions, ClockPositionOptions } from "./options";
+
 /*Default settings*/
 export const yourName = "New Tab";
 export const showCover = true;
 export const clockBackground = true;
 export const clock24Hour = true;
+export const clockDateFormat = ClockDateFormatOptions.None;
+export const clockPosition = ClockPositionOptions.Right;
+export const clockSize = 6;
 export const darkMode = false;
 export const useFrostedGlass = false;
 export const frostedGlassStrength = 8;

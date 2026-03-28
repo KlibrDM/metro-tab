@@ -7,6 +7,9 @@ export const saveConfig = (data) => {
   localStorage.setItem("showCover", data.showCover);
   localStorage.setItem("clockBackground", data.clockBackground);
   localStorage.setItem("clock24Hour", data.clock24Hour);
+  localStorage.setItem("clockDateFormat", data.clockDateFormat);
+  localStorage.setItem("clockPosition", data.clockPosition);
+  localStorage.setItem("clockSize", data.clockSize);
   localStorage.setItem("darkMode", data.darkMode);
   localStorage.setItem("useFrostedGlass", data.useFrostedGlass);
   localStorage.setItem("frostedGlassStrength", data.frostedGlassStrength);
@@ -186,6 +189,18 @@ const data = {
     localStorage.getItem("clock24Hour") === null
     ? CONFIG.clock24Hour
     : localStorage.getItem("clock24Hour") === "true",
+
+  clockDateFormat:
+    localStorage.getItem("clockDateFormat") ||
+    CONFIG.clockDateFormat,
+
+  clockPosition: 
+    localStorage.getItem("clockPosition") ||
+    CONFIG.clockPosition,
+
+  clockSize: 
+    localStorage.getItem("clockSize") ||
+    CONFIG.clockSize,
 
   darkMode:
     localStorage.getItem("darkMode") === null

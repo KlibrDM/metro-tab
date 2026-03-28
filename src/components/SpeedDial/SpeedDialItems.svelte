@@ -19,7 +19,6 @@
   export let groupTileBorderRadius;
   export let groupTileGrow;
   export let navbarCompact;
-  export let showSearchBar;
   export let showPageQuickAdd;
   export let showElementsShadow;
   export let useFrostedGlass;
@@ -36,7 +35,6 @@
 <div
   class="speedDialBox"
   class:isShown={isShown}
-  class:hiddenSearchBar={!showSearchBar}
   class:compactNavbar={navbarCompact}
   class:largePadding={categories.length}
   style={
@@ -371,7 +369,6 @@
   .speedDialBox.largePadding {
     padding-bottom: 48px;
   }
-  .speedDialBox.hiddenSearchBar,
   .speedDialBox.compactNavbar {
     min-height: calc(100vh - 140px);
   }
