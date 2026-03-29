@@ -44,6 +44,14 @@
     ['coverTextColor', 'Cover text color' ],
   ]);
 
+  const behaviorSettingsMap = new Map([
+    ['openPageInNewTab', 'Open pages in new tab'],
+    ['openSearchInNewTab', 'Open search results in new tab'],
+    ['categoryBarScroll', 'Scroll on category bar'],
+    ['categorySwipeNavigation', 'Swipe to navigate categories'],
+    ['categorySwitchButtons', 'Show category switch buttons'],
+  ]);
+
   export let settingsData;
   export let saveSettings;
 
@@ -51,8 +59,8 @@
   let isDefaultBackupDate = getIsDefaultBackupDate();
 
   let settings, fileInput;
-  let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importNotes = true, importSearchEngine = true;
-  let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportNotes = true, exportSearchEngine = true;
+  let importPages = true, importTileImages = true, importBackground = true, importVisuals = true, importBehavior = true, importNotes = true, importSearchEngine = true;
+  let exportPages = true, exportTileImages = true, exportBackground = true, exportVisuals = true, exportBehavior = true, exportNotes = true, exportSearchEngine = true;
 
   // Keep track of import errors
   let importErrors = {
@@ -60,11 +68,14 @@
     tileImages: false,
     background: false,
     visuals: false,
+    behavior: false,
     searchEngine: false,
     notes: false,
   };
-  // Keep track of visual import errors
+  // Keep track of visual & behavior import errors
   let visualImportErrors = [];
+  let behaviorImportErrors = [];
+
   let importFinishedSuccessfully = false; // False doesn't necesarily mean there were errors, just that no import was started
 
   const clearImportErrors = () => {
@@ -73,6 +84,7 @@
       tileImages: false,
       background: false,
       visuals: false,
+      behavior: false,
       searchEngine: false,
       notes: false,
     };
@@ -150,6 +162,13 @@
       exportDataObject.coverTextColor = settingsData.coverTextColor;
       exportDataObject.tabName = settingsData.tabName;
       exportDataObject.tabIcon = settingsData.tabIcon;
+    }
+    if(exportBehavior){
+      exportDataObject.openPageInNewTab = settingsData.openPageInNewTab;
+      exportDataObject.openSearchInNewTab = settingsData.openSearchInNewTab;
+      exportDataObject.categoryBarScroll = settingsData.categoryBarScroll;
+      exportDataObject.categorySwipeNavigation = settingsData.categorySwipeNavigation;
+      exportDataObject.categorySwitchButtons = settingsData.categorySwitchButtons;
     }
     if(exportTileImages){
       const links = getTileImageLinks();
@@ -976,10 +995,82 @@
           }
         }
 
+        //Check behavior settings for errors then import
+        if(importBehavior){
+          let errorsFound = false;
+          behaviorImportErrors = [];
+
+          if(settings.hasOwnProperty('openPageInNewTab')){
+            if(typeof settings.openPageInNewTab !== 'boolean'){
+              errorsFound = true;
+              behaviorImportErrors.push('openPageInNewTab');
+            }
+          }
+          else{
+            errorsFound = true;
+            behaviorImportErrors.push('openPageInNewTab');
+          }
+
+          if(settings.hasOwnProperty('openSearchInNewTab')){
+            if(typeof settings.openSearchInNewTab !== 'boolean'){
+              errorsFound = true;
+              behaviorImportErrors.push('openSearchInNewTab');
+            }
+          }
+          else{
+            errorsFound = true;
+            behaviorImportErrors.push('openSearchInNewTab');
+          }
+
+          if(settings.hasOwnProperty('categoryBarScroll')){
+            if(typeof settings.categoryBarScroll !== 'boolean'){
+              errorsFound = true;
+              behaviorImportErrors.push('categoryBarScroll');
+            }
+          }
+          else{
+            errorsFound = true;
+            behaviorImportErrors.push('categoryBarScroll');
+          }
+
+          if(settings.hasOwnProperty('categorySwipeNavigation')){
+            if(typeof settings.categorySwipeNavigation !== 'boolean'){
+              errorsFound = true;
+              behaviorImportErrors.push('categorySwipeNavigation');
+            }
+          }
+          else{
+            errorsFound = true;
+            behaviorImportErrors.push('categorySwipeNavigation');
+          }
+
+          if(settings.hasOwnProperty('categorySwitchButtons')){
+            if(typeof settings.categorySwitchButtons !== 'boolean'){
+              errorsFound = true;
+              behaviorImportErrors.push('categorySwitchButtons');
+            }
+          }
+          else{
+            errorsFound = true;
+            behaviorImportErrors.push('categorySwitchButtons');
+          }
+
+          behaviorSettingsMap.forEach((_value, key) => {
+            if(!behaviorImportErrors.includes(key)){
+              settingsToSave[key] = settings[key];
+            }
+          });
+
+          if(errorsFound) {
+            importErrors.behavior = true;
+          }
+        }
+
         if(!importErrors.pages
           && !importErrors.tileImages
           && !importErrors.background
           && !importErrors.visuals
+          && !importErrors.behavior
           && !importErrors.searchEngine
           && !importErrors.notes
         ){
@@ -1060,6 +1151,17 @@
           bind:checked={importVisuals}
         />
         <label for="import_visuals">Import Visuals</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
+          id="import_behavior"
+          name="import_behavior"
+          class="settingsCheckbox"
+          bind:checked={importBehavior}
+        />
+        <label for="import_behavior">Import Behavior</label>
       </div>
 
       <div>
@@ -1155,6 +1257,17 @@
       <div>
         <input
           type="checkbox"
+          id="export_behavior"
+          name="export_behavior"
+          class="settingsCheckbox"
+          bind:checked={exportBehavior}
+        />
+        <label for="export_behavior">Export Behavior</label>
+      </div>
+
+      <div>
+        <input
+          type="checkbox"
           id="export_searchEngine"
           name="export_searchEngine"
           class="settingsCheckbox"
@@ -1204,6 +1317,7 @@
     || importErrors.tileImages
     || importErrors.background
     || importErrors.visuals
+    || importErrors.behavior
     || importErrors.searchEngine
     || importErrors.notes
   }
@@ -1211,7 +1325,7 @@
       <div
         class="IEAlert"
         class:IEAlertError={importErrors.pages || importErrors.tileImages || importErrors.background || importErrors.searchEngine || importErrors.notes}
-        class:IEAlertWarning={importErrors.visuals && !(importErrors.pages || importErrors.tileImages || importErrors.background || importErrors.searchEngine || importErrors.notes)}
+        class:IEAlertWarning={importErrors.visuals || importErrors.behavior && !(importErrors.pages || importErrors.tileImages || importErrors.background || importErrors.searchEngine || importErrors.notes)}
       >
         {#if importErrors.pages}
           <span>There was an error importing pages & categories.</span>
@@ -1228,6 +1342,15 @@
             <span>The following visual settings couldn't be imported and remain unchanged:</span>
             {#each visualImportErrors as error}
               <span>- {visualSettingsMap.get(error) || 'Unknown setting'}</span>
+            {/each}
+          {/if}
+        {/if}
+        {#if importErrors.behavior}
+          <span>There was an error importing behavior settings.</span>
+          {#if behaviorImportErrors.length > 0}
+            <span>The following behavior settings couldn't be imported and remain unchanged:</span>
+            {#each behaviorImportErrors as error}
+              <span>- {behaviorSettingsMap.get(error) || 'Unknown setting'}</span>
             {/each}
           {/if}
         {/if}

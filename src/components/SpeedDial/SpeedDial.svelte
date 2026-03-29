@@ -29,6 +29,10 @@
   let frostedGlassOpacity;
   let frostedGlassColor;
   let frostedGlassAccentColor;
+  let openPageInNewTab;
+  let categoryBarScroll;
+  let categorySwipeNavigation;
+  let categorySwitchButtons;
 
   let selectedCategoryIndex = 0;
   let selectedCategoryId = undefined;
@@ -37,6 +41,11 @@
   let isQuickAddOpen = false;
 
   let windowInnerWidth = 0;
+  
+  let lastCategoryNavigationTime = Date.now();
+  let swipeNavigationBoxOffset = 0;
+  let isSlowSwipe = false;
+  let swipeNavTimer;
 
   userData.subscribe((data) => {
     pages = data.pages;
@@ -61,6 +70,10 @@
     frostedGlassOpacity = data.frostedGlassOpacity;
     frostedGlassColor = data.frostedGlassColor;
     frostedGlassAccentColor = data.frostedGlassAccentColor;
+    openPageInNewTab = data.openPageInNewTab;
+    categoryBarScroll = data.categoryBarScroll;
+    categorySwipeNavigation = data.categorySwipeNavigation;
+    categorySwitchButtons = data.categorySwitchButtons;
 
     if(firstRender) {
       // Set the selected category index based on local storage when the component mounts
@@ -89,6 +102,93 @@
     categoriesList.scrollLeft += directionMultiplier * (windowWidth * 0.55 - (windowWidth > 400 ? 100 : 20));
   };
 
+  const onCategoryNext = () => {
+    if (selectedCategoryIndex < categories.length - 1) {
+      selectedCategoryIndex += 1;
+      selectedCategoryId = categories[selectedCategoryIndex] ? categories[selectedCategoryIndex].id : undefined;
+    }
+    else if (showUncategorized && selectedCategoryIndex === categories.length - 1) {
+      selectedCategoryIndex += 1;
+      selectedCategoryId = "0000";
+    }
+  };
+
+  const onCategoryPrevious = () => {
+    if (selectedCategoryIndex > 0) {
+      selectedCategoryIndex -= 1;
+      selectedCategoryId = categories[selectedCategoryIndex] ? categories[selectedCategoryIndex].id : undefined;
+    }
+  };
+
+  const onCategoryBarScroll = (event) => {
+    if(
+      Date.now() - lastCategoryNavigationTime < 400
+      || (event.deltaMode === 0 && (event.deltaY >= -1 && event.deltaY <= 1))
+    ) {
+      return;
+    }
+
+    if (event.deltaY > 0) {
+      onCategoryNext();
+      lastCategoryNavigationTime = Date.now();
+    }
+    else {
+      onCategoryPrevious();
+      lastCategoryNavigationTime = Date.now();
+    }
+  };
+
+  const onCategorySwipe = (event) => {
+    if (
+      Date.now() - lastCategoryNavigationTime < 300
+      || (!isSlowSwipe && Date.now() - lastCategoryNavigationTime < 2000 && event.deltaX > -50 && event.deltaX < 50)
+      || selectedCategoryIndex === 0 && event.deltaX < 0
+      || (showUncategorized && selectedCategoryIndex === categories.length && event.deltaX > 0 || !showUncategorized && selectedCategoryIndex === categories.length - 1 && event.deltaX > 0)
+    ) {
+      return;
+    }
+    swipeNavigationBoxOffset -= event.deltaX / 2;
+
+    if (swipeNavigationBoxOffset > 200) {
+      isSlowSwipe = event.deltaX < 30 && event.deltaX > -30;
+      swipeNavigationBoxOffset = 0;
+      onCategoryPrevious();
+      lastCategoryNavigationTime = Date.now();
+    }
+    else if (swipeNavigationBoxOffset < -200) {
+      isSlowSwipe = event.deltaX < 30 && event.deltaX > -30;
+      swipeNavigationBoxOffset = 0;
+      onCategoryNext();
+      lastCategoryNavigationTime = Date.now();
+    }
+
+    clearTimeout(swipeNavTimer);
+    swipeNavTimer = setTimeout(() => {
+      resetCategoryPosition(swipeNavigationBoxOffset);
+    }, 200);    
+  };
+
+  const resetCategoryPosition = (currentPosition) => {
+    const interval = setInterval(() => {
+      if (currentPosition > 0) {
+        currentPosition -= 5;
+        if (currentPosition < 0) {
+          currentPosition = 0;
+        }
+      }
+      else if (currentPosition < 0) {
+        currentPosition += 5;
+        if (currentPosition > 0) {
+          currentPosition = 0;
+        }
+      }
+      else {
+        clearInterval(interval);
+      }
+      swipeNavigationBoxOffset = currentPosition;
+    }, 2);
+  };
+
   // Change the selected category index when the categories change
   $:if(selectedCategoryId) {
     const categoryIndex = categories.findIndex((category) => category.id === selectedCategoryId);
@@ -101,6 +201,8 @@
       selectedCategoryId = categories[selectedCategoryIndex].id;
     }
   }
+
+  $:showUncategorized = pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0;
 
   // On mount and on resize check if the category navigation buttons should be shown
   $:if(windowInnerWidth) {
@@ -118,7 +220,7 @@
 
 <svelte:window bind:innerWidth={windowInnerWidth} />
 
-<div class="speedDial">
+<div class="speedDial" on:wheel={categorySwipeNavigation ? onCategorySwipe : undefined}>
   {#each categories as category, index}
     <SpeedDialItems
       pages={pages.filter((page) => page.categoryId === category.id)}
@@ -145,6 +247,8 @@
       frostedGlassOpacity={frostedGlassOpacity}
       frostedGlassColor={frostedGlassColor}
       frostedGlassAccentColor={frostedGlassAccentColor}
+      openPageInNewTab={openPageInNewTab}
+      swipeNavigationOffset={swipeNavigationBoxOffset}
     />
   {/each}
 
@@ -173,7 +277,24 @@
     frostedGlassOpacity={frostedGlassOpacity}
     frostedGlassColor={frostedGlassColor}
     frostedGlassAccentColor={frostedGlassAccentColor}
+    openPageInNewTab={openPageInNewTab}
+    swipeNavigationOffset={swipeNavigationBoxOffset}
   />
+
+  {#if categorySwitchButtons}
+    <button
+      class="categorySwitchButton previous"
+      on:click={onCategoryPrevious}
+    >
+      <i class="fa-solid fa-chevron-left"/>
+    </button>
+    <button
+      class="categorySwitchButton next"
+      on:click={onCategoryNext}
+    >
+      <i class="fa-solid fa-chevron-right"/>
+    </button>
+  {/if}
 </div>
 
 {#if categories.length}
@@ -194,6 +315,7 @@
         }
         ${showElementsShadow ? 'box-shadow: 0px 0px 10px rgba(20, 20, 20, 0.2);' : ''}
       `}
+      on:wheel={categoryBarScroll ? onCategoryBarScroll : undefined}
     >
       {#if showCategoryNavigation}
         <div class="categoryNavigation">
@@ -215,7 +337,7 @@
           </div>
         {/each}
 
-        {#if pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0}
+        {#if showUncategorized}
           <div
             class="category"
             class:selected={selectedCategoryIndex === categories.length}
@@ -248,6 +370,10 @@
 {/if}
 
 <style>
+  .speedDial {
+    position: relative;
+    height: 100%;
+  }
   .categoriesContainer {
     display: flex;
     justify-content: center;
@@ -309,7 +435,27 @@
     color: #2880de;
     opacity: 1;
   }
-  .speedDial {
-    position: relative;
+  .categorySwitchButton {
+    position: fixed;
+    z-index: 5;
+    top: 50vh;
+    border: none;
+    outline: none;
+    padding: 0;
+    background-color: transparent;
+    color: white;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .categorySwitchButton:hover {
+    transform: scale(1.2);
+  }
+  .categorySwitchButton.next {
+    right: 12px;
+  }
+  .categorySwitchButton.previous {
+    left: 12px;
   }
 </style>

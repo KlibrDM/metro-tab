@@ -1,6 +1,6 @@
 import { ClockDateFormatOptions, ClockPositionOptions } from "./options";
 
-/*Default settings*/
+// Visual settings
 export const yourName = "New Tab";
 export const showCover = true;
 export const clockBackground = true;
@@ -41,6 +41,13 @@ export const coverColor = { r: 58, g: 153, b: 255 };
 export const coverTextColor = { r: 255, g: 255, b: 255 };
 export const tabName = "Speed Dial";
 export const tabIcon = "ico1"; // ico1 must be the same as the extension icon
+
+// Behavior settings
+export const openPageInNewTab = false;
+export const openSearchInNewTab = false;
+export const categoryBarScroll = false;
+export const categorySwipeNavigation = false;
+export const categorySwitchButtons = false;
 
 export const customSearchEngineUrl = "";
 export const searchEngine = "google";

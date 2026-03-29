@@ -25,6 +25,7 @@
   let customSearchEngineUrl;
   let pinnedNote;
   let clockPosition;
+  let openSearchInNewTab;
 
   let innerHeight = 0;
 
@@ -45,6 +46,7 @@
     frostedGlassAccentColor = data.frostedGlassAccentColor;
     pinnedNote = data.notes.find((note) => note.isPinned);
     clockPosition = data.clockPosition;
+    openSearchInNewTab = data.openSearchInNewTab;
   });
 
   const saveNoteChanges = () => {
@@ -67,6 +69,19 @@
     });
   }
 
+  const handleWindowOpen = (url) => {
+    if (openSearchInNewTab) {
+      window.open(url, "_blank");
+      setTimeout(() => {
+        // Clear search query with a small delay to ensure that the new tab is already in view
+        searchQuery = "";
+      }, 200);
+    }
+    else {
+      window.location.assign(url);
+    }
+  };
+
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery !== "") {
@@ -80,7 +95,7 @@
           "%s",
           encodeURIComponent(searchQuery)
         );
-        window.location.assign(customSearchEngineUrlWithQuery);
+        handleWindowOpen(customSearchEngineUrlWithQuery);
       }
       else {
         const selectedSearchEngine = searchEngineList.find(
@@ -88,13 +103,13 @@
         );
 
         if (selectedSearchEngine) {
-          window.location.assign(
+          handleWindowOpen(
             selectedSearchEngine.link + escapeHTML(searchQuery)
           );
         }
         else {
           // Fall back to google if search engine not found
-          window.location.assign(
+          handleWindowOpen(
             "https://www.google.com/search?q=" + escapeHTML(searchQuery)
           );
         }

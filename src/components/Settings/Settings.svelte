@@ -14,6 +14,7 @@
   import Themes from "./Themes.svelte";
   import Categories from "./Categories.svelte";
   import Bookmarks from "./Bookmarks.svelte";
+  import BehaviorForm from "./BehaviorForm.svelte";
 
   let settingsData = {}; //Local data for settings
   let unsavedSettings = false;
@@ -78,6 +79,11 @@
       state.coverTextColor = settingsData.coverTextColor;
       state.tabName = escapeHTML(settingsData.tabName);
       state.tabIcon = settingsData.tabIcon;
+      state.openPageInNewTab = settingsData.openPageInNewTab;
+      state.openSearchInNewTab = settingsData.openSearchInNewTab;
+      state.categoryBarScroll = settingsData.categoryBarScroll;
+      state.categorySwipeNavigation = settingsData.categorySwipeNavigation;
+      state.categorySwitchButtons = settingsData.categorySwitchButtons;
       state.pages = settingsData.pages;
       state.categories = settingsData.categories;
       return state;
@@ -127,6 +133,21 @@
       state.coverTextColor = CONFIG.coverTextColor;
       state.tabName = escapeHTML(CONFIG.tabName);
       state.tabIcon = CONFIG.tabIcon;
+      return state;
+    });
+
+    //Save to localstorage
+    saveConfig(settingsData);
+  };
+
+  const resetBehavior = () => {
+    //Update state
+    userData.update((state) => {
+      state.openPageInNewTab = CONFIG.openPageInNewTab;
+      state.openSearchInNewTab = CONFIG.openSearchInNewTab;
+      state.categoryBarScroll = CONFIG.categoryBarScroll;
+      state.categorySwipeNavigation = CONFIG.categorySwipeNavigation;
+      state.categorySwitchButtons = CONFIG.categorySwitchButtons;
       return state;
     });
 
@@ -369,33 +390,40 @@
         class:headerSelected={tabIndex === 4}
         on:click={() => {changeTab(4);}}
       >
-        Themes
+        Behavior
       </button>
       <button
         class="settingsNavButton"
         class:headerSelected={tabIndex === 5}
         on:click={() => {changeTab(5);}}
       >
-        Search Engine
+        Themes
       </button>
       <button
         class="settingsNavButton"
         class:headerSelected={tabIndex === 6}
         on:click={() => {changeTab(6);}}
       >
-        Bookmarks
+        Search Engine
       </button>
       <button
         class="settingsNavButton"
         class:headerSelected={tabIndex === 7}
         on:click={() => {changeTab(7);}}
       >
-        Backup
+        Bookmarks
       </button>
       <button
         class="settingsNavButton"
         class:headerSelected={tabIndex === 8}
         on:click={() => {changeTab(8);}}
+      >
+        Backup
+      </button>
+      <button
+        class="settingsNavButton"
+        class:headerSelected={tabIndex === 9}
+        on:click={() => {changeTab(9);}}
       >
         About
       </button>
@@ -431,33 +459,40 @@
         </div>
       {:else if tabIndex === 4}
         <div class="settingsContentHeader">
+          <h2>Behavior</h2>
+        </div>
+        <div class="settingsContent">
+          <BehaviorForm {settingsData} {saveSettings} {resetBehavior} bind:unsavedSettings={unsavedSettings} />
+        </div>
+      {:else if tabIndex === 5}
+        <div class="settingsContentHeader">
           <h2>Themes</h2>
         </div>
         <div class="settingsContent">
           <Themes {settingsData} />
         </div>
-      {:else if tabIndex === 5}
+      {:else if tabIndex === 6}
         <div class="settingsContentHeader">
           <h2>Search Engine</h2>
         </div>
         <div class="settingsContent">
           <SearchEngine {settingsData} {changeSearchEngine} />
         </div>
-      {:else if tabIndex === 6}
+      {:else if tabIndex === 7}
         <div class="settingsContentHeader">
           <h2>Bookmarks</h2>
         </div>
         <div class="settingsContent">
           <Bookmarks {settingsData} {saveSettings} />
         </div>
-      {:else if tabIndex === 7}
+      {:else if tabIndex === 8}
         <div class="settingsContentHeader">
           <h2>Backup</h2>
         </div>
         <div class="settingsContent">
           <ImportExport {settingsData} {saveSettings} />
         </div>
-      {:else if tabIndex === 8}
+      {:else if tabIndex === 9}
         <div class="settingsContent">
           <About />
         </div>

@@ -26,6 +26,8 @@
   export let frostedGlassOpacity;
   export let frostedGlassColor;
   export let frostedGlassAccentColor;
+  export let openPageInNewTab;
+  export let swipeNavigationOffset;
 
   const getActivePagesCountInGroup = (group) => {
     return group.pages.filter(page => page.isActive).length;
@@ -37,11 +39,17 @@
   class:isShown={isShown}
   class:compactNavbar={navbarCompact}
   class:largePadding={categories.length}
-  style={
-    useFrostedGlass
-      ? "transition: none !important;"
-      : ""
-  }
+  style={`
+    ${useFrostedGlass ? "transition: none !important;" : ""}
+    ${swipeNavigationOffset ? `transform: translateX(${swipeNavigationOffset}px);` : ''}
+    ${
+      swipeNavigationOffset > 100
+        ? `opacity: ${1 - (swipeNavigationOffset - 100) / 100};`
+        : swipeNavigationOffset < -100
+          ? `opacity: ${1 - (-swipeNavigationOffset - 100) / 100};`
+          : ''
+    }
+  `}
 >
   <div
     class="buttons"
@@ -80,6 +88,7 @@
             href={page.link}
             class="pageButton"
             aria-label={page.link}
+            target={openPageInNewTab ? "_blank" : undefined}
             style="
               {
                 page.tileImageType === 'custom' && getTileImage(page.link)
@@ -192,6 +201,7 @@
                   href={subpage.link}
                   class="pageButton"
                   aria-label={subpage.link}
+                  target={openPageInNewTab ? "_blank" : undefined}
                   style="
                     {
                       subpage.tileImageType === 'custom' && getTileImage(subpage.link)

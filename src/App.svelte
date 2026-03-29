@@ -82,6 +82,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

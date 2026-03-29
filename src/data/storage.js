@@ -43,6 +43,11 @@ export const saveConfig = (data) => {
   localStorage.setItem("coverTextColor", JSON.stringify(data.coverTextColor));
   localStorage.setItem("tabName", data.tabName);
   localStorage.setItem("tabIcon", data.tabIcon);
+  localStorage.setItem("openPageInNewTab", data.openPageInNewTab);
+  localStorage.setItem("openSearchInNewTab", data.openSearchInNewTab);
+  localStorage.setItem("categoryBarScroll", data.categoryBarScroll);
+  localStorage.setItem("categorySwipeNavigation", data.categorySwipeNavigation);
+  localStorage.setItem("categorySwitchButtons", data.categorySwitchButtons);
   localStorage.setItem("notes", JSON.stringify(data.notes));
   localStorage.setItem("categories", JSON.stringify(data.categories));
   localStorage.setItem("pages", JSON.stringify(data.pages));
@@ -343,6 +348,31 @@ const data = {
   tabIcon:
     localStorage.getItem("tabIcon") ||
     CONFIG.tabIcon,
+
+  openPageInNewTab: 
+    localStorage.getItem("openPageInNewTab") === null 
+    ? CONFIG.openPageInNewTab
+    : localStorage.getItem("openPageInNewTab") === "true",
+
+  openSearchInNewTab:
+    localStorage.getItem("openSearchInNewTab") === null 
+    ? CONFIG.openSearchInNewTab
+    : localStorage.getItem("openSearchInNewTab") === "true",
+
+  categoryBarScroll:
+    localStorage.getItem("categoryBarScroll") === null 
+    ? CONFIG.categoryBarScroll
+    : localStorage.getItem("categoryBarScroll") === "true",
+
+  categorySwipeNavigation:
+    localStorage.getItem("categorySwipeNavigation") === null 
+    ? CONFIG.categorySwipeNavigation
+    : localStorage.getItem("categorySwipeNavigation") === "true",
+
+  categorySwitchButtons:
+    localStorage.getItem("categorySwitchButtons") === null 
+    ? CONFIG.categorySwitchButtons
+    : localStorage.getItem("categorySwitchButtons") === "true",
 
   notes:
     JSON.parse(localStorage.getItem("notes")) ||
