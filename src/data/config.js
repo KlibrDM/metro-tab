@@ -2205,4 +2205,8 @@ export const knownPages = [
   "builds.spectral",
   "op",
   "hltv",
+
+  // V2.9.0
+  "mail.proton",
+  "mail.yahoo",
 ];
