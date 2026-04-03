@@ -109,6 +109,7 @@
     if(exportPages){
       exportDataObject.pages = settingsData.pages;
       exportDataObject.categories = settingsData.categories;
+      exportDataObject.startingCategoryId = settingsData.startingCategoryId;
     }
     if(exportNotes){
       exportDataObject.notes = settingsData.notes;
@@ -319,10 +320,18 @@
             });
           }
 
+          if(settings.startingCategoryId) {
+            // If starting category id exists but it's not a string or null, set error
+            if(typeof settings.startingCategoryId !== 'string' && settings.startingCategoryId !== null){
+              errorsFound = true;
+            }
+          }
+
           //If no errors found, add pages to settings
           if(!errorsFound){
             settingsToSave.pages = settings.pages;
             settingsToSave.categories = settings.categories || [];
+            settingsToSave.startingCategoryId = settings.startingCategoryId || null;
           }
           else{
             importErrors.pages = true;

@@ -33,6 +33,7 @@
   let categoryBarScroll;
   let categorySwipeNavigation;
   let categorySwitchButtons;
+  let startingCategoryId;
 
   let selectedCategoryIndex = 0;
   let selectedCategoryId = undefined;
@@ -74,15 +75,40 @@
     categoryBarScroll = data.categoryBarScroll;
     categorySwipeNavigation = data.categorySwipeNavigation;
     categorySwitchButtons = data.categorySwitchButtons;
+    startingCategoryId = data.startingCategoryId;
 
     if(firstRender) {
       // Set the selected category index based on local storage when the component mounts
-      if(pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0) {
-        selectedCategoryIndex = storageCategoryIndex > categories.length ? 0 : storageCategoryIndex;
+      let isCategorySet = false;
+      
+      if (startingCategoryId) {
+        if (startingCategoryId === "0000" && pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0) {
+          selectedCategoryIndex = categories.length;
+          selectedCategoryId = "0000";
+          isCategorySet = true;
+        }
+        else {
+          const categoryIndex = categories.findIndex((category) => category.id === startingCategoryId);
+          if (categoryIndex !== -1) {
+            selectedCategoryIndex = categoryIndex;
+            selectedCategoryId = categories[selectedCategoryIndex].id;
+            isCategorySet = true;
+          }
+          // If not found, continue to check for last visited
+        }
       }
-      else {
-        selectedCategoryIndex = storageCategoryIndex >= categories.length ? 0 : storageCategoryIndex;
+
+      if (!isCategorySet) {
+        if (pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0) {
+          selectedCategoryIndex = storageCategoryIndex > categories.length ? 0 : storageCategoryIndex;
+          selectedCategoryId = selectedCategoryIndex === categories.length ? "0000" : categories[selectedCategoryIndex] ? categories[selectedCategoryIndex].id : undefined;
+        }
+        else {
+          selectedCategoryIndex = storageCategoryIndex >= categories.length ? 0 : storageCategoryIndex;
+          selectedCategoryId = selectedCategoryIndex === categories.length ? "0000" : categories[selectedCategoryIndex] ? categories[selectedCategoryIndex].id : undefined;
+        }
       }
+
       firstRender = false;
     }
 

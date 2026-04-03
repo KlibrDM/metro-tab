@@ -48,6 +48,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("categoryBarScroll", data.categoryBarScroll);
   localStorage.setItem("categorySwipeNavigation", data.categorySwipeNavigation);
   localStorage.setItem("categorySwitchButtons", data.categorySwitchButtons);
+  localStorage.setItem("startingCategoryId", data.startingCategoryId);
   localStorage.setItem("notes", JSON.stringify(data.notes));
   localStorage.setItem("categories", JSON.stringify(data.categories));
   localStorage.setItem("pages", JSON.stringify(data.pages));
@@ -373,6 +374,12 @@ const data = {
     localStorage.getItem("categorySwitchButtons") === null 
     ? CONFIG.categorySwitchButtons
     : localStorage.getItem("categorySwitchButtons") === "true",
+
+  startingCategoryId:
+    localStorage.getItem("startingCategoryId") === null
+    || localStorage.getItem("startingCategoryId") === "null"
+      ? CONFIG.startingCategoryId
+      : localStorage.getItem("startingCategoryId"),
 
   notes:
     JSON.parse(localStorage.getItem("notes")) ||

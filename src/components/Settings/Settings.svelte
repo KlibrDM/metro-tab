@@ -84,6 +84,7 @@
       state.categoryBarScroll = settingsData.categoryBarScroll;
       state.categorySwipeNavigation = settingsData.categorySwipeNavigation;
       state.categorySwitchButtons = settingsData.categorySwitchButtons;
+      state.startingCategoryId = settingsData.startingCategoryId;
       state.pages = settingsData.pages;
       state.categories = settingsData.categories;
       return state;

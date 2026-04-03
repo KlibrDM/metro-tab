@@ -48,7 +48,13 @@
         page.categoryId = undefined;
       }
     });
+
+    if (settingsData.startingCategoryId === categoryId) {
+      settingsData.startingCategoryId = null;
+    }
   }
+
+  $:showUncategorized = settingsData.pages.filter((page) => page.categoryId === undefined && page.isActive).length > 0;
 </script>
 
 <div id="settingsCategories" class:darkModifier={settingsData.darkMode}>
@@ -133,6 +139,29 @@
       </div>
     {/each}
   </div>
+
+  {#if settingsData.categories.length > 0}
+    <div id="startingCategoryContainer">
+      <div id="startingCategorySection">
+        <p>Open new tab on category</p>
+        <select
+          id="startingCategorySelect"
+          bind:value={settingsData.startingCategoryId}
+          on:change={() => { unsavedSettings = true; }}
+        >
+          <option value={null}>Last visited</option>
+          {#each settingsData.categories as category}
+            <option value={category.id}>{category.name}</option>
+          {/each}
+          {#if showUncategorized}
+            <option value={"0000"}>Uncategorized</option>
+          {:else}
+            <option value={"0000"} disabled>Uncategorized (Not available)</option>
+          {/if}
+        </select>
+      </div>
+    </div>
+  {/if}
 
   <div id="settingsCategoryOptions">
     <h4>Add new page category</h4>
@@ -366,5 +395,27 @@
     margin-top: 8px;
     animation: shake-bottom 4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both infinite;
     animation-delay: 2s;
+  }
+  #startingCategoryContainer {
+    flex-shrink: 0;
+    display: flex;
+    margin: 6px 28px 6px 20px;
+  }
+  #startingCategorySection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-y: auto;
+    border-radius: 20px;
+    background-color: var(--settings-background-secondary-color);
+    padding: 8px 12px 8px 12px;
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsCategories.darkModifier #startingCategorySection {
+    background-color: var(--settings-background-secondary-color-dark);
+  }
+  #startingCategorySection p {
+    margin: 0;
+    flex-shrink: 0;
   }
 </style>

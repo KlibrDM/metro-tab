@@ -49,6 +49,9 @@ export const categoryBarScroll = false;
 export const categorySwipeNavigation = false;
 export const categorySwitchButtons = false;
 
+// Other settings
+export const startingCategoryId = null;
+
 export const customSearchEngineUrl = "";
 export const searchEngine = "google";
 export const searchEngineList = [
