@@ -89,7 +89,7 @@
           />
         </div>
         <div class="settingsFormHintContainer">
-          <Tooltip text="Toggle whether to show buttons on the side of the screen to navigate between categories.">
+          <Tooltip maxWidth="600" text="Toggle whether to show buttons on the side of the screen to navigate between categories. These buttons will be shown only if you are using categories.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
@@ -114,7 +114,7 @@
           />
         </div>
         <div class="settingsFormHintContainer">
-          <Tooltip text="Toggle whether to enable scrolling on the category bar to navigate between categories.">
+          <Tooltip maxWidth="600" text="Toggle whether to enable scrolling on the category bar to navigate between categories. This option will work only if you are using categories.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>
@@ -140,7 +140,7 @@
         </div>
         <div class="settingsFormHintContainer">
           <i class="fa-solid fa-laptop" />
-          <Tooltip maxWidth="600" text="Toggle whether to enable trackpad swiping on the page to navigate between categories. This option can be used only on a device with a trackpad, such as a laptop, or with a mouse that supports horizontal scrolling. You might need to disable browser gestures as they can interfere with this feature.">
+          <Tooltip maxWidth="600" text="Toggle whether to enable trackpad swiping on the page to navigate between categories. This option will work only if you are using categories. You must have a device with a trackpad, such as a laptop, or a mouse that supports horizontal scrolling. You might need to disable browser gestures as they can interfere with this feature.">
             <i class="fa-solid fa-circle-info hintIcon" />
           </Tooltip>
         </div>

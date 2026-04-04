@@ -166,7 +166,8 @@
 
   const onCategorySwipe = (event) => {
     if (
-      Date.now() - lastCategoryNavigationTime < 300
+      !categories.length
+      || Date.now() - lastCategoryNavigationTime < 300
       || (!isSlowSwipe && Date.now() - lastCategoryNavigationTime < 2000 && event.deltaX > -50 && event.deltaX < 50)
       || selectedCategoryIndex === 0 && event.deltaX < 0
       || (showUncategorized && selectedCategoryIndex === categories.length && event.deltaX > 0 || !showUncategorized && selectedCategoryIndex === categories.length - 1 && event.deltaX > 0)
@@ -307,7 +308,7 @@
     swipeNavigationOffset={swipeNavigationBoxOffset}
   />
 
-  {#if categorySwitchButtons}
+  {#if categorySwitchButtons && categories.length}
     <button
       class="categorySwitchButton previous"
       on:click={onCategoryPrevious}
