@@ -19,6 +19,10 @@
     "default_icon": "img/favicon.png"
   },
 
+  "permissions": [
+    "search"
+  ],
+
   "optional_permissions": [
     "bookmarks"
   ]

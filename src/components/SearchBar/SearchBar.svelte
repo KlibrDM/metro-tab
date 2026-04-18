@@ -72,10 +72,6 @@
   const handleWindowOpen = (url) => {
     if (openSearchInNewTab) {
       window.open(url, "_blank");
-      setTimeout(() => {
-        // Clear search query with a small delay to ensure that the new tab is already in view
-        searchQuery = "";
-      }, 200);
     }
     else {
       window.location.assign(url);
@@ -85,7 +81,24 @@
   const handleSearch = (event) => {
     event.preventDefault();
     if (searchQuery !== "") {
-      if (searchEngine === "custom"
+      // Use Chrome Search API - Default for new users from V2.9.0 and later - cannot be changed on Chrome
+      if (searchEngine === "default") {
+        try {
+          chrome.search.query({
+            text: searchQuery,
+            disposition: openSearchInNewTab ? "NEW_TAB" : "CURRENT_TAB",
+          });
+        }
+        catch {
+          // Fall back to google if chrome search API is not available
+          handleWindowOpen(
+            "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+          );
+        }
+      }
+      // Else branches only for users who have set a different search engine in V2.8.0 and before (or Firefox users)
+      else if (
+        searchEngine === "custom"
         && customSearchEngineUrl
         && customSearchEngineUrl.length > 0
         && customSearchEngineUrl.indexOf("%s") !== -1

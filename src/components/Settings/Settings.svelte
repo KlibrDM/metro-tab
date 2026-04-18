@@ -9,7 +9,8 @@
   import Backgrounds from "./Backgrounds.svelte";
   import Pages from "./Pages.svelte";
   import ImportExport from "./ImportExport.svelte";
-  import SearchEngine from "./SearchEngine.svelte";
+  import SearchEngineFirefox from "./SearchEngineFirefox.svelte";
+  import SearchEngineChrome from "./SearchEngineChrome.svelte";
   import About from "./About.svelte";
   import Themes from "./Themes.svelte";
   import Categories from "./Categories.svelte";
@@ -477,7 +478,11 @@
           <h2>Search Engine</h2>
         </div>
         <div class="settingsContent">
-          <SearchEngine {settingsData} {changeSearchEngine} />
+          {#if navigator.userAgent.indexOf("Firefox") !== -1}
+            <SearchEngineFirefox {settingsData} {changeSearchEngine} />
+          {:else}
+            <SearchEngineChrome {settingsData} {changeSearchEngine} />
+          {/if}
         </div>
       {:else if tabIndex === 7}
         <div class="settingsContentHeader">

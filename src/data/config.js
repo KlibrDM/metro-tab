@@ -53,7 +53,7 @@ export const categorySwitchButtons = false;
 export const startingCategoryId = null;
 
 export const customSearchEngineUrl = "";
-export const searchEngine = "google";
+export const searchEngine = "default";
 export const searchEngineList = [
   {
     name: "google",

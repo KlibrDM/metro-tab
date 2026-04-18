@@ -1,14 +1,49 @@
 <script>
   import { searchEngineList } from "../../data/config";
+  import Tooltip from "../Tooltip.svelte";
 
   export let settingsData;
   export let changeSearchEngine;
 
   let customSearchEngineUrlInput = settingsData.customSearchEngineUrl || "";
   let inputModified = false;
+
+  const handleOpenGuide = () => {
+    window.open('https://support.mozilla.org/en-US/kb/change-your-default-search-settings-firefox', "_blank");
+  };
 </script>
 
 <div id="settingsSearchEngine" class:darkModifier={settingsData.darkMode}>
+  <div id="defaultSearchEngine">
+    <h2>Default Search Engine <span style="font-size: 0.8em;">(browser provided)</span></h2>
+    <p>It is recommended to use the default search engine provided by your browser. If you wish to use a different search engine, the best approach is to change it from your browser's settings. The options below will override only the search engine used in the new tab page.</p>
+    <div class="itemButtons">
+      {#if settingsData.searchEngine === "default"}
+        <button disabled class="itemActive">Active</button>
+      {:else}
+        <button
+          class="itemButton"
+          on:click={() => {
+            settingsData.searchEngine = "default";
+            changeSearchEngine("default")
+          }}
+        >
+          Set as active
+        </button>
+      {/if}
+      <button class="openGuideButton" on:click={handleOpenGuide}>
+        How to change?
+      </button>
+    </div>
+  </div>
+
+  <div class="settingsSearchEngineSectionTitle">
+    <h2>Override Search Engine</h2>
+    <Tooltip maxWidth="800" text="You can override the browser provided search engine. This will only change the search engine used in the new tab page search bar and will not affect the search engine used in the address bar or other browser features. It is recommended to change the search engine from the browser's settings instead of overriding it.">
+      <i class="fa-solid fa-circle-info hintIcon" />
+    </Tooltip>
+  </div>
+
   <div id="itemList">
     {#each searchEngineList as searchEngine}
       <div class="item">
@@ -92,8 +127,39 @@
 
 <style>
   h2 {
-    margin-block-start: 0em;
+    margin-block-start: 0.2em;
     margin-block-end: 0.4em;
+  }
+  #defaultSearchEngine {
+    padding: 10px 30px 20px;
+    border-radius: 10px;
+    background-color: var(--settings-background-secondary-color);
+    box-shadow: var(--shadow-small-strong);
+  }
+  #settingsSearchEngine.darkModifier #defaultSearchEngine {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
+  }
+  .settingsSearchEngineSectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    background-color: var(--settings-background-secondary-color);
+    padding: 6px 12px 6px 16px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-small-strong);
+    margin-top: 10px;
+  }
+  #settingsSearchEngine.darkModifier .settingsSearchEngineSectionTitle {
+    background-color: var(--settings-background-secondary-color-dark);
+    border: 1px solid var(--primary-color);
+  }
+  .settingsSearchEngineSectionTitle h2 {
+    margin: 0;
+  }
+  .hintIcon {
+    color: #3a99ff;
   }
   #itemList {
     display: flex;
@@ -125,6 +191,16 @@
   }
   #settingsSearchEngine.darkModifier .item:hover {
     background-color: #0c1b3a !important;
+  }
+  .openGuideButton {
+    border: 0;
+    cursor: pointer;
+    color: var(--primary-color);
+    background-color: transparent;
+    transition: 0.3s;
+  }
+  .openGuideButton:hover {
+    color: var(--primary-color-hover);
   }
   .item p {
     margin: 0;
@@ -160,7 +236,7 @@
     background-color: rgba(238, 218, 34, 0.4);
   }
   #customSearchEngine {
-    padding: 12px;
+    padding: 10px 30px 20px;
     border-radius: 10px;
     background-color: var(--settings-background-secondary-color);
     box-shadow: var(--shadow-small-strong);

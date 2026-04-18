@@ -1447,6 +1447,9 @@
     margin: 0;
   }
   .settingsSectionTitleWithHint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     align-self: flex-start;
     background-color: var(--settings-background-secondary-color);
     padding: 6px 12px 6px 16px;
@@ -1502,11 +1505,6 @@
   }
   .hintIcon {
     color: #3a99ff;
-  }
-  .settingsSectionTitleWithHint {
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
   .imagePlaceholder {
     width: 250px;
