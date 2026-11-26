@@ -92,7 +92,7 @@
         catch {
           // Fall back to google if chrome search API is not available
           handleWindowOpen(
-            "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+            "https://www.google.com/search?q=" + encodeURIComponent(searchQuery)
           );
         }
       }
@@ -117,31 +117,18 @@
 
         if (selectedSearchEngine) {
           handleWindowOpen(
-            selectedSearchEngine.link + escapeHTML(searchQuery)
+            selectedSearchEngine.link + encodeURIComponent(searchQuery)
           );
         }
         else {
           // Fall back to google if search engine not found
           handleWindowOpen(
-            "https://www.google.com/search?q=" + escapeHTML(searchQuery)
+            "https://www.google.com/search?q=" + encodeURIComponent(searchQuery)
           );
         }
       }
     }
   };
-
-  let entityMap = {
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-    "`": "&#x60;",
-  };
-  function escapeHTML(string) {
-    return String(string).replace(/[<>"'`]/g, function (s) {
-      return entityMap[s];
-    });
-  }
 </script>
 
 <svelte:window bind:innerHeight />
