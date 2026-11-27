@@ -17,6 +17,7 @@
   let backgroundImage;
   let isBackgroundSolid = false;
   let backgroundSolidColor;
+  let backgroundDim = 0;
 
   let tabName;
   let tabIcon;
@@ -27,6 +28,7 @@
     backgroundImage = data.backgroundImage;
     isBackgroundSolid = data.isBackgroundSolid;
     backgroundSolidColor = data.backgroundSolidColor;
+    backgroundDim = data.backgroundDim;
     tabName = data.tabName;
     tabIcon = data.tabIcon;
   });
@@ -56,10 +58,10 @@
   style={`
     ${Object.entries(STYLE_VARIABLES).map(([key, value]) => `${key}: ${value};`).join(" ")}
     ${isBackgroundSolid
-      ? "background-color: " + backgroundSolidColor + ";"
+      ? "background-color: " + backgroundSolidColor + "; background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + "));"
       : backgroundImage.length > 5
-      ? "background-image: url(" + backgroundImage + ");"
-      : "background-image: url(" + backgroundImageUrl + ");"}
+      ? "background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + ")), url(" + backgroundImage + ");"
+      : "background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + ")), url(" + backgroundImageUrl + ");"}
   `}
 >
   <Cover />

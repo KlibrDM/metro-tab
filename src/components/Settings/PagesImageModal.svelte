@@ -17,11 +17,13 @@
   let clickedOutsideModal = false;
 
   let backgroundImage;
+  let backgroundDim = 0;
   let isBackgroundSolid = false;
   let backgroundSolidColor;
 
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
+    backgroundDim = data.backgroundDim;
     isBackgroundSolid = data.isBackgroundSolid;
     backgroundSolidColor = data.backgroundSolidColor;
   });
@@ -480,10 +482,10 @@
     <div
       id="tilePreviewContainer"
       style={isBackgroundSolid
-        ? "background-color: " + backgroundSolidColor + ";"
+        ? "background-color: " + backgroundSolidColor + "; background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + "));"
         : backgroundImage.length > 5
-          ? "background-image: url(" + backgroundImage + ");"
-          : "background-image: url(" + "static/images/bg/" + backgroundImage + "." + getBackgroundFormat(backgroundImage) + ");"}
+          ? "background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + ")), url(" + backgroundImage + ");"
+          : "background-image: linear-gradient(rgba(0,0,0," + backgroundDim + "), rgba(0,0,0," + backgroundDim + ")), url(" + "static/images/bg/" + backgroundImage + "." + getBackgroundFormat(backgroundImage) + ");"}
     >
       <div
         id="tilePreview"

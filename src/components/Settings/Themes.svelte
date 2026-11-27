@@ -19,6 +19,7 @@
       state.isBackgroundSolid = settings.isBackgroundSolid !== undefined ? settings.isBackgroundSolid : state.isBackgroundSolid;
       state.backgroundSolidColor = settings.backgroundSolidColor !== undefined ? settings.backgroundSolidColor : state.backgroundSolidColor;
       state.backgroundImage = settings.backgroundImage !== undefined ? settings.backgroundImage : state.backgroundImage;
+      state.backgroundDim = settings.backgroundDim !== undefined ? settings.backgroundDim : state.backgroundDim;
       state.tileZoom = settings.tileZoom !== undefined ? settings.tileZoom : state.tileZoom;
       state.tileGrow = settings.tileGrow !== undefined ? settings.tileGrow : state.tileGrow;
       state.tileMinWidth = settings.tileMinWidth !== undefined ? settings.tileMinWidth : state.tileMinWidth;

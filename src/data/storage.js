@@ -25,6 +25,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
+  localStorage.setItem("backgroundDim", data.backgroundDim);
   localStorage.setItem("tileZoom", data.tileZoom);
   localStorage.setItem("tileGrow", data.tileGrow);
   localStorage.setItem("tileSafeZone", data.tileSafeZone);
@@ -64,6 +65,10 @@ export const saveBackground = (bg) => {
 export const saveBackgroundColor = (color) => {
   localStorage.setItem("backgroundSolidColor", color);
   localStorage.setItem("isBackgroundSolid", true);
+};
+
+export const saveBackgroundDim = (dim) => {
+  localStorage.setItem("backgroundDim", dim);
 };
 
 export const saveNotes = (notes) => {
@@ -275,6 +280,10 @@ const data = {
   backgroundImage:
     localStorage.getItem("backgroundImage") ||
     CONFIG.backgroundImage,
+
+  backgroundDim:
+    localStorage.getItem("backgroundDim") ||
+    CONFIG.backgroundDim,
 
   tileZoom:
     localStorage.getItem("tileZoom") === null

@@ -2,6 +2,7 @@
   import { userData } from "../../store";
   import { backgrounds, sourceDetails } from "../../data/config";
   import { getBackgroundFormat } from "../../data/tools";
+  import { saveBackgroundDim } from "../../data/storage";
   import CustomBackgrounds from "./CustomBackgrounds.svelte";
   import Tooltip from "../Tooltip.svelte";
 
@@ -10,6 +11,7 @@
 
   let darkMode;
   let backgroundImage;
+  let backgroundDim;
   let savedBackgroundSolidColor;
   let isBackgroundSolid;
   let backgroundSources = new Set();
@@ -25,10 +27,29 @@
 
   userData.subscribe((data) => {
     backgroundImage = data.backgroundImage;
+    backgroundDim = data.backgroundDim;
     savedBackgroundSolidColor = data.backgroundSolidColor;
     isBackgroundSolid = data.isBackgroundSolid;
     darkMode = data.darkMode;
   });
+
+  let dimSaveTimer = null;
+
+  const throttledSaveBackgroundDim = () => {
+    if (dimSaveTimer) return; // a save is already scheduled; it will pick up the latest value
+
+    dimSaveTimer = setTimeout(() => {
+      dimSaveTimer = null;
+      if (backgroundDim === undefined || backgroundDim === null) return;
+      const n = parseFloat(backgroundDim);
+      const sanitizedDim = Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0;
+      userData.update((state) => {
+        state.backgroundDim = sanitizedDim;
+        return state;
+      });
+      saveBackgroundDim(sanitizedDim);
+    }, 200);
+  };
 
   $: backgroundImageUrl = "static/images/bg/thumbnails/" + backgroundImage + "." + getBackgroundFormat(backgroundImage);
   $: if (backgroundImage) {
@@ -43,15 +64,41 @@
     <div
       id="currentBackgroundImage"
       style={ isBackgroundSolid
-      ? "border: 1px solid lightgray; background-color: " + savedBackgroundSolidColor + ";"
+      ? "filter: brightness(" + (1 - backgroundDim) + "); border: 1px solid lightgray; background-color: " + savedBackgroundSolidColor + ";"
       : "" }
     >
       {#if !isBackgroundSolid}
-      <img
-        src="{backgroundImage.length > 5 ? backgroundImage : backgroundImageUrl}"
-        alt="Current background"
-      />
+        <img
+          src="{backgroundImage.length > 5 ? backgroundImage : backgroundImageUrl}"
+          alt="Current background"
+          style={`filter: brightness(${1 - backgroundDim});`}
+        />
       {/if}
+    </div>
+    <label for="set_backgroundDim">
+      Background Dim
+    </label>
+    <div class="settingsNumberSliderGroup">
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        class="settingsSlider"
+        bind:value={backgroundDim}
+        on:input={throttledSaveBackgroundDim}
+      />
+      <input
+        type="number"
+        min="0"
+        max="1"
+        step="0.01"
+        class="settingsNumberInput"
+        id="set_backgroundDim"
+        name="set_backgroundDim"
+        bind:value={backgroundDim}
+        on:input={throttledSaveBackgroundDim}
+      />
     </div>
   </div>
 
@@ -120,6 +167,16 @@
     background-color: var(--settings-background-secondary-color-dark);
     border: 1px solid var(--primary-color);
   }
+  .settingsNumberSliderGroup {
+    display: flex;
+    gap: 4px;
+  }
+  .settingsNumberInput {
+    padding: 3px 5px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    width: 40px;
+  }
   #currentBackgroundImageContainer img {
     width: 100%;
     border-radius: 5px;
@@ -130,6 +187,7 @@
     min-height: 125px;
     border-radius: 5px;
     box-sizing: border-box;
+    margin-bottom: 8px;
   }
   #customBackgroundsContainer {
     display: flex;

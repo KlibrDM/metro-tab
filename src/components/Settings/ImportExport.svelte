@@ -125,6 +125,7 @@
       exportDataObject.isBackgroundSolid = settingsData.isBackgroundSolid;
       exportDataObject.backgroundSolidColor = settingsData.backgroundSolidColor;
       exportDataObject.backgroundImage = settingsData.backgroundImage;
+      exportDataObject.backgroundDim = settingsData.backgroundDim;
     }
     if(exportVisuals){
       exportDataObject.yourName = settingsData.yourName;
@@ -445,10 +446,24 @@
             errorsFound = true;
           }
 
+          //Check if backgroundDim exists and if it's the right type
+          if(settings.hasOwnProperty('backgroundDim')){
+            settings.backgroundDim = parseFloat(settings.backgroundDim);
+            if(typeof settings.backgroundDim !== 'number' || settings.backgroundDim < 0 || settings.backgroundDim > 1){
+              // Do not fail the import if backgroundDim is invalid, just set it to 0
+              settings.backgroundDim = 0;
+            }
+          }
+          else{
+            // Do not fail the import if backgroundDim is missing, just set it to 0
+            settings.backgroundDim = 0;
+          }
+
           if(!errorsFound) {
             settingsToSave.isBackgroundSolid = settings.isBackgroundSolid;
             settingsToSave.backgroundSolidColor = settings.backgroundSolidColor;
             settingsToSave.backgroundImage = settings.backgroundImage;
+            settingsToSave.backgroundDim = settings.backgroundDim;
           }
           else{
             importErrors.background = true;
