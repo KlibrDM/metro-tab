@@ -19,6 +19,7 @@ export const showSearchBar = true;
 export const searchBarWidth = 50;
 export const searchBarHeight = 7;
 export const showPageQuickAdd = true;
+export const showPageDeleteOnHover = false;
 export const isBackgroundSolid = false;
 export const backgroundSolidColor = "#3a99ff";
 export const backgroundImage = "bg32"; // For backwards compatibility the app should always have [bg1, sl1, bg32] images available

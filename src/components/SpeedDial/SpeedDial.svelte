@@ -1,5 +1,5 @@
 <script>
-  import { getCurrentSelectedCategoryIndex, saveCurrentSelectedCategoryIndex } from "../../data/storage";
+  import { getCurrentSelectedCategoryIndex, saveCurrentSelectedCategoryIndex, savePages } from "../../data/storage";
   import { userData } from "../../store";
   import PageQuickAddModal from "./PageQuickAddModal.svelte";
   import SpeedDialItems from "./SpeedDialItems.svelte";
@@ -23,6 +23,7 @@
   let groupTileGrow;
   let navbarCompact;
   let showPageQuickAdd;
+  let showPageDeleteOnHover;
   let showElementsShadow;
   let useFrostedGlass;
   let frostedGlassStrength;
@@ -65,6 +66,7 @@
     groupTileGrow = data.groupTileGrow;
     navbarCompact = data.navbarCompact;
     showPageQuickAdd = data.showPageQuickAdd;
+    showPageDeleteOnHover = data.showPageDeleteOnHover;
     showElementsShadow = data.showElementsShadow;
     useFrostedGlass = data.useFrostedGlass;
     frostedGlassStrength = data.frostedGlassStrength;
@@ -120,6 +122,26 @@
       }
     }, 0);
   });
+
+  const onPageActionsDelete = (page, subPage) => {
+    if (!page) {
+      return;
+    }
+
+    if (subPage) {
+      page.pages = page.pages.filter((p) => p !== subPage);
+    }
+    else {
+      pages = pages.filter((p) => p !== page);
+    }
+
+    userData.update((state) => {
+      state.pages = pages;
+      return state;
+    });
+
+    savePages(pages);
+  }
 
   const onCategoryNavigationClick = (directionMultiplier) => {
     const categoriesList = document.querySelector("#categoriesList");
@@ -253,6 +275,8 @@
       pages={pages.filter((page) => page.categoryId === category.id)}
       categories={categories}
       openQuickAdd={() => {isQuickAddOpen = true;}}
+      showPageActions={showPageDeleteOnHover}
+      onPageActionsDelete={onPageActionsDelete}
       isShown={selectedCategoryIndex === index}
       tileZoom={tileZoom}
       tileGrow={tileGrow}
@@ -283,6 +307,8 @@
     pages={categories.length ? pages.filter((page) => page.categoryId === undefined) : pages}
     categories={categories}
     openQuickAdd={() => {isQuickAddOpen = true;}}
+    showPageActions={showPageDeleteOnHover}
+    onPageActionsDelete={onPageActionsDelete}
     isShown={selectedCategoryIndex === categories.length}
     tileZoom={tileZoom}
     tileGrow={tileGrow}

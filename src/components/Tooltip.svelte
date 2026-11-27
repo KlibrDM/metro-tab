@@ -1,4 +1,5 @@
 <script>
+  import { createPortal } from "../data/tools";
   import { userData } from "../store";
   import { v4 as uuid } from "uuid";
 
@@ -7,9 +8,12 @@
   export let showDelay = 300;
   export let hideDelay = 500;
   export let maxWidth = 400;
+  export let usePortal = false;
+  export let onUnhoverFinished = undefined;
 
   let id = uuid();
   let mouseOverTooltip = false;
+  let hasBeenHovered = false;
   let windowInnerWidth = 0;
 
   let darkMode = false;
@@ -51,6 +55,8 @@
         tooltipBox.style.right = 'unset';
       }
 
+      hasBeenHovered = true;
+
       // Show on next event loop to ensure display block is already applied
       setTimeout(() => {
         tooltipBox.style.opacity = '1';
@@ -67,7 +73,15 @@
 
       // Wait for the opacity transition to finish before hiding
       setTimeout(() => {
+        if (mouseOverTooltip) return;
+
         tooltipBox.style.display = 'none';
+
+        // Call the onUnhoverFinished function if it exists
+        if (hasBeenHovered && onUnhoverFinished) {
+          hasBeenHovered = false;
+          onUnhoverFinished();
+        }
       }, 200);
     }, hideDelay);
   }
@@ -88,6 +102,7 @@
 </div>
 
 <div
+  use:createPortal={{ usePortal }}
   class="tooltipBox"
   id={`tooltipBox_${id}`}
   class:darkModifier={darkMode}

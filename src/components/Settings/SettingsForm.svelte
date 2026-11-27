@@ -449,6 +449,31 @@
 
       <div class="settingsInput">
         <div class="imagePlaceholder">
+          <img src="static/images/settings/s_show_page_delete_on_hover.webp" alt="Set show page delete button on hover" />
+        </div>
+        <hr/>
+        <div class="settingsInputGroup">
+          <label for="set_showPageDeleteOnHover">Show page delete button on hover</label>
+          <input
+            type="checkbox"
+            id="set_showPageDeleteOnHover"
+            name="set_showPageDeleteOnHover"
+            class="settingsCheckbox"
+            bind:checked={settingsData.showPageDeleteOnHover}
+            on:input={() => {
+              unsavedSettings = true;
+            }}
+          />
+        </div>
+        <div class="settingsFormHintContainer">
+          <Tooltip text="Toggle whether to show the page delete button when hovering over a page. This option will not show on groups with more than 6 pages due to space constraints.">
+            <i class="fa-solid fa-circle-info hintIcon" />
+          </Tooltip>
+        </div>
+      </div>
+
+      <div class="settingsInput">
+        <div class="imagePlaceholder">
           <img src="static/images/settings/s_tile_zoom.webp" alt="Set tile zoom on hover" />
         </div>
         <hr/>

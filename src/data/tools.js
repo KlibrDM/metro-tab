@@ -120,3 +120,22 @@ export const compressImage = (image, maxWidth, maxHeight, quality, format = "ima
     };
   });
 };
+
+export const createPortal = (node, options) => {
+  if (!node) return;
+
+  let usePortal = options && options.usePortal !== undefined ? options.usePortal : true;
+  let target = options && options.target || document.body;
+  if (usePortal) target.appendChild(node);
+
+  return {
+    update(newOptions) {
+      usePortal = newOptions && newOptions.usePortal !== undefined ? newOptions.usePortal : true;
+      target = newOptions && newOptions.target || document.body;
+      if (usePortal) target.appendChild(node);
+    },
+    destroy() {
+      node.remove();
+    },
+  }
+}

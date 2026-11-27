@@ -21,6 +21,7 @@ export const saveConfig = (data) => {
   localStorage.setItem("searchBarWidth", data.searchBarWidth);
   localStorage.setItem("searchBarHeight", data.searchBarHeight);
   localStorage.setItem("showPageQuickAdd", data.showPageQuickAdd);
+  localStorage.setItem("showPageDeleteOnHover", data.showPageDeleteOnHover);
   localStorage.setItem("isBackgroundSolid", data.isBackgroundSolid);
   localStorage.setItem("backgroundSolidColor", data.backgroundSolidColor);
   localStorage.setItem("backgroundImage", data.backgroundImage);
@@ -256,6 +257,11 @@ const data = {
     localStorage.getItem("showPageQuickAdd") === null
     ? CONFIG.showPageQuickAdd
     : localStorage.getItem("showPageQuickAdd") === "true",
+  
+  showPageDeleteOnHover:
+    localStorage.getItem("showPageDeleteOnHover") === null 
+    ? CONFIG.showPageDeleteOnHover
+    : localStorage.getItem("showPageDeleteOnHover") === "true",
 
   isBackgroundSolid:
     localStorage.getItem("isBackgroundSolid") === null

@@ -61,6 +61,7 @@
       state.searchBarWidth = settingsData.searchBarWidth;
       state.searchBarHeight = settingsData.searchBarHeight;
       state.showPageQuickAdd = settingsData.showPageQuickAdd;
+      state.showPageDeleteOnHover = settingsData.showPageDeleteOnHover;
       state.tileZoom = settingsData.tileZoom;
       state.tileGrow = settingsData.tileGrow;
       state.tileSafeZone = settingsData.tileSafeZone;
@@ -116,6 +117,7 @@
       state.searchBarWidth = CONFIG.searchBarWidth;
       state.searchBarHeight = CONFIG.searchBarHeight;
       state.showPageQuickAdd = CONFIG.showPageQuickAdd;
+      state.showPageDeleteOnHover = CONFIG.showPageDeleteOnHover;
       state.tileZoom = CONFIG.tileZoom;
       state.tileGrow = CONFIG.tileGrow;
       state.tileSafeZone = CONFIG.tileSafeZone;

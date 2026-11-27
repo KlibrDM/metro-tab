@@ -1,10 +1,13 @@
 <script>
   import { getTileImage } from "../../data/storage";
   import { clearOldExtension, toHexAlpha } from "../../data/tools";
+  import Tooltip from "../Tooltip.svelte";
 
   export let pages = [];
   export let categories = [];
   export let openQuickAdd;
+  export let showPageActions;
+  export let onPageActionsDelete;
   export let isShown = false;
   export let tileZoom;
   export let tileGrow;
@@ -28,6 +31,11 @@
   export let frostedGlassAccentColor;
   export let openPageInNewTab;
   export let swipeNavigationOffset;
+
+  let pageRemoveConfirmationIndex = {
+    index: null,
+    subIndex: null
+  };
 
   const getActivePagesCountInGroup = (group) => {
     return group.pages.filter(page => page.isActive).length;
@@ -79,7 +87,7 @@
         No pages available in this category
       </div>
     {/if}
-    {#each pages as page}
+    {#each pages as page, index}
       {#if page.isActive}
         {#if !page.isGroup}
 
@@ -139,6 +147,25 @@
               {!tileZoom ? "animation: none !important" : ''}
             "
           >
+            {#if showPageActions}
+              {#if pageRemoveConfirmationIndex.index === null && pageRemoveConfirmationIndex.subIndex === null}
+                <div class="pageActions" class:pageActionsRightBig={tileBorderRadius > 3 && tileBorderRadius <= 7} class:pageActionsCenter={tileBorderRadius > 7}>
+                  <button on:click={(e) => {e.preventDefault(); pageRemoveConfirmationIndex = { index: index, subIndex: null };}}><i class="fa-solid fa-x" /></button>
+                </div>
+              {:else if pageRemoveConfirmationIndex.index === index && pageRemoveConfirmationIndex.subIndex === null}
+                <div class="pageActions pageActionsConfirmation" class:pageActionsRightBig={tileBorderRadius > 3 && tileBorderRadius <= 7} class:pageActionsCenter={tileBorderRadius > 7}>
+                  <Tooltip
+                    text="Are you sure? Click again to delete."
+                    showDelay={0}
+                    hideDelay={0}
+                    usePortal={true}
+                    onUnhoverFinished={() => { pageRemoveConfirmationIndex = { index: null, subIndex: null }; }}
+                  >
+                    <button on:click={(e) => {e.preventDefault(); onPageActionsDelete(page); pageRemoveConfirmationIndex = { index: null, subIndex: null };}}><i class="fa-solid fa-x" /></button>
+                  </Tooltip>
+                </div>
+              {/if}
+            {/if}
             {#if (useFrostedGlass || page.useCustomColors) && (page.tileImageType === 'predefined' || (page.tileImageType === 'custom' && !getTileImage(page.link)))}
               <div
                 class="frostedGlassIcon"
@@ -195,7 +222,7 @@
               };
             ` : ''}
           ">
-            {#each page.pages as subpage}
+            {#each page.pages as subpage, subIndex}
               {#if subpage.isActive}
                 <a
                   href={subpage.link}
@@ -280,6 +307,25 @@
                     ` : ''}
                   "
                 >
+                  {#if showPageActions && getActivePagesCountInGroup(page) <= 6}
+                    {#if pageRemoveConfirmationIndex.index === null && pageRemoveConfirmationIndex.subIndex === null}
+                      <div class="pageActions pageActionsGroup" class:pageActionsRightBig={groupTileBorderRadius > 2 && groupTileBorderRadius <= 3} class:pageActionsCenter={groupTileBorderRadius > 3}>
+                        <button on:click={(e) => {e.preventDefault(); pageRemoveConfirmationIndex = { index: index, subIndex: subIndex };}}><i class="fa-solid fa-x" /></button>
+                      </div>
+                    {:else if pageRemoveConfirmationIndex.index === index && pageRemoveConfirmationIndex.subIndex === subIndex}
+                      <div class="pageActions pageActionsGroup pageActionsConfirmation" class:pageActionsRightBig={groupTileBorderRadius > 2 && groupTileBorderRadius <= 3} class:pageActionsCenter={groupTileBorderRadius > 3}>
+                        <Tooltip
+                          text="Are you sure? Click again to delete."
+                          showDelay={0}
+                          hideDelay={0}
+                          usePortal={true}
+                          onUnhoverFinished={() => { pageRemoveConfirmationIndex = { index: null, subIndex: null }; }}
+                        >
+                          <button on:click={(e) => {e.preventDefault(); onPageActionsDelete(page, subpage); pageRemoveConfirmationIndex = { index: null, subIndex: null };}}><i class="fa-solid fa-x" /></button>
+                        </Tooltip>
+                      </div>
+                    {/if}
+                  {/if}
                   {#if (useFrostedGlass || subpage.useCustomColors) && (subpage.tileImageType === 'predefined' || (subpage.tileImageType === 'custom' && !getTileImage(subpage.link)))}
                     <div
                       class="frostedGlassIcon"
@@ -403,6 +449,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
     min-width: 180px;
     background-position: center;
     background-size: cover;
@@ -431,5 +478,65 @@
     height: 100%;
     mask-repeat: no-repeat;
     mask-position: center;
+  }
+  .pageButton:hover .pageActions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pageActions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .pageActions button {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    font-size: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.75;
+  }
+  .pageActions button i {
+    transform: scale(1.1);
+  }
+  .pageActions button:hover {
+    background-color: rgba(20, 20, 20, 0.8);
+    opacity: 1;
+  }
+  .pageActions.pageActionsConfirmation button {
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+  .pageActions.pageActionsConfirmation button:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+  }
+  .pageActions.pageActionsCenter {
+    justify-content: center;
+  }
+  .pageActions.pageActionsRightBig {
+    justify-content: flex-end;
+    top: 16px;
+    right: 16px;
+  }
+  .pageActions.pageActionsGroup {
+    top: 4px;
+    right: 4px;
+    left: 4px;
+  }
+  .pageActions.pageActionsGroup.pageActionsRightBig {
+    top: 8px;
+    right: 8px;
+    left: 8px;
   }
 </style>

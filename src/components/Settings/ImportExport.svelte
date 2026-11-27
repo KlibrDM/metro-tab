@@ -21,6 +21,7 @@
     ['searchBarWidth', 'Search bar width'],
     ['searchBarHeight', 'Search bar height'],
     ['showPageQuickAdd', 'Show page quick add'],
+    ['showPageDeleteOnHover', 'Show page delete button on hover'],
     ['tileZoom', 'Tile zoom on hover'],
     ['tileGrow', 'Tile fill space'],
     ['tileSafeZone', 'Tile safe zone'],
@@ -144,6 +145,7 @@
       exportDataObject.searchBarWidth = settingsData.searchBarWidth;
       exportDataObject.searchBarHeight = settingsData.searchBarHeight;
       exportDataObject.showPageQuickAdd = settingsData.showPageQuickAdd;
+      exportDataObject.showPageDeleteOnHover = settingsData.showPageDeleteOnHover;
       exportDataObject.tileZoom = settingsData.tileZoom;
       exportDataObject.tileGrow = settingsData.tileGrow;
       exportDataObject.tileSafeZone = settingsData.tileSafeZone;
@@ -647,6 +649,17 @@
           else{
             errorsFound = true;
             visualImportErrors.push('showPageQuickAdd');
+          }
+
+          if(settings.hasOwnProperty('showPageDeleteOnHover')){
+            if(typeof settings.showPageDeleteOnHover !== 'boolean'){
+              errorsFound = true;
+              visualImportErrors.push('showPageDeleteOnHover');
+            }
+          }
+          else{
+            errorsFound = true;
+            visualImportErrors.push('showPageDeleteOnHover');
           }
 
           if(settings.hasOwnProperty('tileZoom')){
